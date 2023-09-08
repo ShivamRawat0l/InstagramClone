@@ -34,13 +34,14 @@ struct AuthState  {
 
 struct AuthService {
     static func signup(email: String, password : String ,_ dispatch :@escaping (_ action :AuthAction)-> Void)  {
+        dispatch(.setSignupStatus(.pending))
         Auth.auth().createUser(withEmail: email, password: password) { authResult ,error in
             if let _ = authResult {
-                dispatch( .setLoginStatus(.success))
+                dispatch( .setSignupStatus(.success))
             } else if let error {
-                dispatch( .setLoginStatus(.failure(error.localizedDescription)))
+                dispatch( .setSignupStatus(.failure(error.localizedDescription)))
             } else {
-                dispatch( .setLoginStatus(.failure("Something went wrong.")))
+                dispatch( .setSignupStatus(.failure("Something went wrong.")))
             }
         }
     }

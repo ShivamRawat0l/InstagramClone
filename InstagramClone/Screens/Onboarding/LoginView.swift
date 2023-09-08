@@ -14,28 +14,19 @@ struct LoginView: View {
             NavigationLink(destination: Homescreen() , isActive: .constant(authStore.state.loginAuthStatus == AuthStatus.success)) {
                 EmptyView()
             }
+            InstagramLogo()
+                .padding()
             TextField("Enter your email address", text: $authStore.state.email)
             TextField("Enter your password", text: $authStore.state.password)
-            switch  authStore.state.loginAuthStatus {
-            case .initial :
-                Text("Initial")
-            case .pending:
-                Text("Pending")
-            case .failure(let err):
-                Text("\(err)")
-            default :
-                Text("Unknown Error")
-            }
-            if case .failure(let error) = authStore.state.loginAuthStatus {
-                Text(error)
-            }
+            AuthErrorHandler(authStatus: authStore.state.loginAuthStatus)
+            
             Button {
                 authStore.dispatch(.login)
             } label : {
-                Text("Sign In" )
-                
+                PrimaryButton(text: "Login", loading: authStore.state.loginAuthStatus == .pending)
             }
-            NavigationLink(isActive: .constant(true)) {
+            Spacer()
+            NavigationLink {
                 SignupView();
             } label : {
                 Text("Create Account")
@@ -47,4 +38,5 @@ struct LoginView: View {
 
 #Preview {
     LoginView()
+        .environmentObject(AuthStore())
 }

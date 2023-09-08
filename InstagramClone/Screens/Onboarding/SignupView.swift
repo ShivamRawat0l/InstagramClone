@@ -9,26 +9,33 @@ import Foundation
 import SwiftUI
 
 struct SignupView : View {
-    @EnvironmentObject var loginStore : AuthStore ;
+    @EnvironmentObject var authStore : AuthStore ;
+    @Environment(\.dismiss) var dismiss;
     var body: some View {
         VStack {
-            TextField("Enter your email address", text: $loginStore.state.email)
-            TextField("Enter your password", text: $loginStore.state.password)
+          InstagramLogo()
+            TextField("Enter your email address", text: $authStore.state.email)
+            TextField("Enter your password", text: $authStore.state.password)
+            
             Button {
-                loginStore.dispatch(.login)
+                authStore.dispatch(.signup)
             } label : {
-                Text("Create Account")
+                PrimaryButton(text: "Create Account")
             }
-            NavigationLink {
-                SignupView();
+           Spacer()
+            Button {
+                dismiss();
             } label : {
-                Text("Sign In" )
+                Text("Sign In")
             }
         }
+        .navigationTitle("New Account")
+        .navigationBarTitleDisplayMode(.large)
         .padding()
     }
 }
 
 #Preview {
-    LoginView()
+    SignupView()
+        .environmentObject(AuthStore())
 }

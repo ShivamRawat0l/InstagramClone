@@ -8,11 +8,19 @@
 import SwiftUI
 
 struct ContentView: View {
+    @EnvironmentObject var authStore : AuthStore
     var body: some View {
-        LoginView()
+        NavigationView {
+            if authStore.state.loginAuthStatus == .success {
+                Homescreen()
+            } else {
+                LoginView()
+            }
+        }
     }
 }
 
 #Preview {
     ContentView()
+        .environmentObject(AuthStore())
 }
