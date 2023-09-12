@@ -14,9 +14,11 @@ struct AuthErrorHandler: View {
         case .initial :
             EmptyView()
         case .pending:
-            Text("Pending")
+            EmptyView()
         case .failure(let err):
             Text("\(err)")
+        case .success:
+            Text("Successfully logged in")
         default :
             Text("Unknown Error")
         }

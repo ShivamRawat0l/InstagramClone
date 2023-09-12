@@ -7,6 +7,7 @@
 
 import Foundation
 import FirebaseAuth
+import FirebaseFirestore
 
 typealias ReducerType = (_ state : AuthState , _ action :AuthAction) -> AuthState ;
 
@@ -33,10 +34,24 @@ struct AuthState  {
 }
 
 struct AuthService {
+    
+    static func createUser(email :String) {
+        let firestoreDB = Firestore.firestore();
+        
+        firestoreDB.collection("users").document(email).setData([
+            "name" : email
+        ])  { err in
+            if let err = err {
+                print("Error adding document: \(err)")
+            } else {
+                print("Document added")
+            }
+        }
+    }
     static func signup(email: String, password : String ,_ dispatch :@escaping (_ action :AuthAction)-> Void)  {
-        dispatch(.setSignupStatus(.pending))
         Auth.auth().createUser(withEmail: email, password: password) { authResult ,error in
             if let _ = authResult {
+                createUser(email: email)
                 dispatch( .setSignupStatus(.success))
             } else if let error {
                 dispatch( .setSignupStatus(.failure(error.localizedDescription)))
@@ -46,9 +61,9 @@ struct AuthService {
         }
     }
     static func  login(email: String, password : String ,_ dispatch :@escaping (_ action :AuthAction)-> Void) {
-        dispatch(.setLoginStatus(.pending))
         Auth.auth().signIn(withEmail: email, password: password) { authResult, error  in
             if let authResult {
+                createUser(email: email)
                 dispatch(.setLoginStatus(.success))
             } else  if let error {
                 dispatch(.setLoginStatus(.failure(error.localizedDescription)))
@@ -69,16 +84,17 @@ struct AuthService {
     }
     
     func dispatch( _ action:AuthAction ){
-        let newState = self.reducer(self.state, action)
-        state = newState
+        state = self.reducer(self.state, action)
     }
     
     func reducer (_ state : AuthState, _ action : AuthAction) -> AuthState {
         var mutableState = state;
         switch action {
         case .login :
+            mutableState.loginAuthStatus = .pending
             AuthService.login(email: state.email, password: state.password,self.dispatch)
         case .signup:
+            mutableState.signupAuthStatus = .pending
             AuthService.signup(email: state.email, password: state.password,self.dispatch)
         case .reset :
             mutableState.email = ""

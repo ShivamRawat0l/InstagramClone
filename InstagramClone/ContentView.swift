@@ -12,7 +12,7 @@ struct ContentView: View {
     var body: some View {
         NavigationView {
             if authStore.state.loginAuthStatus == .success {
-                Homescreen()
+                Tabbar()
             } else {
                 LoginView()
             }
@@ -23,4 +23,6 @@ struct ContentView: View {
 #Preview {
     ContentView()
         .environmentObject(AuthStore())
+        .environmentObject(SearchStore())
+        .environment(MessageStore())
 }

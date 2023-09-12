@@ -12,17 +12,28 @@ struct SignupView : View {
     @EnvironmentObject var authStore : AuthStore ;
     @Environment(\.dismiss) var dismiss;
     var body: some View {
+        NavigationLink(destination: HomeScreen() , isActive: .constant(authStore.state.signupAuthStatus == AuthStatus.success)) {
+            EmptyView()
+        }
         VStack {
-          InstagramLogo()
             TextField("Enter your email address", text: $authStore.state.email)
-            TextField("Enter your password", text: $authStore.state.password)
-            
+                .autocorrectionDisabled(true)
+                .defaultInput()
+                .padding(.top, 20)
+            PasswordField(title:"Enter your password", text: $authStore.state.password)
+                .padding(.top, 20)
+            AuthErrorHandler(authStatus: authStore.state.signupAuthStatus)
+                .foregroundColor(.red)
+                .padding(.top, 20)
+                .multilineTextAlignment(.center)
+                .frame(maxWidth: .infinity,alignment: .leading)
             Button {
                 authStore.dispatch(.signup)
             } label : {
                 PrimaryButton(text: "Create Account")
+                    .padding(.top, 100)
             }
-           Spacer()
+            Spacer()
             Button {
                 dismiss();
             } label : {
@@ -37,5 +48,5 @@ struct SignupView : View {
 
 #Preview {
     SignupView()
-        .environmentObject(AuthStore())
+        .environmentObject(AuthStore(state: AuthState(email: "", password: "", loginAuthStatus: .failure("Erro"), signupAuthStatus: .failure("Error"))))
 }
