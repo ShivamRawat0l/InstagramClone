@@ -9,24 +9,47 @@ import SwiftUI
 
 struct SearchScreen: View {
     @State var search = "";
+     
+    @EnvironmentObject var searchStore : SearchStore;
+    
+    func renderUser (email :String, userName : String)-> some View {
+        NavigationLink(destination: MessageDetailScreen(email: email, username: userName)){
+            UserTab(title: email, caption: userName)
+            .padding()
+        }
+    }
+    
     var body: some View {
         VStack {
             HStack {
                 Image(systemName: "magnifyingglass")
-                    .padding(.leading , 10)
+                    .padding(.leading , 14)
+                    .padding(.trailing, 4)
                 TextField("Search" ,text: $search)
                     .foregroundColor(.gray)
-                    .padding()
+                    .padding(.vertical)
             }
             .background {
                 RoundedRectangle(cornerRadius: 8)
                     .fill(Color("lightgray"))
             }
             .padding()
+            if searchStore.state.searchStatus == .success {
+                if search == "" {
+                    ForEach(searchStore.state.names, id: \.self) { names in
+                        renderUser(email: names, userName: names)
+                    }
+                }
+                else {
+                    ForEach(searchStore.state.filteredNames, id: \.self) { names in
+                        renderUser(email: names, userName: names)
+                    }
+                }
+            }
             Spacer()
         }
         .onAppear {
-            
+            searchStore.dispatch(.fetchAll)
         }
     
     }
@@ -34,4 +57,5 @@ struct SearchScreen: View {
 
 #Preview {
     SearchScreen()
+        .environmentObject(SearchStore())
 }

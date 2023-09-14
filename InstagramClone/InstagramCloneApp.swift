@@ -19,12 +19,17 @@ class AppDelegate: NSObject, UIApplicationDelegate {
 
 @main
 struct InstagramCloneApp: App {
-    var authStore = AuthStore();
+    var authStore : AuthStore = AuthStore(state: AuthState(email: "A@a.com", password: "Aaaaaa", loginAuthStatus: .success, signupAuthStatus: .success));
+    var searchStore = SearchStore();
+    var messageStore = MessageStore();
+    
     @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
     var body: some Scene {
         WindowGroup {
             ContentView()
                 .environmentObject(authStore)
+                .environmentObject(searchStore)
+                .environmentObject(messageStore)
         }
     }
 }

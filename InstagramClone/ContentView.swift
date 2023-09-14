@@ -9,10 +9,12 @@ import SwiftUI
 
 struct ContentView: View {
     @EnvironmentObject var authStore : AuthStore
+    @EnvironmentObject var messageStore : MessageStore ;
     var body: some View {
         NavigationView {
             if authStore.state.loginAuthStatus == .success {
                 Tabbar()
+                   
             } else {
                 LoginView()
             }
@@ -24,5 +26,5 @@ struct ContentView: View {
     ContentView()
         .environmentObject(AuthStore())
         .environmentObject(SearchStore())
-        .environment(MessageStore())
+        .environmentObject(MessageStore())
 }
