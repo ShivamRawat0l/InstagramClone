@@ -14,11 +14,11 @@ struct MessageScreen: View {
     var body: some View {
         VStack(alignment: .leading){
             HStack {
-                Button {
-                    dismiss()
-                } label : {
+             
                     Image(systemName: "chevron.backward")
-                }
+                    .onTapGesture {
+                        dismiss()
+                    }
                 Text("A@a.com")
                     .tint(.black)
                     .foregroundColor(.black)
@@ -34,7 +34,7 @@ struct MessageScreen: View {
                 VStack{
                     if messageStore.state.messageListStatus == .success {
                         ForEach(messageStore.state.messageList, id: \.content) { message in
-                            NavigationLink(destination: MessageDetailScreen(email: message.ownerName, username: message.ownerName)) {
+                            NavigationLink(destination: MessageDetailScreen(email: message.ownerEmail, username: message.ownerName)) {
                                 UserTab(title: message.ownerName, caption: message.content)
                             }
                         }

@@ -19,14 +19,18 @@ struct MessageDetailScreen: View {
     var body: some View {
         VStack {
             HStack {
-                Button {
-                    print("HERE")
-                    dismiss()
-                } label : {
-                    Image(systemName: "chevron.backward")
-                        .font(.system(size: 20))
-                        .padding(.leading, 10)
-                }
+                Rectangle()
+                    .fill(.white)
+                    .frame(width: 40, height: 40)
+                    .overlay {
+                        Image(systemName: "chevron.backward")
+                           
+                    }
+                    .onTapGesture {
+                        dismiss()
+                    }
+                        
+                
                 AsyncImage(url: URL(string: Constant.getImageUrl(title: email)))
                     .frame(width: 40,height: 40)
                     .clipShape(Circle())
@@ -39,6 +43,12 @@ struct MessageDetailScreen: View {
                 Image(systemName: "video")
             }
             .padding()
+            Button {
+                messageStore.dispatch(.resetMessages)
+           dismiss()
+            } label : {
+                Text("Dismiss")
+            }
             ScrollView{
                 VStack {
                     ForEach(messageStore.state.selectedMessage, id : \.self.content) { message in
@@ -47,11 +57,11 @@ struct MessageDetailScreen: View {
                             .padding()
                             .background {
                                 RoundedRectangle(cornerRadius: 20)
-                                    .fill(.blue)
+                                    .fill(message.isOwner ? .blue : .gray)
                             }
                             .rotationEffect(.degrees(180))
                             .scaleEffect(x: -1, y: 1, anchor: .center)
-                            .frame(maxWidth: .infinity,alignment:.trailing)
+                            .frame(maxWidth: .infinity,alignment: message.isOwner ? .trailing : .leading)
                         
                     }
                 }
@@ -68,9 +78,8 @@ struct MessageDetailScreen: View {
                     Image(systemName: "photo")
                 } else {
                     Button {
-                        print(email , authStore.state.email)
-                        messageStore.dispatch(.send(email, authStore.state.email, sendText))
-                        messageStore.dispatch(.select(email,authStore.state.email))
+                        messageStore.dispatch(.send((email,username),(authStore.state.email,authStore.state.email == "A@a.com" ? "A_a": "B_b"), sendText))
+                      //  messageStore.dispatch(.select((email,username),(authStore.state.email,authStore.state.email == "A@a.com" ? "A_a": "B_b")))
                         sendText = ""
                     } label : {
                         Image(systemName: "paperplane.fill")
@@ -82,11 +91,13 @@ struct MessageDetailScreen: View {
         }
         .navigationBarBackButtonHidden(true)
         .onAppear(perform: {
-            messageStore.dispatch(.select(email,authStore.state.email))
+            messageStore.dispatch(.select((email,username),(authStore.state.email,authStore.state.email == "A@a.com" ? "A_a": "B_b")))
         })
     }
 }
 
 #Preview {
     MessageDetailScreen(email :"A@a.com", username: "A_a")
+        .environmentObject(AuthStore(state: AuthState(email: "temp@temp.com", password: "temp", loginAuthStatus: .success, signupAuthStatus: .success)))
+        .environmentObject(MessageStore())
 }

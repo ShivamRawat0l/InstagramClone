@@ -16,8 +16,8 @@ enum SearchStatus {
 }
 
 struct SearchState {
-    var filteredNames : [String] = []
-    var names : [String] = []
+    var filteredNames : [(String,String)] = []
+    var names : [(String,String)] = []
     var searchStatus : SearchStatus = .initial
 }
 
@@ -25,12 +25,12 @@ enum SearchAction {
     case fetchAll
     case filter(String)
     case setSearchStatus(SearchStatus)
-    case setName([String])
+    case setName([(String,String)])
 }
 
 class SearchService {
     static func fetchAll(_ dispatch: @escaping (_ action : SearchAction) -> Void ) {
-        var fetchedNames : [String] = [];
+        var fetchedNames : [(String,String)] = [];
         let firestoreDB = Firestore.firestore();
         firestoreDB.collection("users").getDocuments() { (querySnapshot, err) in
             if let err = err {
@@ -38,19 +38,17 @@ class SearchService {
                 dispatch(.setSearchStatus(.failure))
             } else {
                 for document in querySnapshot!.documents {
-                    print("\(document.documentID) => \(document.data())")
-                    fetchedNames.append(document.documentID)
+                   fetchedNames.append((document.documentID,document.data()["username"] as! String))
                 }
                 dispatch(.setSearchStatus(.success))
-                print("Setting Names" , fetchedNames)
                 dispatch(.setName(fetchedNames))
             }
         }
     }
     
-    static func filter(searchText : String, names : [String] ,_ dispatch: @escaping (_ action : SearchAction) -> Void ) -> [String] {
+    static func filter(searchText : String, names : [(String,String)] ,_ dispatch: @escaping (_ action : SearchAction) -> Void ) -> [(String,String)] {
         let filteredNames =  names.filter { name in
-            name.contains(searchText)
+            return name.0.contains(searchText) || name.1.contains(searchText)
         }
         return filteredNames
     }

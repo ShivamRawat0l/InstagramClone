@@ -36,13 +36,13 @@ struct SearchScreen: View {
             .padding()
             if searchStore.state.searchStatus == .success {
                 if search == "" {
-                    ForEach(searchStore.state.names, id: \.self) { names in
-                        renderUser(email: names, userName: names)
+                    ForEach(searchStore.state.names, id: \.self.0) { names in
+                        renderUser(email: names.0, userName: names.1)
                     }
                 }
                 else {
-                    ForEach(searchStore.state.filteredNames, id: \.self) { names in
-                        renderUser(email: names, userName: names)
+                    ForEach(searchStore.state.filteredNames, id: \.self.0) { names in
+                        renderUser(email: names.0, userName: names.1)
                     }
                 }
             }

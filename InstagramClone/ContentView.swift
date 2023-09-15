@@ -14,9 +14,13 @@ struct ContentView: View {
         NavigationView {
             if authStore.state.loginAuthStatus == .success {
                 Tabbar()
+                    .onAppear {
+                        messageStore.dispatch(.addListeners(authStore.state.email))
+                    }
                    
             } else {
                 LoginView()
+                    
             }
         }
     }

@@ -39,7 +39,8 @@ struct AuthService {
         let firestoreDB = Firestore.firestore();
         
         firestoreDB.collection("users").document(email).setData([
-            "name" : email
+            "name" : email,
+            "username" : "B_b"
         ])  { err in
             if let err = err {
                 print("Error adding document: \(err)")
