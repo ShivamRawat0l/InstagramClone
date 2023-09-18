@@ -55,7 +55,7 @@ class SearchService {
 }
 
 class SearchStore : ObservableObject {
-    var state : SearchState ;
+    @Published var state : SearchState ;
     
     init(state: SearchState = SearchState()){
         self.state = state;

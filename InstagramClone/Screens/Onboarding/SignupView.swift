@@ -16,6 +16,10 @@ struct SignupView : View {
             EmptyView()
         }
         VStack {
+            TextField("Enter your username", text: $authStore.state.username)
+                .autocorrectionDisabled(true)
+                .defaultInput()
+                .padding(.top, 20)
             TextField("Enter your email address", text: $authStore.state.email)
                 .autocorrectionDisabled(true)
                 .defaultInput()
@@ -48,5 +52,5 @@ struct SignupView : View {
 
 #Preview {
     SignupView()
-        .environmentObject(AuthStore(state: AuthState(email: "", password: "", loginAuthStatus: .failure("Erro"), signupAuthStatus: .failure("Error"))))
+        .environmentObject(AuthStore(state: AuthState(username: "",email: "", password: "", loginAuthStatus: .failure("Erro"), signupAuthStatus: .failure("Error"))))
 }

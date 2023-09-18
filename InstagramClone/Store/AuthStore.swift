@@ -27,6 +27,7 @@ enum AuthStatus : Equatable {
 }
 
 struct AuthState  {
+    var username :String;
     var email : String ;
     var password : String ;
     var loginAuthStatus : AuthStatus;
@@ -35,12 +36,12 @@ struct AuthState  {
 
 struct AuthService {
     
-    static func createUser(email :String) {
+    static func createUser(username: String, email :String) {
         let firestoreDB = Firestore.firestore();
         
         firestoreDB.collection("users").document(email).setData([
             "name" : email,
-            "username" : "B_b"
+            "username" : username + String(email.hash)
         ])  { err in
             if let err = err {
                 print("Error adding document: \(err)")
@@ -49,10 +50,11 @@ struct AuthService {
             }
         }
     }
-    static func signup(email: String, password : String ,_ dispatch :@escaping (_ action :AuthAction)-> Void)  {
+    
+    static func signup(username :String , email: String, password : String ,_ dispatch :@escaping (_ action :AuthAction)-> Void)  {
         Auth.auth().createUser(withEmail: email, password: password) { authResult ,error in
             if let _ = authResult {
-                createUser(email: email)
+                createUser(username: username,email: email)
                 dispatch( .setSignupStatus(.success))
             } else if let error {
                 dispatch( .setSignupStatus(.failure(error.localizedDescription)))
@@ -64,7 +66,6 @@ struct AuthService {
     static func  login(email: String, password : String ,_ dispatch :@escaping (_ action :AuthAction)-> Void) {
         Auth.auth().signIn(withEmail: email, password: password) { authResult, error  in
             if let authResult {
-                createUser(email: email)
                 dispatch(.setLoginStatus(.success))
             } else  if let error {
                 dispatch(.setLoginStatus(.failure(error.localizedDescription)))
@@ -80,7 +81,7 @@ struct AuthService {
 @MainActor class AuthStore : ObservableObject{
     @Published var state : AuthState;
     
-    init(state: AuthState = AuthState(email: "", password: "", loginAuthStatus: .initial, signupAuthStatus: .initial)) {
+    init(state: AuthState = AuthState(username: "",email: "", password: "", loginAuthStatus: .initial, signupAuthStatus: .initial)) {
         self.state = state
     }
     
@@ -96,7 +97,7 @@ struct AuthService {
             AuthService.login(email: state.email, password: state.password,self.dispatch)
         case .signup:
             mutableState.signupAuthStatus = .pending
-            AuthService.signup(email: state.email, password: state.password,self.dispatch)
+            AuthService.signup(username: state.username, email: state.email, password: state.password,self.dispatch)
         case .reset :
             mutableState.email = ""
             mutableState.password = ""

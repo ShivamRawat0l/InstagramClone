@@ -51,7 +51,7 @@ struct MessageDetailScreen: View {
             }
             ScrollView{
                 VStack {
-                    ForEach(messageStore.state.selectedMessage, id : \.self.content) { message in
+                    ForEach(messageStore.state.selectedMessage.reversed(), id : \.self.content) { message in
                         Text(message.content)
                             .foregroundStyle(.white)
                             .padding()
@@ -65,6 +65,7 @@ struct MessageDetailScreen: View {
                         
                     }
                 }
+                .padding()
                 
             }
             .rotationEffect(.degrees(180))
@@ -98,6 +99,6 @@ struct MessageDetailScreen: View {
 
 #Preview {
     MessageDetailScreen(email :"A@a.com", username: "A_a")
-        .environmentObject(AuthStore(state: AuthState(email: "temp@temp.com", password: "temp", loginAuthStatus: .success, signupAuthStatus: .success)))
+        .environmentObject(AuthStore(state: AuthState(username: "",email: "temp@temp.com", password: "temp", loginAuthStatus: .success, signupAuthStatus: .success)))
         .environmentObject(MessageStore())
 }

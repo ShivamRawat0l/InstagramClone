@@ -9,6 +9,7 @@ import SwiftUI
 
 struct ProfileScreen: View {
     @EnvironmentObject var authStore : AuthStore ;
+    @EnvironmentObject var profileStore : ProfileStore ;
     
     func renderInfo(_ number : String , _ details : String) -> some View {
         VStack {
@@ -25,9 +26,10 @@ struct ProfileScreen: View {
                 Image(systemName: "lock")
                     .font(.system(size: 20))
                     .bold()
-                Text(authStore.state.email.split(separator: "@")[0])
+                Text(profileStore.state.username)
                     .font(.system(size: 26))
                     .bold()
+                    .lineLimit(1)
                 Image(systemName: "chevron.down")
                     .font(.system(size: 26))
                     .bold()
@@ -41,7 +43,7 @@ struct ProfileScreen: View {
             }
             .padding(.bottom, 40)
             HStack {
-                AsyncImage(url: URL(string: "https://api.dicebear.com/7.x/adventurer/png?seed=\(authStore.state.email)"))
+                AsyncImage(url: URL(string: "https://api.dicebear.com/7.x/adventurer/png?seed=\(profileStore.state.email)"))
                     .frame(width:  110,height: 110)
                     .clipShape(Circle())
                     .overlay {
@@ -62,7 +64,7 @@ struct ProfileScreen: View {
                 Spacer()
                 renderInfo("910", "Following")
             }
-            Text(authStore.state.email)
+            Text(profileStore.state.email)
                 .bold()
             Text("status")
             Spacer()
@@ -73,5 +75,6 @@ struct ProfileScreen: View {
 
 #Preview {
     ProfileScreen()
-        .environmentObject(AuthStore(state: AuthState(email: "temp@temp.com", password: "temp", loginAuthStatus: .success, signupAuthStatus: .success)))
+        .environmentObject(AuthStore(state: AuthState(username: "",email: "temp@temp.com", password: "temp", loginAuthStatus: .success, signupAuthStatus: .success)))
+        .environmentObject(ProfileStore(state: ProfileState(email:"EMAIL", username: "Hello3720221024930739300")))
 }

@@ -46,10 +46,8 @@ class MessageService {
     
     static func addListener(owner : String , state : MessageState,dispatch: @escaping (_ action: MessageAction) -> Void){
         let firestoreDB = Firestore.firestore()
-        print(owner, "ADDDING LISTENER")
         listener = firestoreDB.collection("messages").document(owner)
             .addSnapshotListener(includeMetadataChanges: true) { querySnapshot, err in
-                print("RUNNING SNAPSHOT",state.messageListStatus , selectedInfo)
                 if let err {
                     dispatch(.setMessagesListStatus(.failure))
                 } else  {

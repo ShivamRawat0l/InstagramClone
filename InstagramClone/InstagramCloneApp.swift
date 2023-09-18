@@ -23,6 +23,7 @@ struct InstagramCloneApp: App {
     var authStore = AuthStore()
     var searchStore = SearchStore();
     var messageStore = MessageStore();
+    var profileStore = ProfileStore();
     
     @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
     var body: some Scene {
@@ -31,6 +32,7 @@ struct InstagramCloneApp: App {
                 .environmentObject(authStore)
                 .environmentObject(searchStore)
                 .environmentObject(messageStore)
+                .environmentObject(profileStore)
         }
     }
 }

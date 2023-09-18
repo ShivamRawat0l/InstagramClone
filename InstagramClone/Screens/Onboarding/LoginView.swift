@@ -49,5 +49,5 @@ struct LoginView: View {
 
 #Preview {
     LoginView()
-        .environmentObject(AuthStore(state: AuthState(email: "", password: "", loginAuthStatus: .failure("Error occured"), signupAuthStatus: .failure("ErrorOccured"))))
+        .environmentObject(AuthStore(state: AuthState(username:"",email: "", password: "", loginAuthStatus: .failure("Error occured"), signupAuthStatus: .failure("ErrorOccured"))))
 }
