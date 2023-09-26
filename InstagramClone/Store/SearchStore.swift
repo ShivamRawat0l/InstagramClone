@@ -34,7 +34,6 @@ class SearchService {
         let firestoreDB = Firestore.firestore();
         firestoreDB.collection("users").getDocuments() { (querySnapshot, err) in
             if let err = err {
-                print("Error getting documents: \(err)")
                 dispatch(.setSearchStatus(.failure))
             } else {
                 for document in querySnapshot!.documents {

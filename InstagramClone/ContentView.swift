@@ -13,7 +13,7 @@ struct ContentView: View {
     @EnvironmentObject var profileStore : ProfileStore ;
     var body: some View {
         NavigationView {
-            if authStore.state.loginAuthStatus == .success {
+            if authStore.state.loginAuthStatus == .success || authStore.state.signupAuthStatus == .success {
                 Tabbar()
                     .onAppear {
                         messageStore.dispatch(.addListeners(authStore.state.email))
@@ -22,7 +22,6 @@ struct ContentView: View {
                    
             } else {
                 LoginView()
-                    
             }
         }
     }

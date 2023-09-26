@@ -15,43 +15,48 @@ struct MessageDetailScreen: View {
     @Environment(\.dismiss) var dismiss;
     @EnvironmentObject var authStore : AuthStore ;
     @EnvironmentObject var messageStore : MessageStore ;
+    @EnvironmentObject var profileStore : ProfileStore;
+    
+    func header() -> some View {
+        HStack {
+            Rectangle()
+                .fill(.white)
+                .frame(width: 40, height: 40)
+                .overlay {
+                    Image(systemName: "chevron.backward")
+                    
+                }
+                .onTapGesture {
+                    dismiss()
+                }
+            AsyncImage(url: URL(string: Constant.getImageUrl(title: email)))
+                .frame(width: 40,height: 40)
+                .clipShape(Circle())
+            VStack(alignment: .leading) {
+                Text(email)
+                Text(username)
+            }
+            Spacer()
+            Image(systemName: "phone")
+            Image(systemName: "video")
+        }
+        .padding()
+    }
     
     var body: some View {
         VStack {
-            HStack {
-                Rectangle()
-                    .fill(.white)
-                    .frame(width: 40, height: 40)
-                    .overlay {
-                        Image(systemName: "chevron.backward")
-                           
-                    }
-                    .onTapGesture {
-                        dismiss()
-                    }
-                        
-                
-                AsyncImage(url: URL(string: Constant.getImageUrl(title: email)))
-                    .frame(width: 40,height: 40)
-                    .clipShape(Circle())
-                VStack(alignment: .leading) {
-                    Text(email)
-                    Text(username)
-                }
-                Spacer()
-                Image(systemName: "phone")
-                Image(systemName: "video")
-            }
-            .padding()
+            header()
+            
             Button {
                 messageStore.dispatch(.resetMessages)
-           dismiss()
+                dismiss()
             } label : {
                 Text("Dismiss")
             }
+            
             ScrollView{
                 VStack {
-                    ForEach(messageStore.state.selectedMessage.reversed(), id : \.self.content) { message in
+                    ForEach(messageStore.state.selectedMessage.enumerated().reversed(), id : \.offset) { index, message in
                         Text(message.content)
                             .foregroundStyle(.white)
                             .padding()
@@ -66,10 +71,10 @@ struct MessageDetailScreen: View {
                     }
                 }
                 .padding()
-                
             }
             .rotationEffect(.degrees(180))
             .scaleEffect(x: -1, y: 1, anchor: .center)
+            
             HStack {
                 Image(systemName: "camera.fill")
                 TextField("Hello",text:  $sendText)
@@ -79,8 +84,7 @@ struct MessageDetailScreen: View {
                     Image(systemName: "photo")
                 } else {
                     Button {
-                        messageStore.dispatch(.send((email,username),(authStore.state.email,authStore.state.email == "A@a.com" ? "A_a": "B_b"), sendText))
-                      //  messageStore.dispatch(.select((email,username),(authStore.state.email,authStore.state.email == "A@a.com" ? "A_a": "B_b")))
+                        messageStore.dispatch(.send((email,username),(profileStore.state.email,profileStore.state.username), sendText))
                         sendText = ""
                     } label : {
                         Image(systemName: "paperplane.fill")
@@ -92,7 +96,7 @@ struct MessageDetailScreen: View {
         }
         .navigationBarBackButtonHidden(true)
         .onAppear(perform: {
-            messageStore.dispatch(.select((email,username),(authStore.state.email,authStore.state.email == "A@a.com" ? "A_a": "B_b")))
+            messageStore.dispatch(.select((email,username),(profileStore.state.email,profileStore.state.username)))
         })
     }
 }
