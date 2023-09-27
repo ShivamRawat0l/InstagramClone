@@ -57,7 +57,7 @@ class MessageService {
             listener = firestoreDB.collection("messages").document(owner)
                 .addSnapshotListener { querySnapshot, err in
                     if messagesFetchedOnce {
-                        if let err {
+                        if err != nil {
                             dispatch(.setMessagesListStatus(.failure))
                         } else  {
                             var messageListFormatted : [MessageListDetail] = []
@@ -65,6 +65,9 @@ class MessageService {
                             var lastMessage = ""
                             if let data = querySnapshot?.data()  {
                                 for ownerName in data.keys {
+                                    messages = []
+                                    lastMessage = ""
+                                    
                                     let object = data[ownerName] as! [ String : Any ]
                                     
                                     if let messagesExist = object["messages"] {
@@ -99,7 +102,8 @@ class MessageService {
             "\(to.1).messages":FieldValue.arrayUnion([
                 [
                     "isOwner" : true,
-                    "content" : message
+                    "content" : message,
+                    "time" : Date().toMillis()!
                 ]
             ])
             
@@ -109,7 +113,9 @@ class MessageService {
             "\(from.1).messages"  :FieldValue.arrayUnion([
                 [
                     "isOwner" : false,
-                    "content" : message
+                    "content" : message,
+                    "time" : Date().toMillis()!
+
                 ]
             ])
             
@@ -117,7 +123,6 @@ class MessageService {
     }
     
     static func createConversation(from: (String,String), to:(String,String)  ){
-     
             let firestoreDB = Firestore.firestore()
             firestoreDB.collection("messages").document(from.0).setData([ to.1 : [
                 "email"  : to.0,
@@ -127,7 +132,6 @@ class MessageService {
                 "email"  : from.0,
                 "messages": []
             ]], merge: true)
-        
     }
     
     static func selectMessage( state : MessageState, from: (String,String), to:(String,String) , dispatch : @escaping (_ action : MessageAction) -> Void ){
@@ -149,7 +153,7 @@ class MessageService {
     static func recieveList(currentUser : String , dispatch: @escaping (_ action : MessageAction ) -> Void ) {
         let firestoreDB = Firestore.firestore()
         firestoreDB.collection("messages").document(currentUser).getDocument { (querySnapshot , err) in
-            if let err {
+            if err != nil {
                 dispatch(.setMessagesListStatus(.failure))
             } else  {
                 var messageListFormatted : [MessageListDetail] = []

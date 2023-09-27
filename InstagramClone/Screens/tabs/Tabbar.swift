@@ -11,7 +11,8 @@ import SwiftUI
 
 struct Tabbar: View {
     @State var selectedIndex  = 0 ;
-    func renderTab(_ unselectedName: String ,  _ selectedName : String , isSelected : Bool , onSelectTab : @escaping () -> Void  ) -> some View {
+    
+    func renderTab(_ unselectedName: String ,  _ selectedName : String , isSelected : Bool , onSelectTab : @escaping () -> Void) -> some View {
         Group{
             if isSelected {
                 return Image(systemName: selectedName)
@@ -21,9 +22,9 @@ struct Tabbar: View {
                     .font(.system(size: 30))
             }
         }
-            .onTapGesture {
-                onSelectTab()
-            }
+        .onTapGesture {
+            onSelectTab()
+        }
     }
     
     var icons = [
@@ -31,7 +32,7 @@ struct Tabbar: View {
         ("magnifyingglass.circle", "magnifyingglass.circle.fill", 1 ),
         ("plus.circle", "plus.circle.fill", 2 ),
         ("person.crop.circle", "person.crop.circle.fill", 3 )
-        ]
+    ]
     
     var body: some View {
         VStack {
@@ -61,5 +62,5 @@ struct Tabbar: View {
 #Preview {
     Tabbar()
         .environmentObject(AuthStore(state: AuthState(username : "", email: "temp@temp.com", password: "temp", loginAuthStatus: .success, signupAuthStatus: .success)))
-
+    
 }

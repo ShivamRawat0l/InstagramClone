@@ -32,6 +32,7 @@
 		5E4410FF2AAAE64500781FEF /* NotificationScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E4410FE2AAAE64500781FEF /* NotificationScreen.swift */; };
 		5E4411012AAAE66500781FEF /* ProfileScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E4411002AAAE66500781FEF /* ProfileScreen.swift */; };
 		5E4411032AAAE6E200781FEF /* Tabbar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E4411022AAAE6E200781FEF /* Tabbar.swift */; };
+		5EB05B9C2AC3E03800141CE0 /* Date.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EB05B9B2AC3E03800141CE0 /* Date.swift */; };
 		5ECF4F6C2AAE1930008BEC9C /* UploadScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ECF4F6B2AAE1930008BEC9C /* UploadScreen.swift */; };
 		5ECF4F6E2AAE193A008BEC9C /* SearchScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ECF4F6D2AAE193A008BEC9C /* SearchScreen.swift */; };
 		5ECF4F702AAE2B7E008BEC9C /* DefaultInputModifer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ECF4F6F2AAE2B7E008BEC9C /* DefaultInputModifer.swift */; };
@@ -89,6 +90,7 @@
 		5E4410FE2AAAE64500781FEF /* NotificationScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationScreen.swift; sourceTree = "<group>"; };
 		5E4411002AAAE66500781FEF /* ProfileScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileScreen.swift; sourceTree = "<group>"; };
 		5E4411022AAAE6E200781FEF /* Tabbar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tabbar.swift; sourceTree = "<group>"; };
+		5EB05B9B2AC3E03800141CE0 /* Date.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Date.swift; sourceTree = "<group>"; };
 		5ECF4F6B2AAE1930008BEC9C /* UploadScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadScreen.swift; sourceTree = "<group>"; };
 		5ECF4F6D2AAE193A008BEC9C /* SearchScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchScreen.swift; sourceTree = "<group>"; };
 		5ECF4F6F2AAE2B7E008BEC9C /* DefaultInputModifer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultInputModifer.swift; sourceTree = "<group>"; };
@@ -155,6 +157,7 @@
 		5E44109E2AA7101800781FEF /* InstagramClone */ = {
 			isa = PBXGroup;
 			children = (
+				5EB05B9D2AC3E03B00141CE0 /* Extensions */,
 				5E4410DC2AA865F900781FEF /* GoogleService-Info.plist */,
 				5ECF4F832AB1CB7E008BEC9C /* Services */,
 				5E4410D32AA83CDF00781FEF /* Store */,
@@ -195,23 +198,23 @@
 		5E4410C92AA7366400781FEF /* Screens */ = {
 			isa = PBXGroup;
 			children = (
-				5E4410FB2AAAE60700781FEF /* Screens */,
+				5E4410FB2AAAE60700781FEF /* messaging */,
 				5E4410F82AA9C78A00781FEF /* modifer */,
 				5E4410F32AA98D9000781FEF /* components */,
-				5E4410E82AA89D0500781FEF /* Tabs */,
-				5E4410CA2AA7366F00781FEF /* Onboarding */,
+				5E4410E82AA89D0500781FEF /* tabs */,
+				5E4410CA2AA7366F00781FEF /* onboarding */,
 			);
 			path = Screens;
 			sourceTree = "<group>";
 		};
-		5E4410CA2AA7366F00781FEF /* Onboarding */ = {
+		5E4410CA2AA7366F00781FEF /* onboarding */ = {
 			isa = PBXGroup;
 			children = (
 				5E4410E72AA88BC700781FEF /* components */,
 				5E4410CD2AA7370F00781FEF /* LoginView.swift */,
 				5E4410E52AA88AB200781FEF /* SignupView.swift */,
 			);
-			path = Onboarding;
+			path = onboarding;
 			sourceTree = "<group>";
 		};
 		5E4410D32AA83CDF00781FEF /* Store */ = {
@@ -236,7 +239,7 @@
 			path = components;
 			sourceTree = "<group>";
 		};
-		5E4410E82AA89D0500781FEF /* Tabs */ = {
+		5E4410E82AA89D0500781FEF /* tabs */ = {
 			isa = PBXGroup;
 			children = (
 				5E4410E92AA89D2E00781FEF /* HomeScreen.swift */,
@@ -245,7 +248,7 @@
 				5ECF4F6B2AAE1930008BEC9C /* UploadScreen.swift */,
 				5ECF4F6D2AAE193A008BEC9C /* SearchScreen.swift */,
 			);
-			path = Tabs;
+			path = tabs;
 			sourceTree = "<group>";
 		};
 		5E4410F32AA98D9000781FEF /* components */ = {
@@ -267,7 +270,7 @@
 			path = modifer;
 			sourceTree = "<group>";
 		};
-		5E4410FB2AAAE60700781FEF /* Screens */ = {
+		5E4410FB2AAAE60700781FEF /* messaging */ = {
 			isa = PBXGroup;
 			children = (
 				5E4410FC2AAAE62E00781FEF /* MessageDetailScreen.swift */,
@@ -275,7 +278,15 @@
 				5ECF4F782AB002A7008BEC9C /* UserProfileScreen.swift */,
 				5ECF4F7C2AB028C9008BEC9C /* MessageScreen.swift */,
 			);
-			path = Screens;
+			path = messaging;
+			sourceTree = "<group>";
+		};
+		5EB05B9D2AC3E03B00141CE0 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				5EB05B9B2AC3E03800141CE0 /* Date.swift */,
+			);
+			path = Extensions;
 			sourceTree = "<group>";
 		};
 		5ECF4F732AAF2194008BEC9C /* Frameworks */ = {
@@ -456,6 +467,7 @@
 				5ECF4F852AB1CBBE008BEC9C /* Constant.swift in Sources */,
 				5ECF4F7F2AB06616008BEC9C /* GlobalStore.swift in Sources */,
 				5E4410EC2AA98C2800781FEF /* InstagramLogo.swift in Sources */,
+				5EB05B9C2AC3E03800141CE0 /* Date.swift in Sources */,
 				5E4410E62AA88AB200781FEF /* SignupView.swift in Sources */,
 				5E4410FF2AAAE64500781FEF /* NotificationScreen.swift in Sources */,
 				5E4410F72AA9962D00781FEF /* PasswordField.swift in Sources */,

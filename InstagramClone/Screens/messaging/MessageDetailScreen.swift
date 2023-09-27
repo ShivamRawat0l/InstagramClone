@@ -79,7 +79,7 @@ struct MessageDetailScreen: View {
                 Image(systemName: "camera.fill")
                 TextField("Hello",text:  $sendText)
                 Spacer()
-                if sendText != nil ,sendText == "" {
+                if sendText == "" {
                     Image(systemName: "mic")
                     Image(systemName: "photo")
                 } else {
@@ -103,6 +103,7 @@ struct MessageDetailScreen: View {
 
 #Preview {
     MessageDetailScreen(email :"A@a.com", username: "A_a")
-        .environmentObject(AuthStore(state: AuthState(username: "",email: "temp@temp.com", password: "temp", loginAuthStatus: .success, signupAuthStatus: .success)))
+        .environmentObject(AuthStore(state: AuthState(username: "temp_temp",email: "temp@temp.com", password: "temp", loginAuthStatus: .success, signupAuthStatus: .success)))
         .environmentObject(MessageStore())
+        .environmentObject(ProfileStore())
 }
