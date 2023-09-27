@@ -65,4 +65,5 @@ struct MessageScreen: View {
 #Preview {
     MessageScreen()
         .environmentObject(MessageStore())
+        .environmentObject(ProfileStore())
 }
