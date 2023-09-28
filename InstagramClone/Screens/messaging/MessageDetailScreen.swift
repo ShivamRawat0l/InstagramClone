@@ -22,19 +22,22 @@ struct MessageDetailScreen: View {
             Rectangle()
                 .fill(.white)
                 .frame(width: 40, height: 40)
+                .zIndex(1)
                 .overlay {
                     Image(systemName: "chevron.backward")
-                    
                 }
                 .onTapGesture {
                     dismiss()
                 }
+                
             AsyncImage(url: URL(string: Constant.getImageUrl(title: email)))
                 .frame(width: 40,height: 40)
                 .clipShape(Circle())
+            
             VStack(alignment: .leading) {
                 Text(email)
                 Text(username)
+                    .lineLimit(1)
             }
             Spacer()
             Image(systemName: "phone")
@@ -47,16 +50,11 @@ struct MessageDetailScreen: View {
         VStack {
             header()
             
-            Button {
-                messageStore.dispatch(.resetMessages)
-                dismiss()
-            } label : {
-                Text("Dismiss")
-            }
-            
             ScrollView{
                 VStack {
-                    ForEach(messageStore.state.selectedMessage.enumerated().reversed(), id : \.offset) { index, message in
+                    ForEach(messageStore.state.selectedMessage.enumerated().reversed(), 
+                            id : \.offset) { index, message in
+
                         Text(message.content)
                             .foregroundStyle(.white)
                             .padding()
@@ -67,6 +65,7 @@ struct MessageDetailScreen: View {
                             .rotationEffect(.degrees(180))
                             .scaleEffect(x: -1, y: 1, anchor: .center)
                             .frame(maxWidth: .infinity,alignment: message.isOwner ? .trailing : .leading)
+
                     }
                 }
                 .padding()
@@ -102,7 +101,7 @@ struct MessageDetailScreen: View {
 
 #Preview {
     MessageDetailScreen(email :"A@a.com", username: "A_a")
-        .environmentObject(AuthStore(state: AuthState(username: "temp_temp",email: "temp@temp.com", password: "temp", loginAuthStatus: .success, signupAuthStatus: .success)))
+        .environmentObject(AuthStore(state: AuthState(username: "temp_temp",email: "temp@temp.com", password: "temp", loginAuthStatus: .success("A@a.com"), signupAuthStatus: .success("B@b.com"))))
         .environmentObject(MessageStore())
-        .environmentObject(ProfileStore())
+        .environmentObject(ProfileStore(state: ProfileState(email: "shivam@shivam.com", username: "username")))
 }

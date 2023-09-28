@@ -75,6 +75,11 @@ struct ProfileScreen: View {
 
 #Preview {
     ProfileScreen()
-        .environmentObject(AuthStore(state: AuthState(username: "",email: "temp@temp.com", password: "temp", loginAuthStatus: .success, signupAuthStatus: .success)))
-        .environmentObject(ProfileStore(state: ProfileState(email:"EMAIL", username: "Hello3720221024930739300")))
+        .environmentObject(AuthStore(state: AuthState(username: "",
+                                                      email: "temp@temp.com",
+                                                      password: "temp",
+                                                      loginAuthStatus: .success("B@b.com"),
+                                                      signupAuthStatus: .success("A@a.com"))))
+        .environmentObject(ProfileStore(state: ProfileState(email: "EMAIL",
+                                                            username: "Hello3720221024930739300")))
 }

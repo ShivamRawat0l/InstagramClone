@@ -8,12 +8,13 @@
 import SwiftUI
 
 struct ContentView: View {
-    @EnvironmentObject var authStore : AuthStore
-    @EnvironmentObject var messageStore : MessageStore ;
-    @EnvironmentObject var profileStore : ProfileStore ;
+    @EnvironmentObject var authStore: AuthStore
+    @EnvironmentObject var messageStore: MessageStore
+    @EnvironmentObject var profileStore: ProfileStore
+
     var body: some View {
         NavigationView {
-            if authStore.state.loginAuthStatus == .success || authStore.state.signupAuthStatus == .success {
+            if case .success = authStore.state.loginAuthStatus {
                 Tabbar()
                     .onAppear {
                         messageStore.dispatch(.addListeners(authStore.state.email))

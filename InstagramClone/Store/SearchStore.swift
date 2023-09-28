@@ -16,9 +16,9 @@ enum SearchStatus {
 }
 
 struct SearchState {
-    var filteredNames : [(String,String)] = []
-    var names : [(String,String)] = []
-    var searchStatus : SearchStatus = .initial
+    var filteredNames: [(String,String)] = []
+    var names: [(String,String)] = []
+    var searchStatus: SearchStatus = .initial
 }
 
 enum SearchAction {
@@ -29,7 +29,7 @@ enum SearchAction {
 }
 
 class SearchService {
-    static func fetchAll(_ dispatch: @escaping (_ action : SearchAction) -> Void ) {
+    static func fetchAll(_ dispatch: @escaping (_ action: SearchAction) -> Void ) {
         var fetchedNames : [(String,String)] = [];
         let firestoreDB = Firestore.firestore();
         firestoreDB.collection("users").getDocuments() { (querySnapshot, err) in
@@ -45,7 +45,7 @@ class SearchService {
         }
     }
     
-    static func filter(searchText : String, names : [(String,String)] ,_ dispatch: @escaping (_ action : SearchAction) -> Void ) -> [(String,String)] {
+    static func filter(searchText: String, names: [(String,String)] ,_ dispatch: @escaping (_ action : SearchAction) -> Void ) -> [(String,String)] {
         let filteredNames =  names.filter { name in
             return name.0.contains(searchText) || name.1.contains(searchText)
         }
@@ -64,7 +64,9 @@ class SearchStore : ObservableObject {
         self.state =  self.reducer(self.state , action)
     }
     
-    func reducer(_ state : SearchState ,  _ action : SearchAction ) -> SearchState {
+    func reducer(_ state: SearchState ,  
+                 _ action: SearchAction ) -> SearchState {
+
         var mutableState = state;
         switch(action) {
         case .fetchAll :
@@ -72,7 +74,8 @@ class SearchStore : ObservableObject {
             SearchService.fetchAll(self.dispatch)
         case .filter(let searchText):
             if self.state.searchStatus == .success {
-                mutableState.filteredNames = SearchService.filter(searchText: searchText, names : self.state.names,self.dispatch)
+                mutableState.filteredNames = SearchService.filter(searchText: searchText, 
+                                                                  names : self.state.names,self.dispatch)
             }
         case .setSearchStatus(let searchStatus):
             mutableState.searchStatus = searchStatus;
@@ -80,5 +83,6 @@ class SearchStore : ObservableObject {
             mutableState.names = fetchedNames;
         }
         return mutableState;
+        
     }
 }

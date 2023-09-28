@@ -22,18 +22,23 @@ enum ProfileAction {
 }
 
 struct ProfileService {
-    static func getProfile(email : String, _ dispatch : @escaping (_ action : ProfileAction) -> Void ) {
+    static func getProfile(email : String, 
+                           _ dispatch : @escaping (_ action : ProfileAction) -> Void) {
         let firestoreDB = Firestore.firestore()
-        firestoreDB.collection("users").document(email).getDocument { (querySnapshot , err) in
+        firestoreDB
+            .collection("users")
+            .document(email)
+            .getDocument { (querySnapshot , err) in
+
             if let err {
-                //   dispatch(.setMessagesListStatus(.failure))
+                // Logout the user
             } else  {
                 if let data = querySnapshot?.data()  {
                     let newData = data  as! [String: String] ;
                     dispatch(.setProfile(newData["name"]!, newData["username"]!))
-                    //messageListFormatted.append(MessageListDetail(ownerEmail :email as! String,ownerName: ownerName, content:lastMessage , message: messages ))
                 }
             }
+
         }
     }
 }
@@ -51,7 +56,9 @@ class ProfileStore : ObservableObject {
         self.state = self.reducer(self.state ,action)
     }
     
-    func reducer(_ state : ProfileState , _ action : ProfileAction )  ->  ProfileState {
+    func reducer(_ state : ProfileState,
+                 _ action : ProfileAction) -> ProfileState {
+
         var mutableState = state ;
         switch action {
         case .getProfile(let email):

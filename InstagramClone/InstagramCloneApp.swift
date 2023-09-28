@@ -19,7 +19,6 @@ class AppDelegate: NSObject, UIApplicationDelegate {
 
 @main
 struct InstagramCloneApp: App {
-    //var authStore : AuthStore = AuthStore(state: AuthState(email: "A@a.com", password: "Aaaaaa", loginAuthStatus: .success, signupAuthStatus: .success));
     var authStore = AuthStore()
     var searchStore = SearchStore();
     var messageStore = MessageStore();
