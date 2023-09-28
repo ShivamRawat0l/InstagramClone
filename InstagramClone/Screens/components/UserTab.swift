@@ -14,7 +14,7 @@ struct UserTab: View {
     var body: some View {
         HStack {
             AsyncImage(url: URL(string: Constant.getImageUrl(title: title)))
-                .frame(width: 40,height: 40)
+                .frame(width: 40, height: 40)
                 .clipShape(Circle())
             VStack(alignment: .leading) {
                 Text(title)
@@ -22,7 +22,7 @@ struct UserTab: View {
                     .foregroundStyle(.black)
                 Text(caption)
             }
-            .padding(.leading , 20)
+            .padding(.leading, 20)
             Spacer()
         }
     }

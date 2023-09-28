@@ -5,8 +5,8 @@
 //  Created by Shivam Rawat on 07/09/23.
 //
 
-import Foundation
 import FirebaseFirestore
+import Foundation
 
 struct MessageDetail: Codable {
     var isOwner: Bool
@@ -17,7 +17,7 @@ struct MessageListDetail {
     var ownerEmail: String
     var ownerName: String
     var content: String
-    var message:  [MessageDetail]
+    var message: [MessageDetail]
 }
 
 struct MessageState {
@@ -27,11 +27,11 @@ struct MessageState {
 }
 
 enum MessageAction {
-    case send((String,String), (String,String),String)
-    case select((String,String),(String,String))
+    case send((String, String), (String, String), String)
+    case select((String, String),(String, String))
     case recieveAll(String)
     case addListeners(String)
-    
+
     // MARK: Setter Actions
     case resetMessages
     case setMessages([MessageDetail])
@@ -41,17 +41,17 @@ enum MessageAction {
 
 
 class MessageService {
-    static var listener: ListenerRegistration? = nil;
-    static var selectedInfo: ((String,String),(String,String))? = nil ;
-    static var messagesFetchedOnce: Bool = true;
-    
+    static var listener: ListenerRegistration? = nil
+    static var selectedInfo: ((String, String), (String, String))? = nil
+    static var messagesFetchedOnce = true
+
     static func removeListener() {
         if let listener {
             listener.remove()
         }
     }
-    
-    static func addListener(owner: String , state: MessageState, dispatch: @escaping (_ action: MessageAction) -> Void){
+
+    static func addListener(owner: String, state: MessageState, dispatch: @escaping (_ action: MessageAction) -> Void){
         let firestoreDB = Firestore.firestore()
         guard listener != nil else {
             return
@@ -64,25 +64,25 @@ class MessageService {
                     if err != nil {
                         dispatch(.setMessagesListStatus(.failure))
                     } else  {
-                        var messageListFormatted : [MessageListDetail] = []
-                        var messages : [MessageDetail] = []
+                        var messageListFormatted: [MessageListDetail] = []
+                        var messages: [MessageDetail] = []
                         var lastMessage = ""
                         if let data = querySnapshot?.data()  {
                             for ownerName in data.keys {
                                 messages = []
                                 lastMessage = ""
-                                
-                                let object = data[ownerName] as! [ String : Any ]
-                                
+
+                                let object = data[ownerName] as! [String: Any]
+
                                 if let messagesExist = object["messages"] {
-                                    for message in messagesExist  as! [[String:Any]] {
+                                    for message in messagesExist  as! [[String: Any]] {
                                         messages.append(MessageDetail(isOwner: message["isOwner"] as! Bool, content: message["content"] as! String))
                                         lastMessage = message["content"] as! String
                                     }
                                 }
-                                
+
                                 if let email = object["email"]{
-                                    messageListFormatted.append(MessageListDetail(ownerEmail :email as! String,ownerName: ownerName, content:lastMessage , message: messages ))
+                                    messageListFormatted.append(MessageListDetail(ownerEmail: email as! String, ownerName: ownerName, content:lastMessage, message: messages))
                                 }
                             }
                         }
@@ -95,54 +95,55 @@ class MessageService {
                 }
             }
     }
-    
+
     /*
      This method sends the message from one user to another and create the message object for both user.
-     
+
      - parameter to: Indicates the person sending the message. Its is a tuple (email, username) with first argument as email and second as username
      - parameter from: Indicates the person the message is being send to. Its is a tuple (email, username) with first argument as email and second as username
      */
-    static func sendMessage(to :(String,String) , from : (String,String), message :String)  {
+    static func sendMessage(to: (String, String) , from: (String, String), message: String)  {
         let firestoreDB = Firestore.firestore()
-        let senderDocRef = firestoreDB.collection("messages").document(from.0);
-        let recieverDocRef = firestoreDB.collection("messages").document(to.0);
-        
+        let senderDocRef = firestoreDB.collection("messages").document(from.0)
+        let recieverDocRef = firestoreDB.collection("messages").document(to.0)
+
         senderDocRef.updateData([
-            "\(to.1).messages":FieldValue.arrayUnion([
+            "\(to.1).messages": FieldValue.arrayUnion([
                 [
-                    "isOwner" : true,
-                    "content" : message,
-                    "time" : Date().toMillis()!
+                    "isOwner": true,
+                    "content": message,
+                    "time": Date().toMillis()!
                 ]
             ])
-            
         ])
-        
+
         recieverDocRef.updateData([
-            "\(from.1).messages"  :FieldValue.arrayUnion([
+            "\(from.1).messages": FieldValue.arrayUnion([
                 [
-                    "isOwner" : false,
-                    "content" : message,
-                    "time" : Date().toMillis()!
-                    
+                    "isOwner": false,
+                    "content": message,
+                    "time": Date().toMillis()!
+
                 ]
             ])
-            
         ])
     }
-    
-    static func createConversation(from: (String,String), to:(String,String)  ){
+
+    static func createConversation(from: (String, String), to: (String, String)) {
         let firestoreDB = Firestore.firestore()
-        firestoreDB.collection("messages").document(from.0).setData([ to.1 : [
-            "email"  : to.0,
-            "messages": []
-        ]], merge: true)
-        firestoreDB.collection("messages").document(to.0).setData([ from.1 : [
-            "email"  : from.0,
-            "messages": []
-        ]], merge: true)
+        firestoreDB.collection("messages").document(from.0).setData([
+            to.1 : [
+                "email": to.0,
+                "messages": []
+            ]], merge: true)
+
+        firestoreDB.collection("messages").document(to.0).setData([
+            from.1 : [
+                "email": from.0,
+                "messages": []
+            ]], merge: true)
     }
-    
+
     static func selectMessage( state : MessageState, from: (String,String), to:(String,String) , dispatch : @escaping (_ action : MessageAction) -> Void ){
         var isConversationAvailable = false ;
         selectedInfo = (from, to) ;
@@ -154,21 +155,21 @@ class MessageService {
                 isConversationAvailable = true;
             }
         })
-        
+
         guard isConversationAvailable else {
             createConversation(from: from, to: to)
             return
         }
     }
-    
-    static func recieveList(currentUser : String , dispatch: @escaping (_ action : MessageAction ) -> Void ) {
+
+    static func recieveList(currentUser: String, dispatch: @escaping (_ action: MessageAction) -> Void) {
         let firestoreDB = Firestore.firestore()
-        firestoreDB.collection("messages").document(currentUser).getDocument { (querySnapshot , err) in
+        firestoreDB.collection("messages").document(currentUser).getDocument { (querySnapshot, err) in
             if err != nil {
                 dispatch(.setMessagesListStatus(.failure))
             } else  {
-                var messageListFormatted : [MessageListDetail] = []
-                var messages : [MessageDetail] = []
+                var messageListFormatted: [MessageListDetail] = []
+                var messages: [MessageDetail] = []
                 var lastMessage = ""
                 if let data = querySnapshot?.data()  {
                     for ownerName in data.keys {
@@ -182,7 +183,7 @@ class MessageService {
                         if let email = object["email"]{
                             messageListFormatted.append(MessageListDetail(ownerEmail :email as! String,ownerName: ownerName, content:lastMessage , message: messages ))
                         }
-                        
+
                     }
                 }
                 messagesFetchedOnce = true
@@ -191,48 +192,51 @@ class MessageService {
             }
         }
     }
-    
+
     static func reset() {
         self.selectedInfo = nil ;
     }
 }
 
-class MessageStore : ObservableObject {
-    @Published var state : MessageState ;
-    
+class MessageStore: ObservableObject {
+    @Published var state: MessageState
+
     init(state: MessageState = MessageState()) {
-        self.state = state;
+        self.state = state
     }
-    
-    func dispatch(_ action : MessageAction) {
+
+    func dispatch(_ action: MessageAction) {
         self.state = self.reducer(self.state, action)
     }
-    
-    func reducer(_ state : MessageState , _ action : MessageAction ) -> MessageState {
+
+    func reducer(_ state: MessageState, _ action: MessageAction) -> MessageState {
         var mutableState = state;
         switch action  {
         case .send(let to, let from , let message):
-            MessageService.sendMessage(to: to,from : from,  message: message)
+            MessageService.sendMessage(to: to, from: from, message: message)
         case .recieveAll(let from):
             mutableState.messageListStatus = .pending
-            MessageService.recieveList(currentUser: from,dispatch:  self.dispatch)
+            MessageService.recieveList(currentUser: from, dispatch: self.dispatch)
         case .select(let from , let to):
-            MessageService.selectMessage(state:self.state,from: from, to: to , dispatch: self.dispatch)
+            MessageService.selectMessage(state:self.state,
+                                         from: from,
+                                         to: to,
+                                         dispatch: self.dispatch)
         case .addListeners(let owner):
-            MessageService.addListener(owner: owner, state :state, dispatch: self.dispatch)
-            
+            MessageService.addListener(owner: owner, state: state, dispatch: self.dispatch)
+
             // MARK: Setter actions
         case .resetMessages :
-            mutableState.selectedMessage = [];
+            mutableState.selectedMessage = []
             MessageService.reset()
         case .setMessages(let message):
             mutableState.selectedMessage = message
         case .setMessagesList(let messageList):
             mutableState.messageList = messageList
         case .setMessagesListStatus(let messageListStatus):
-            mutableState.messageListStatus = messageListStatus ;
+            mutableState.messageListStatus = messageListStatus
         }
         return mutableState;
     }
-    
+
 }

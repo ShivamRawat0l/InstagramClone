@@ -34,5 +34,5 @@ struct PasswordField: View {
 }
 
 #Preview {
-    PasswordField(title: "" , text: .constant(""))
+    PasswordField(title: "", text: .constant(""))
 }

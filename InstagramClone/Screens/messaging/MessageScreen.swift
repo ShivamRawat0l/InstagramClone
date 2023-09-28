@@ -9,6 +9,7 @@ import SwiftUI
 
 struct MessageScreen: View {
     @Environment(\.dismiss) var dismiss
+
     @EnvironmentObject var messageStore: MessageStore
     @EnvironmentObject var authStore: AuthStore
     @EnvironmentObject var profileStore: ProfileStore

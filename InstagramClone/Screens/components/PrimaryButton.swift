@@ -9,13 +9,12 @@ import SwiftUI
 
 struct PrimaryButton: View {
     var text = "Placeholder"
-    var loading  = false
+    var loading = false
     
     var body: some View {
         RoundedRectangle(cornerRadius: 10)
             .fill(.blue)
             .frame(height: 50)
-        
             .overlay {
                 if !loading {
                     Text(text)

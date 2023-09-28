@@ -10,11 +10,13 @@ import FirebaseFirestore
 import Foundation
 import SwiftUI
 
-typealias ReducerType = (_ state: AuthState , _ action: AuthAction) -> AuthState
+typealias ReducerType = (_ state: AuthState, _ action: AuthAction) -> AuthState
 
 enum AuthAction {
     case login
     case signup
+    
+    // MARK: Setter actions
     case reset
     case setLoginStatus(AuthStatus)
     case setSignupStatus(AuthStatus)
@@ -28,9 +30,9 @@ enum AuthStatus: Equatable {
 }
 
 struct AuthState: Equatable {
-    var username: String = ""
-    var email: String = ""
-    var password: String = ""
+    var username = ""
+    var email = ""
+    var password = ""
     var loginAuthStatus: AuthStatus = .initial
     var signupAuthStatus: AuthStatus = .initial
 }
@@ -55,11 +57,10 @@ struct AuthService {
     static func signup(username: String,
                        email: String,
                        password: String,
-                       _ dispatch: @escaping (_ action: AuthAction)-> Void)  {
+                       _ dispatch: @escaping (_ action: AuthAction) -> Void) {
         Auth
             .auth()
             .createUser(withEmail: email, password: password) { authResult ,error in
-                
                 if let _ = authResult {
                     createUser(username: username, email: email)
                     dispatch( .setSignupStatus(.success(email)))
@@ -78,7 +79,6 @@ struct AuthService {
         Auth
             .auth()
             .signIn(withEmail: email, password: password) { authResult, error  in
-                
                 if authResult != nil {
                     dispatch(.setLoginStatus(.success(email)))
                 } else  if let error {
@@ -94,10 +94,10 @@ struct AuthService {
 
 
 
-@MainActor class AuthStore : ObservableObject{
-    @Published  var state = AuthState();
+@MainActor class AuthStore: ObservableObject {
+    @Published var state = AuthState()
     
-    @AppStorage("AuthStatus") var authStatus = "";
+    @AppStorage("AuthStatus") var authStatus = ""
     
     init(state: AuthState = AuthState()) {
         self.state = state
@@ -112,7 +112,7 @@ struct AuthService {
     }
     
     func reducer (_ state: AuthState, _ action: AuthAction) -> AuthState {
-        var mutableState = state;
+        var mutableState = state
         switch action {
         case .login:
             mutableState.loginAuthStatus = .pending
@@ -123,7 +123,10 @@ struct AuthService {
             mutableState.signupAuthStatus = .pending
             AuthService.signup(username: state.username,
                                email: state.email,
-                               password: state.password,self.dispatch)
+                               password: state.password,
+                               self.dispatch)
+            
+            // MARK: Setter actions
         case .reset:
             mutableState.email = ""
             mutableState.password = ""

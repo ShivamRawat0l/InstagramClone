@@ -19,7 +19,7 @@ struct LoginView: View {
             TextField("Enter your email address", text: $authStore.state.email)
                 .disableAutocorrection(true)
                 .defaultInput()
-            PasswordField(title:"Enter your password", text: $authStore.state.password)
+            PasswordField(title: "Enter your password", text: $authStore.state.password)
         }
         .padding(.top, 20)
         .textInputAutocapitalization(.never)
@@ -34,7 +34,7 @@ struct LoginView: View {
                 .foregroundColor(.red)
                 .padding(.top, 20)
                 .multilineTextAlignment(.center)
-                .frame(maxWidth: .infinity,alignment: .leading)
+                .frame(maxWidth: .infinity, alignment: .leading)
             Button {
                 authStore.dispatch(.login)
             } label : {

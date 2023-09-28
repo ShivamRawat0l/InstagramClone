@@ -23,7 +23,7 @@ struct SearchScreen: View {
         VStack {
             HStack {
                 Image(systemName: "magnifyingglass")
-                    .padding(.leading , 14)
+                    .padding(.leading, 14)
                     .padding(.trailing, 4)
                 TextField("Search" ,text: $search)
                     .foregroundColor(.gray)

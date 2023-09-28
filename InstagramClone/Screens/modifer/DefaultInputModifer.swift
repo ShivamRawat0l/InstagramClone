@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct DefaultInputModifer : ViewModifier {
+    
     func body (content: Content) -> some View {
         content
             .padding()
@@ -21,8 +22,8 @@ struct DefaultInputModifer : ViewModifier {
 extension View {
     func defaultInput() -> some View {
         return ModifiedContent(
-            content : self,
-            modifier : DefaultInputModifer()
+            content: self,
+            modifier: DefaultInputModifer()
         )
     }
 }

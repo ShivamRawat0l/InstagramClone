@@ -9,8 +9,8 @@ import Foundation
 import FirebaseFirestore
 
 struct ProfileState {
-    var email: String = ""
-    var username: String = ""
+    var email = ""
+    var username = ""
     var profilePicture: String {
         return Constant.getImageUrl(title: username)
     }
@@ -18,7 +18,9 @@ struct ProfileState {
 
 enum ProfileAction {
     case getProfile(String)
-    case setProfile(String,String)
+    
+    // MARK: Setter actions
+    case setProfile(String, String)
 }
 
 struct ProfileService {
@@ -42,8 +44,8 @@ struct ProfileService {
 
 
 
-class ProfileStore : ObservableObject {
-    @Published var state: ProfileState ;
+class ProfileStore: ObservableObject {
+    @Published var state: ProfileState
     
     init (state: ProfileState = ProfileState()) {
         self.state = state
@@ -61,6 +63,8 @@ class ProfileStore : ObservableObject {
         switch action {
         case .getProfile(let email):
             ProfileService.getProfile(email: email, self.dispatch)
+
+            // MARK: Setter actions
         case .setProfile(let email, let username):
             mutableState.email = email
             mutableState.username = username

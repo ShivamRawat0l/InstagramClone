@@ -7,9 +7,10 @@
 
 import SwiftUI
 
-struct ShowPasswordModifier : ViewModifier {
-    var onPressBtn : () -> Void;
-    func body (content : Content)  -> some View {
+struct ShowPasswordModifier: ViewModifier {
+    var onPressBtn: () -> Void;
+    
+    func body (content: Content) -> some View {
         content
             .overlay {
                 HStack{
@@ -25,7 +26,7 @@ struct ShowPasswordModifier : ViewModifier {
 }
 
 extension View {
-    func showPasswordIcon(onPressBtn :@escaping ()-> Void ) -> some View {
+    func showPasswordIcon(onPressBtn: @escaping () -> Void) -> some View {
         return ModifiedContent(
             content : self,
             modifier : ShowPasswordModifier(onPressBtn: onPressBtn)

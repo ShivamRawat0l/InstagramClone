@@ -19,7 +19,7 @@ struct SignupView : View {
                 .defaultInput()
             TextField("Enter your email address", text: $authStore.state.email)
                 .defaultInput()
-            PasswordField(title:"Enter your password", text: $authStore.state.password)
+            PasswordField(title: "Enter your password", text: $authStore.state.password)
         }
         .padding(.top, 20)
         .textInputAutocapitalization(.never)

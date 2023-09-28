@@ -11,7 +11,7 @@ struct ProfileScreen: View {
     @EnvironmentObject var authStore: AuthStore ;
     @EnvironmentObject var profileStore: ProfileStore ;
     
-    func renderInfo(_ number: String , _ details: String) -> some View {
+    func renderInfo(_ number: String, _ details: String) -> some View {
         VStack {
             Text(number)
                 .bold()
@@ -42,8 +42,8 @@ struct ProfileScreen: View {
             }
             .padding(.bottom, 40)
             HStack {
-                AsyncImage(url: URL(string: "https://api.dicebear.com/7.x/adventurer/png?seed=\(profileStore.state.email)"))
-                    .frame(width:  110,height: 110)
+                AsyncImage(url: URL(string: Constant.getImageUrl(title: profileStore.state.email)))
+                    .frame(width:110, height: 110)
                     .clipShape(Circle())
                     .overlay {
                         Image(systemName: "plus")
