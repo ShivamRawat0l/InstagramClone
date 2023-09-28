@@ -8,16 +8,15 @@
 import SwiftUI
 
 struct ProfileScreen: View {
-    @EnvironmentObject var authStore : AuthStore ;
-    @EnvironmentObject var profileStore : ProfileStore ;
+    @EnvironmentObject var authStore: AuthStore ;
+    @EnvironmentObject var profileStore: ProfileStore ;
     
-    func renderInfo(_ number : String , _ details : String) -> some View {
+    func renderInfo(_ number: String , _ details: String) -> some View {
         VStack {
             Text(number)
                 .bold()
             Text(details)
         }
-        
     }
     
     var body: some View {
@@ -58,10 +57,13 @@ struct ProfileScreen: View {
                             .frame(maxWidth: .infinity, maxHeight: .infinity,alignment: .bottomTrailing)
                     }
                 Spacer()
+                // TODO: Replace Hard Coded Numbers
                 renderInfo("10", "Posts")
                 Spacer()
+                // TODO: Replace Hard Coded Numbers
                 renderInfo("847", "Followers")
                 Spacer()
+                // TODO: Replace Hard Coded Numbers
                 renderInfo("910", "Following")
             }
             Text(profileStore.state.email)

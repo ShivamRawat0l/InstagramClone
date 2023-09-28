@@ -8,9 +8,9 @@
 import SwiftUI
 
 struct LoginView: View {
-    @EnvironmentObject var authStore : AuthStore ;
+    @EnvironmentObject var authStore: AuthStore
     
-    var isLoading : Bool  {
+    var isLoading: Bool {
         return authStore.state.loginAuthStatus == .pending
     }
     
@@ -27,27 +27,21 @@ struct LoginView: View {
     
     var body: some View {
         VStack{
-            
             InstagramLogo()
                 .padding()
-            
             inputFields()
-            
             AuthErrorHandler(authStatus: authStore.state.loginAuthStatus)
                 .foregroundColor(.red)
                 .padding(.top, 20)
                 .multilineTextAlignment(.center)
                 .frame(maxWidth: .infinity,alignment: .leading)
-            
             Button {
                 authStore.dispatch(.login)
             } label : {
                 PrimaryButton(text: "Login", loading:isLoading)
                     .padding(.top, 100)
             }
-            
             Spacer()
-            
             NavigationLink {
                 SignupView();
             } label : {
@@ -60,5 +54,6 @@ struct LoginView: View {
 
 #Preview {
     LoginView()
-        .environmentObject(AuthStore(state: AuthState(username:"",email: "", password: "", loginAuthStatus: .failure("Error occured"), signupAuthStatus: .failure("ErrorOccured"))))
+        .environmentObject(AuthStore(state: AuthState(loginAuthStatus: .failure("Error Occured"),
+                                                      signupAuthStatus: .failure("Error Occured"))))
 }

@@ -8,15 +8,16 @@
 import SwiftUI
 
 struct MessageDetailScreen: View {
-    var email : String;
-    var username : String;
-    @State var sendText = "";
-    
-    @Environment(\.dismiss) var dismiss;
-    @EnvironmentObject var authStore : AuthStore ;
-    @EnvironmentObject var messageStore : MessageStore ;
-    @EnvironmentObject var profileStore : ProfileStore;
-    
+    var email: String
+    var username: String
+
+    @State var sendText = ""
+
+    @Environment(\.dismiss) var dismiss
+    @EnvironmentObject var authStore: AuthStore
+    @EnvironmentObject var messageStore: MessageStore
+    @EnvironmentObject var profileStore: ProfileStore
+
     func header() -> some View {
         HStack {
             Rectangle()
@@ -29,11 +30,11 @@ struct MessageDetailScreen: View {
                 .onTapGesture {
                     dismiss()
                 }
-                
+
             AsyncImage(url: URL(string: Constant.getImageUrl(title: email)))
-                .frame(width: 40,height: 40)
+                .frame(width: 40, height: 40)
                 .clipShape(Circle())
-            
+
             VStack(alignment: .leading) {
                 Text(email)
                 Text(username)
@@ -45,16 +46,15 @@ struct MessageDetailScreen: View {
         }
         .padding()
     }
-    
+
     var body: some View {
         VStack {
             header()
-            
+
             ScrollView{
                 VStack {
-                    ForEach(messageStore.state.selectedMessage.enumerated().reversed(), 
+                    ForEach(messageStore.state.selectedMessage.enumerated().reversed(),
                             id : \.offset) { index, message in
-
                         Text(message.content)
                             .foregroundStyle(.white)
                             .padding()
@@ -65,14 +65,12 @@ struct MessageDetailScreen: View {
                             .rotationEffect(.degrees(180))
                             .scaleEffect(x: -1, y: 1, anchor: .center)
                             .frame(maxWidth: .infinity,alignment: message.isOwner ? .trailing : .leading)
-
                     }
                 }
                 .padding()
             }
             .rotationEffect(.degrees(180))
             .scaleEffect(x: -1, y: 1, anchor: .center)
-            
             HStack {
                 Image(systemName: "camera.fill")
                 TextField("Hello",text:  $sendText)
@@ -82,12 +80,15 @@ struct MessageDetailScreen: View {
                     Image(systemName: "photo")
                 } else {
                     Button {
-                        messageStore.dispatch(.send((email,username),(profileStore.state.email,profileStore.state.username), sendText))
+                        let sendAction = MessageAction.send((email,username),
+                                                            (profileStore.state.email,profileStore.state.username),
+                                                            sendText)
+                        messageStore.dispatch(sendAction)
                         sendText = ""
                     } label : {
                         Image(systemName: "paperplane.fill")
                     }
-                    
+
                 }
             }
             .padding()
@@ -100,8 +101,12 @@ struct MessageDetailScreen: View {
 }
 
 #Preview {
-    MessageDetailScreen(email :"A@a.com", username: "A_a")
-        .environmentObject(AuthStore(state: AuthState(username: "temp_temp",email: "temp@temp.com", password: "temp", loginAuthStatus: .success("A@a.com"), signupAuthStatus: .success("B@b.com"))))
+    MessageDetailScreen(email:"A@a.com", username: "A_a")
+        .environmentObject(AuthStore(state: AuthState(username: "temp_temp",
+                                                      email: "temp@temp.com", password: "temp",
+                                                      loginAuthStatus: .success("A@a.com"),
+                                                      signupAuthStatus: .success("B@b.com"))))
+        .environmentObject(ProfileStore(state: ProfileState(email: "shivam@shivam.com",
+                                                            username: "username")))
         .environmentObject(MessageStore())
-        .environmentObject(ProfileStore(state: ProfileState(email: "shivam@shivam.com", username: "username")))
 }

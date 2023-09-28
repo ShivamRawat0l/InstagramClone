@@ -8,15 +8,15 @@
 import SwiftUI
 
 struct UserTab: View {
-    var title: String;
-    var caption : String;
+    var title: String
+    var caption: String
+
     var body: some View {
         HStack {
-            AsyncImage(url: URL(string:Constant.getImageUrl(title: title)))
+            AsyncImage(url: URL(string: Constant.getImageUrl(title: title)))
                 .frame(width: 40,height: 40)
                 .clipShape(Circle())
-            
-            VStack(alignment : .leading) {
+            VStack(alignment: .leading) {
                 Text(title)
                     .bold()
                     .foregroundStyle(.black)

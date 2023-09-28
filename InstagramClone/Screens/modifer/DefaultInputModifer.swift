@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct DefaultInputModifer : ViewModifier {
-    func body (content : Content)  -> some View {
+    func body (content: Content) -> some View {
         content
             .padding()
             .overlay(

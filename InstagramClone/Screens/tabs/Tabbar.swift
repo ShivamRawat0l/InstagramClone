@@ -7,12 +7,12 @@
 
 import SwiftUI
 
-
-
 struct Tabbar: View {
-    @State var selectedIndex  = 0 ;
+    @State var selectedIndex = 0
     
-    func renderTab(_ unselectedName: String ,  _ selectedName : String , isSelected : Bool , onSelectTab : @escaping () -> Void) -> some View {
+    func renderTab(_ unselectedName: String ,  
+                   _ selectedName : String ,
+                   isSelected : Bool , onSelectTab : @escaping () -> Void) -> some View {
         Group{
             if isSelected {
                 return Image(systemName: selectedName)

@@ -32,17 +32,16 @@ struct MessageScreen: View {
     var body: some View {
         VStack(alignment: .leading){
             header()
-
             Text("Messages")
                 .bold()
                 .padding(.top , 20)
-
             ScrollView {
                 VStack{
-                    let _ = print("message ",messageStore.state.messageList)
                     if messageStore.state.messageListStatus == .success {
                         ForEach(messageStore.state.messageList, id: \.ownerName) { message in
-                            NavigationLink(destination: MessageDetailScreen(email: message.ownerEmail, username: message.ownerName)) {
+                            let messageDetailsScreen = MessageDetailScreen(email: message.ownerEmail,
+                                                                          username: message.ownerName)
+                            NavigationLink(destination: messageDetailsScreen) {
                                 UserTab(title: message.ownerName, caption: message.content)
                             }
                         }
@@ -50,11 +49,10 @@ struct MessageScreen: View {
                         Text(messageStore.state.messageListStatus.rawValue)
                         ProgressView()
                     }
-
                 }.frame(maxWidth: .infinity)
 
             }
-            .padding(.top , 20)
+            .padding(.top, 20)
         }
         .navigationBarBackButtonHidden(true)
         .padding()

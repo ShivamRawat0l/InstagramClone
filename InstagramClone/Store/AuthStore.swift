@@ -4,12 +4,13 @@
 //
 //  Created by Shivam Rawat on 06/09/23.
 //
-import SwiftUI
-import Foundation
+
 import FirebaseAuth
 import FirebaseFirestore
+import Foundation
+import SwiftUI
 
-typealias ReducerType = (_ state : AuthState , _ action :AuthAction) -> AuthState ;
+typealias ReducerType = (_ state: AuthState , _ action: AuthAction) -> AuthState
 
 enum AuthAction {
     case login
@@ -133,7 +134,7 @@ struct AuthService {
             switch status {
             case .success(let email):
                 self.authStatus = email
-            default:
+            case .failure, .initial, .pending:
                 self.authStatus = ""
             }
             mutableState.loginAuthStatus = status

@@ -8,23 +8,22 @@
 import SwiftUI
 
 struct PasswordField: View {
-    var title : String = "" ;
-    @Binding var text : String ;
-    @State var isSecured : Bool = true;
-    
-   
+    var title = ""
+
+    @Binding var text: String
+
+    @State var isSecured = true
+
     var body: some View {
         if isSecured {
-            SecureField(title,text: $text)
+            SecureField(title, text: $text)
                 .frame(height: 22)
                 .defaultInput()
                 .showPasswordIcon {
                     isSecured = false;
                 }
-             //
-                
-        }else {
-            TextField(title,text: $text)
+        } else {
+            TextField(title, text: $text)
                 .frame(height: 22)
                 .defaultInput()
                 .showPasswordIcon {

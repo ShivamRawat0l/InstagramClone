@@ -29,7 +29,7 @@ enum SearchAction {
 }
 
 class SearchService {
-    static func fetchAll(_ dispatch: @escaping (_ action: SearchAction) -> Void ) {
+    static func fetchAll(_ dispatch: @escaping (_ action: SearchAction) -> Void) {
         var fetchedNames : [(String,String)] = [];
         let firestoreDB = Firestore.firestore();
         firestoreDB.collection("users").getDocuments() { (querySnapshot, err) in
@@ -37,15 +37,18 @@ class SearchService {
                 dispatch(.setSearchStatus(.failure))
             } else {
                 for document in querySnapshot!.documents {
-                   fetchedNames.append((document.documentID,document.data()["username"] as! String))
+                    let userDetails = (document.documentID,document.data()["username"] as? String ?? "")
+                    fetchedNames.append(userDetails)
                 }
                 dispatch(.setSearchStatus(.success))
                 dispatch(.setName(fetchedNames))
             }
         }
     }
-    
-    static func filter(searchText: String, names: [(String,String)] ,_ dispatch: @escaping (_ action : SearchAction) -> Void ) -> [(String,String)] {
+
+    static func filter(searchText: String, 
+                       names: [(String,String)] ,
+                       _ dispatch: @escaping (_ action: SearchAction) -> Void ) -> [(String,String)] {
         let filteredNames =  names.filter { name in
             return name.0.contains(searchText) || name.1.contains(searchText)
         }
@@ -54,35 +57,35 @@ class SearchService {
 }
 
 class SearchStore : ObservableObject {
-    @Published var state : SearchState ;
-    
+    @Published var state : SearchState
+
     init(state: SearchState = SearchState()){
         self.state = state;
     }
-    
+
     func dispatch(_ action : SearchAction) {
         self.state =  self.reducer(self.state , action)
     }
-    
-    func reducer(_ state: SearchState ,  
-                 _ action: SearchAction ) -> SearchState {
 
+    func reducer(_ state: SearchState ,
+                 _ action: SearchAction) -> SearchState {
         var mutableState = state;
-        switch(action) {
-        case .fetchAll :
+        switch action {
+        case .fetchAll:
             mutableState.searchStatus = .pending
             SearchService.fetchAll(self.dispatch)
         case .filter(let searchText):
             if self.state.searchStatus == .success {
-                mutableState.filteredNames = SearchService.filter(searchText: searchText, 
-                                                                  names : self.state.names,self.dispatch)
+                mutableState.filteredNames = SearchService.filter(searchText: searchText,
+                                                                  names: self.state.names,
+                                                                  self.dispatch)
             }
         case .setSearchStatus(let searchStatus):
-            mutableState.searchStatus = searchStatus;
+            mutableState.searchStatus = searchStatus
         case .setName(let fetchedNames):
-            mutableState.names = fetchedNames;
+            mutableState.names = fetchedNames
         }
         return mutableState;
-        
+
     }
 }

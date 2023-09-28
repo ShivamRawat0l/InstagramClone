@@ -8,7 +8,7 @@
 import Foundation
 
 struct Constant {
-    static func getImageUrl(title : String) -> String {
+    static func getImageUrl(title: String) -> String {
          "https://api.dicebear.com/7.x/adventurer/png?seed=\(title)"
     }
 }

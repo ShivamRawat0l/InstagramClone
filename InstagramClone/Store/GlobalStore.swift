@@ -7,7 +7,7 @@
 
 import Foundation
 
-enum AsyncStatus : String{
+enum AsyncStatus: String {
     case inital
     case pending
     case success
