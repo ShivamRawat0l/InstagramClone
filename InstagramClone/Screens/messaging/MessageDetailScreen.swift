@@ -10,14 +10,14 @@ import SwiftUI
 struct MessageDetailScreen: View {
     var email: String
     var username: String
-
+    
     @State var sendText = ""
-
+    
     @Environment(\.dismiss) var dismiss
     @EnvironmentObject var authStore: AuthStore
     @EnvironmentObject var messageStore: MessageStore
     @EnvironmentObject var profileStore: ProfileStore
-
+    
     func header() -> some View {
         HStack {
             Rectangle()
@@ -30,11 +30,11 @@ struct MessageDetailScreen: View {
                 .onTapGesture {
                     dismiss()
                 }
-
+            
             AsyncImage(url: URL(string: Constant.getImageUrl(title: email)))
                 .frame(width: 40, height: 40)
                 .clipShape(Circle())
-
+            
             VStack(alignment: .leading) {
                 Text(email)
                 Text(username)
@@ -46,11 +46,11 @@ struct MessageDetailScreen: View {
         }
         .padding()
     }
-
+    
     var body: some View {
         VStack {
             header()
-
+            
             ScrollView{
                 VStack {
                     ForEach(messageStore.state.selectedMessage.enumerated().reversed(),
@@ -88,7 +88,7 @@ struct MessageDetailScreen: View {
                     } label : {
                         Image(systemName: "paperplane.fill")
                     }
-
+                    
                 }
             }
             .padding()

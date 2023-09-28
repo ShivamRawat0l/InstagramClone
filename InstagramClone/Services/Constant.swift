@@ -9,6 +9,6 @@ import Foundation
 
 struct Constant {
     static func getImageUrl(title: String) -> String {
-         "https://api.dicebear.com/7.x/adventurer/png?seed=\(title)"
+        "https://api.dicebear.com/7.x/adventurer/png?seed=\(title)"
     }
 }

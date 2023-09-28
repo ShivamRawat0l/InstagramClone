@@ -9,11 +9,11 @@ import SwiftUI
 
 struct PasswordField: View {
     var title = ""
-
+    
     @Binding var text: String
-
+    
     @State var isSecured = true
-
+    
     var body: some View {
         if isSecured {
             SecureField(title, text: $text)

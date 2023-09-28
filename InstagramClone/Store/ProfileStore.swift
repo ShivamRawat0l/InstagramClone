@@ -44,20 +44,20 @@ struct ProfileService {
 
 class ProfileStore : ObservableObject {
     @Published var state: ProfileState ;
-
+    
     init (state: ProfileState = ProfileState()) {
         self.state = state
     }
-
+    
     func dispatch(_ action: ProfileAction) {
         self.state = self.reducer(self.state, action)
     }
-
+    
     func reducer(_ state: ProfileState,
                  _ action: ProfileAction) -> ProfileState {
-
+        
         var mutableState = state
-
+        
         switch action {
         case .getProfile(let email):
             ProfileService.getProfile(email: email, self.dispatch)
@@ -65,7 +65,7 @@ class ProfileStore : ObservableObject {
             mutableState.email = email
             mutableState.username = username
         }
-
+        
         return mutableState ;
     }
 }

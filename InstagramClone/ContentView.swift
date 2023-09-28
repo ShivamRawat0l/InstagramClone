@@ -11,7 +11,7 @@ struct ContentView: View {
     @EnvironmentObject var authStore: AuthStore
     @EnvironmentObject var messageStore: MessageStore
     @EnvironmentObject var profileStore: ProfileStore
-
+    
     var body: some View {
         NavigationView {
             if case .success = authStore.state.loginAuthStatus {
@@ -20,7 +20,7 @@ struct ContentView: View {
                         messageStore.dispatch(.addListeners(authStore.state.email))
                         profileStore.dispatch(.getProfile(authStore.state.email))
                     }
-                   
+                
             } else {
                 LoginView()
             }

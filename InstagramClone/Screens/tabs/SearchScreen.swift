@@ -9,13 +9,13 @@ import SwiftUI
 
 struct SearchScreen: View {
     @State var search = ""
-     
+    
     @EnvironmentObject var searchStore: SearchStore
-
+    
     func renderUser(email: String, userName: String) -> some View {
         NavigationLink(destination: MessageDetailScreen(email: email, username: userName)){
             UserTab(title: email, caption: userName)
-            .padding()
+                .padding()
         }
     }
     
@@ -51,7 +51,7 @@ struct SearchScreen: View {
         .onAppear {
             searchStore.dispatch(.fetchAll)
         }
-    
+        
     }
 }
 

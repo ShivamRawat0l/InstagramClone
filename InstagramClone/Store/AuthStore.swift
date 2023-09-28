@@ -36,10 +36,10 @@ struct AuthState: Equatable {
 }
 
 struct AuthService {
-
+    
     static func createUser(username: String, email: String) {
         let firestoreDB = Firestore.firestore();
-
+        
         firestoreDB.collection("users").document(email).setData([
             "name": email,
             "username": username + String(email.hash)
@@ -51,7 +51,7 @@ struct AuthService {
             }
         }
     }
-
+    
     static func signup(username: String,
                        email: String,
                        password: String,
@@ -59,7 +59,7 @@ struct AuthService {
         Auth
             .auth()
             .createUser(withEmail: email, password: password) { authResult ,error in
-
+                
                 if let _ = authResult {
                     createUser(username: username, email: email)
                     dispatch( .setSignupStatus(.success(email)))
@@ -71,15 +71,14 @@ struct AuthService {
                 }
             }
     }
-
+    
     static func  login(email: String,
                        password: String ,
                        _ dispatch: @escaping (_ action: AuthAction) -> Void) {
-
         Auth
             .auth()
             .signIn(withEmail: email, password: password) { authResult, error  in
-
+                
                 if authResult != nil {
                     dispatch(.setLoginStatus(.success(email)))
                 } else  if let error {
@@ -87,9 +86,9 @@ struct AuthService {
                 } else {
                     dispatch(.setLoginStatus(.failure("Something went wrong.")))
                 }
-
+                
             }
-
+        
     }
 }
 
@@ -97,9 +96,9 @@ struct AuthService {
 
 @MainActor class AuthStore : ObservableObject{
     @Published  var state = AuthState();
-
+    
     @AppStorage("AuthStatus") var authStatus = "";
-
+    
     init(state: AuthState = AuthState()) {
         self.state = state
         if authStatus != "" {
@@ -107,11 +106,11 @@ struct AuthService {
             self.state.loginAuthStatus = .success(authStatus)
         }
     }
-
+    
     func dispatch(_ action: AuthAction) {
         state = self.reducer(self.state, action)
     }
-
+    
     func reducer (_ state: AuthState, _ action: AuthAction) -> AuthState {
         var mutableState = state;
         switch action {

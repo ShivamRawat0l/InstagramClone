@@ -45,7 +45,7 @@ class SearchService {
             }
         }
     }
-
+    
     static func filter(searchText: String, 
                        names: [(String,String)] ,
                        _ dispatch: @escaping (_ action: SearchAction) -> Void ) -> [(String,String)] {
@@ -58,15 +58,15 @@ class SearchService {
 
 class SearchStore : ObservableObject {
     @Published var state : SearchState
-
+    
     init(state: SearchState = SearchState()){
         self.state = state;
     }
-
+    
     func dispatch(_ action : SearchAction) {
         self.state =  self.reducer(self.state , action)
     }
-
+    
     func reducer(_ state: SearchState ,
                  _ action: SearchAction) -> SearchState {
         var mutableState = state;
@@ -86,6 +86,6 @@ class SearchStore : ObservableObject {
             mutableState.names = fetchedNames
         }
         return mutableState;
-
+        
     }
 }

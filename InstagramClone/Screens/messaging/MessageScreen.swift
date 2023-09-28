@@ -12,7 +12,7 @@ struct MessageScreen: View {
     @EnvironmentObject var messageStore: MessageStore
     @EnvironmentObject var authStore: AuthStore
     @EnvironmentObject var profileStore: ProfileStore
-
+    
     func header() -> some View {
         HStack {
             Image(systemName: "chevron.backward")
@@ -28,7 +28,7 @@ struct MessageScreen: View {
             Image(systemName: "square.and.pencil")
         }
     }
-
+    
     var body: some View {
         VStack(alignment: .leading){
             header()
@@ -40,7 +40,7 @@ struct MessageScreen: View {
                     if messageStore.state.messageListStatus == .success {
                         ForEach(messageStore.state.messageList, id: \.ownerName) { message in
                             let messageDetailsScreen = MessageDetailScreen(email: message.ownerEmail,
-                                                                          username: message.ownerName)
+                                                                           username: message.ownerName)
                             NavigationLink(destination: messageDetailsScreen) {
                                 UserTab(title: message.ownerName, caption: message.content)
                             }
@@ -50,7 +50,7 @@ struct MessageScreen: View {
                         ProgressView()
                     }
                 }.frame(maxWidth: .infinity)
-
+                
             }
             .padding(.top, 20)
         }

@@ -10,7 +10,7 @@ import SwiftUI
 struct UserTab: View {
     var title: String
     var caption: String
-
+    
     var body: some View {
         HStack {
             AsyncImage(url: URL(string: Constant.getImageUrl(title: title)))

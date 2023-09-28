@@ -10,9 +10,9 @@ import SwiftUI
 
 struct SignupView : View {
     @EnvironmentObject var authStore: AuthStore
-
+    
     @Environment(\.dismiss) var dismiss
-
+    
     func inputFields() -> some View {
         VStack {
             TextField("Enter your username", text: $authStore.state.username)
@@ -25,7 +25,7 @@ struct SignupView : View {
         .textInputAutocapitalization(.never)
         .autocorrectionDisabled(true)
     }
-
+    
     var body: some View {
         VStack {
             inputFields()
