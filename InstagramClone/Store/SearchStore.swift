@@ -24,7 +24,7 @@ struct SearchState {
 enum SearchAction {
     case fetchAll
     case filter(String)
-
+    
     // MARK: Setter actions
     case setSearchStatus(SearchStatus)
     case setName([(String,String)])
@@ -52,7 +52,9 @@ class SearchService {
                        names: [(String, String)],
                        _ dispatch: @escaping (_ action: SearchAction) -> Void) -> [(String, String)] {
         let filteredNames =  names.filter { name in
-            return name.0.contains(searchText) || name.1.contains(searchText)
+            let searchContainsEmail =  name.0.lowercased().contains(searchText.lowercased());
+            let searchContainsUsername =  name.1.lowercased().contains(searchText.lowercased());
+            return searchContainsEmail || searchContainsUsername;
         }
         return filteredNames
     }

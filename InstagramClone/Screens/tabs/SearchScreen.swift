@@ -28,6 +28,9 @@ struct SearchScreen: View {
                 TextField("Search" ,text: $search)
                     .foregroundColor(.gray)
                     .padding(.vertical)
+                    .onChange(of: search) {
+                        searchStore.dispatch(.filter(search))
+                    }
             }
             .background {
                 RoundedRectangle(cornerRadius: 8)
@@ -35,15 +38,8 @@ struct SearchScreen: View {
             }
             .padding()
             if searchStore.state.searchStatus == .success {
-                if search == "" {
-                    ForEach(searchStore.state.names, id: \.self.0) { names in
-                        renderUser(email: names.0, userName: names.1)
-                    }
-                }
-                else {
-                    ForEach(searchStore.state.filteredNames, id: \.self.0) { names in
-                        renderUser(email: names.0, userName: names.1)
-                    }
+                ForEach(searchStore.state.filteredNames, id: \.self.0) { names in
+                    renderUser(email: names.0, userName: names.1)
                 }
             }
             Spacer()
