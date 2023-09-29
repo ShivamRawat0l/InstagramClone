@@ -56,7 +56,6 @@ struct LoginView: View {
             case .success(let email):
                 globalStore.dispatch(.authAction(.login(email,.success)))
             case .initial, .pending, .failure : break
-
             }
         }
     }

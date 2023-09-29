@@ -39,7 +39,10 @@ class SearchService {
                 dispatch(.setSearchStatus(.failure))
             } else {
                 for document in querySnapshot!.documents {
-                    let userDetails = (document.documentID,document.data()["username"] as? String ?? "")
+                    let userDetails = (
+                        document.documentID,
+                        document.data()["username"] as? String ?? ""
+                    )
                     fetchedNames.append(userDetails)
                 }
                 dispatch(.setSearchStatus(.success))

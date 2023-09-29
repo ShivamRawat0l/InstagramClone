@@ -30,8 +30,33 @@ class GlobalMessageService {
         }
     }
 
-    func addListener(owner: String, state: GlobalState, dispatch: @escaping (_ action: GlobalAction) -> Void){
+    func getFormattedMessages(querySnapshot: DocumentSnapshot?) -> [MessageListDetail] {
+       var messageListFormatted: [MessageListDetail] = []
+        var messages: [MessageDetail] = []
+        var lastMessage = ""
+        if let data = querySnapshot?.data()  {
+            for ownerName in data.keys {
+                messages = []
+                lastMessage = ""
 
+                let object = data[ownerName] as! [String: Any]
+
+                if let messagesExist = object["messages"] {
+                    for message in messagesExist  as! [[String: Any]] {
+                        messages.append(MessageDetail(isOwner: message["isOwner"] as! Bool, content: message["content"] as! String))
+                        lastMessage = message["content"] as! String
+                    }
+                }
+
+                if let email = object["email"]{
+                    messageListFormatted.append(MessageListDetail(ownerEmail: email as! String, ownerName: ownerName, content:lastMessage, message: messages))
+                }
+            }
+        }
+        return messageListFormatted
+    }
+
+    func addListener(owner: String, state: GlobalState, dispatch: @escaping (_ action: GlobalAction) -> Void){
         guard listener == nil else {
             return
         }
@@ -40,28 +65,7 @@ class GlobalMessageService {
                     if err != nil {
                         dispatch(.messageAction(.setMessagesListStatus(.failure)))
                     } else  {
-                        var messageListFormatted: [MessageListDetail] = []
-                        var messages: [MessageDetail] = []
-                        var lastMessage = ""
-                        if let data = querySnapshot?.data()  {
-                            for ownerName in data.keys {
-                                messages = []
-                                lastMessage = ""
-
-                                let object = data[ownerName] as! [String: Any]
-
-                                if let messagesExist = object["messages"] {
-                                    for message in messagesExist  as! [[String: Any]] {
-                                        messages.append(MessageDetail(isOwner: message["isOwner"] as! Bool, content: message["content"] as! String))
-                                        lastMessage = message["content"] as! String
-                                    }
-                                }
-
-                                if let email = object["email"]{
-                                    messageListFormatted.append(MessageListDetail(ownerEmail: email as! String, ownerName: ownerName, content:lastMessage, message: messages))
-                                }
-                            }
-                        }
+                        let messageListFormatted = self.getFormattedMessages(querySnapshot: querySnapshot)
                         dispatch(.messageAction(.setMessagesList(messageListFormatted)))
                         dispatch(.messageAction(.setMessagesListStatus(.success)))
                         if let selectedInfo = self.selectedInfo {

@@ -212,10 +212,12 @@
 		5E4410C92AA7366400781FEF /* Module */ = {
 			isa = PBXGroup;
 			children = (
+				5EB05BCB2AC6CCC700141CE0 /* Search */,
+				5EB05BCA2AC6CCA900141CE0 /* Post */,
 				5EB05BC72AC6C15000141CE0 /* Profile */,
 				5EB05BC62AC6C13000141CE0 /* Home */,
 				5E4410FB2AAAE60700781FEF /* Messaging */,
-				5E4410E82AA89D0500781FEF /* BottomTabs */,
+				5E4410E82AA89D0500781FEF /* BottomTab */,
 				5E4410CA2AA7366F00781FEF /* Auth */,
 			);
 			path = Module;
@@ -247,13 +249,12 @@
 			path = Components;
 			sourceTree = "<group>";
 		};
-		5E4410E82AA89D0500781FEF /* BottomTabs */ = {
+		5E4410E82AA89D0500781FEF /* BottomTab */ = {
 			isa = PBXGroup;
 			children = (
 				5EB05BBB2AC6B90C00141CE0 /* Views */,
-				5EB05BA12AC67B8600141CE0 /* Store */,
 			);
-			path = BottomTabs;
+			path = BottomTab;
 			sourceTree = "<group>";
 		};
 		5E4410F32AA98D9000781FEF /* Components */ = {
@@ -381,8 +382,6 @@
 			isa = PBXGroup;
 			children = (
 				5E4411022AAAE6E200781FEF /* Tabbar.swift */,
-				5ECF4F6B2AAE1930008BEC9C /* UploadScreen.swift */,
-				5ECF4F6D2AAE193A008BEC9C /* SearchScreen.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -423,6 +422,23 @@
 				5E4411002AAAE66500781FEF /* ProfileScreen.swift */,
 			);
 			path = Profile;
+			sourceTree = "<group>";
+		};
+		5EB05BCA2AC6CCA900141CE0 /* Post */ = {
+			isa = PBXGroup;
+			children = (
+				5ECF4F6B2AAE1930008BEC9C /* UploadScreen.swift */,
+			);
+			name = Post;
+			sourceTree = "<group>";
+		};
+		5EB05BCB2AC6CCC700141CE0 /* Search */ = {
+			isa = PBXGroup;
+			children = (
+				5EB05BA12AC67B8600141CE0 /* Store */,
+				5ECF4F6D2AAE193A008BEC9C /* SearchScreen.swift */,
+			);
+			path = Search;
 			sourceTree = "<group>";
 		};
 		5ECF4F732AAF2194008BEC9C /* Frameworks */ = {

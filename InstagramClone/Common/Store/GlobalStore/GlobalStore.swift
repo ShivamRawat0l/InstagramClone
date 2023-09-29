@@ -10,10 +10,9 @@ import FirebaseFirestore
 import Foundation
 import SwiftUI
 
-
-
 @MainActor class GlobalStore: ObservableObject {
     @Published var state = GlobalState()
+
     var globalProfileService = GlobalProfileService()
     var globalMessageService = GlobalMessageService()
 
@@ -34,6 +33,7 @@ import SwiftUI
     func reducer (_ state: GlobalState, _ action: GlobalAction) -> GlobalState {
         var mutableState = state
         switch action {
+
         case .authAction(let authAction):
             switch authAction {
             case .login(let email,let loginStatus):
@@ -77,6 +77,7 @@ import SwiftUI
             case .setMessagesListStatus(let messageListStatus):
                 mutableState.messageState.messageListStatus = messageListStatus
             }
+            
         }
         return mutableState;
     }
