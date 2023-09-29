@@ -10,7 +10,7 @@ import SwiftUI
 struct ProfileScreen: View {
     @EnvironmentObject var globalStore: GlobalStore
 
-    var globalProfileStore : ProfileState {
+    var globalProfileStore : GlobalProfileState {
         globalStore.state.profileState
     }
 

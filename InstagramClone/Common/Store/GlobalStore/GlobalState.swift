@@ -7,7 +7,26 @@
 
 import Foundation
 
-struct ProfileState {
+enum LoginStatus: Equatable {
+    case initial
+    case pending
+    case failure
+    case success
+}
+
+struct MessageDetail: Codable {
+    var isOwner: Bool
+    var content: String
+}
+
+struct MessageListDetail {
+    var ownerEmail: String
+    var ownerName: String
+    var content: String
+    var message: [MessageDetail]
+}
+
+struct GlobalProfileState {
     var email = ""
     var username = ""
     var profilePicture: String {
@@ -15,7 +34,7 @@ struct ProfileState {
     }
 }
 
-struct MessageState {
+struct GlobalMessageState {
     var selectedMessage: [MessageDetail] = []
     var messageListStatus: AsyncStatus  = .inital
     var messageList: [MessageListDetail] = []
@@ -23,6 +42,6 @@ struct MessageState {
 
 struct GlobalState {
     var loginStatus : LoginStatus = .initial
-    var profileState: ProfileState = ProfileState()
-    var messageState: MessageState = MessageState()
+    var profileState: GlobalProfileState = GlobalProfileState()
+    var messageState: GlobalMessageState = GlobalMessageState()
 }

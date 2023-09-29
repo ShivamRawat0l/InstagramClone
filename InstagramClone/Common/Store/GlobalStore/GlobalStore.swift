@@ -10,20 +10,7 @@ import FirebaseFirestore
 import Foundation
 import SwiftUI
 
-enum AsyncStatus: String {
-    case inital
-    case pending
-    case success
-    case failure
-}
 
-
-enum LoginStatus: Equatable {
-    case initial
-    case pending
-    case failure
-    case success
-}
 
 @MainActor class GlobalStore: ObservableObject {
     @Published var state = GlobalState()
@@ -72,7 +59,6 @@ enum LoginStatus: Equatable {
 
         case .messageAction(let messageAction):
             switch messageAction {
-                globalMessageService.recieveList(currentUser: from, dispatch: self.dispatch)
             case .select(let from , let to):
                 globalMessageService.selectMessage(state:self.state,
                                              from: from,

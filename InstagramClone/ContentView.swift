@@ -10,7 +10,7 @@ import SwiftUI
 struct ContentView: View {
     @EnvironmentObject var globalStore: GlobalStore
 
-    var globalProfileStore: ProfileState {
+    var globalProfileStore: GlobalProfileState {
         globalStore.state.profileState
     }
     var body: some View {

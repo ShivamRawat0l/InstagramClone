@@ -19,8 +19,12 @@ struct MessageDetailScreen: View {
 
     @ObservedObject var messageStore = MessageStore()
 
-    var globalProfileStore : ProfileState {
+    var globalProfileStore: GlobalProfileState {
         globalStore.state.profileState
+    }
+
+    var globalMessageStore: GlobalMessageState {
+        globalStore.state.messageState
     }
 
     func header() -> some View {
@@ -58,7 +62,7 @@ struct MessageDetailScreen: View {
             
             ScrollView{
                 VStack {
-                    ForEach(messageStore.state.selectedMessage.enumerated().reversed(),
+                    ForEach(globalMessageStore.selectedMessage.enumerated().reversed(),
                             id : \.offset) { index, message in
                         Text(message.content)
                             .foregroundStyle(.white)

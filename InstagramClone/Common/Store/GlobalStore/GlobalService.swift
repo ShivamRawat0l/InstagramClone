@@ -40,7 +40,7 @@ class GlobalMessageService {
 
      func addListener(owner: String, state: GlobalState, dispatch: @escaping (_ action: GlobalAction) -> Void){
         let firestoreDB = Firestore.firestore()
-        guard listener != nil else {
+        guard listener == nil else {
             return
         }
         listener = firestoreDB
@@ -73,7 +73,6 @@ class GlobalMessageService {
                                 }
                             }
                         }
-                        print("HERE RUNNING LISTENER ", messageListFormatted)
                         dispatch(.messageAction(.setMessagesList(messageListFormatted)))
                         dispatch(.messageAction(.setMessagesListStatus(.success)))
                         if let selectedInfo = self.selectedInfo {

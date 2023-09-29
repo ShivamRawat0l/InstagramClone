@@ -12,11 +12,11 @@ struct MessageScreen: View {
 
     @EnvironmentObject var globalStore: GlobalStore
 
-    var globalMessageStore: MessageState {
+    var globalMessageStore: GlobalMessageState {
         globalStore.state.messageState
     }
 
-    var globalProfileStore : ProfileState {
+    var globalProfileStore : GlobalProfileState {
         globalStore.state.profileState
     }
 
