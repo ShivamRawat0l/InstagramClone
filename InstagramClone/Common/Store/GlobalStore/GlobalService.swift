@@ -73,6 +73,7 @@ class GlobalMessageService {
                                 }
                             }
                         }
+                        print("HERE RUNNING LISTENER ", messageListFormatted)
                         dispatch(.messageAction(.setMessagesList(messageListFormatted)))
                         dispatch(.messageAction(.setMessagesListStatus(.success)))
                         if let selectedInfo = self.selectedInfo {
@@ -84,51 +85,20 @@ class GlobalMessageService {
     }
 
     func selectMessage(state : GlobalState, from: (String,String), to:(String,String) , dispatch : @escaping (_ action : GlobalAction) -> Void ){
-        var isConversationAvailable = false ;
-        selectedInfo = (from, to) ;
+        var isConversationAvailable = false
+        selectedInfo = (from, to)
         state.messageState.messageList.forEach({ message in
             if message.ownerName == from.1 {
                 DispatchQueue.main.async {
                     dispatch(.messageAction(.setMessages(message.message)))
                 }
-                isConversationAvailable = true;
+                isConversationAvailable = true
             }
         })
 
         guard isConversationAvailable else {
             createConversation(from: from, to: to)
             return
-        }
-    }
-
-     func recieveList(currentUser: String, dispatch: @escaping (_ action: GlobalAction) -> Void) {
-        let firestoreDB = Firestore.firestore()
-        firestoreDB.collection("messages").document(currentUser).getDocument { (querySnapshot, err) in
-            if err != nil {
-                dispatch(.messageAction(.setMessagesListStatus(.failure)))
-            } else  {
-                var messageListFormatted: [MessageListDetail] = []
-                var messages: [MessageDetail] = []
-                var lastMessage = ""
-                if let data = querySnapshot?.data()  {
-                    for ownerName in data.keys {
-                        let object = data[ownerName] as! [ String : Any ]
-                        if let messagesExist = object["messages"] {
-                            for message in messagesExist  as! [[String:Any]] {
-                                messages.append(MessageDetail(isOwner: message["isOwner"] as! Bool, content: message["content"] as! String))
-                                lastMessage = message["content"] as! String
-                            }
-                        }
-                        if let email = object["email"]{
-                            messageListFormatted.append(MessageListDetail(ownerEmail :email as! String,ownerName: ownerName, content:lastMessage , message: messages ))
-                        }
-
-                    }
-                }
-                self.messagesFetchedOnce = true
-                dispatch(.messageAction(.setMessagesList(messageListFormatted)))
-                dispatch(.messageAction(.setMessagesListStatus(.success)))
-            }
         }
     }
 
@@ -148,6 +118,6 @@ class GlobalMessageService {
     }
     
      func reset() {
-        self.selectedInfo = nil ;
+        self.selectedInfo = nil
     }
 }

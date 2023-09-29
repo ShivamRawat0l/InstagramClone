@@ -21,7 +21,6 @@ enum GlobalProfileAction {
 
 enum GlobalMessageAction {
     case select((String, String),(String, String))
-    case recieveAll(String)
     case addListeners(String)
 
     // MARK: Setter Actions

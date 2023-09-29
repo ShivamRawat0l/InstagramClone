@@ -11,7 +11,10 @@ struct MessageScreen: View {
     @Environment(\.dismiss) var dismiss
 
     @EnvironmentObject var globalStore: GlobalStore
-    @EnvironmentObject var messageStore: MessageStore
+
+    var globalMessageStore: MessageState {
+        globalStore.state.messageState
+    }
 
     var globalProfileStore : ProfileState {
         globalStore.state.profileState
@@ -41,8 +44,8 @@ struct MessageScreen: View {
                 .padding(.top , 20)
             ScrollView {
                 VStack{
-                    if messageStore.state.messageListStatus == .success {
-                        ForEach(messageStore.state.messageList, id: \.ownerName) { message in
+                    if globalMessageStore.messageListStatus == .success {
+                        ForEach(globalMessageStore.messageList, id: \.ownerName) { message in
                             let messageDetailsScreen = MessageDetailScreen(email: message.ownerEmail,
                                                                            username: message.ownerName)
                             NavigationLink(destination: messageDetailsScreen) {
@@ -50,7 +53,7 @@ struct MessageScreen: View {
                             }
                         }
                     } else {
-                        Text(messageStore.state.messageListStatus.rawValue)
+                        Text(globalMessageStore.messageListStatus.rawValue)
                         ProgressView()
                     }
                 }.frame(maxWidth: .infinity)

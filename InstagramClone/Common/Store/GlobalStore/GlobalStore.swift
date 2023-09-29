@@ -72,8 +72,6 @@ enum LoginStatus: Equatable {
 
         case .messageAction(let messageAction):
             switch messageAction {
-            case .recieveAll(let from):
-                mutableState.messageState.messageListStatus = .pending
                 globalMessageService.recieveList(currentUser: from, dispatch: self.dispatch)
             case .select(let from , let to):
                 globalMessageService.selectMessage(state:self.state,

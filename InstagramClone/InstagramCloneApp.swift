@@ -19,7 +19,6 @@ class AppDelegate: NSObject, UIApplicationDelegate {
 
 @main
 struct InstagramCloneApp: App {
-    var messageStore = MessageStore();
     var globalStore = GlobalStore()
 
     @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
@@ -27,7 +26,6 @@ struct InstagramCloneApp: App {
         WindowGroup {
             ContentView()
                 .environmentObject(globalStore)
-                .environmentObject(messageStore)
         }
     }
 }

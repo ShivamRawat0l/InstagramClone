@@ -20,11 +20,9 @@ struct MessageListDetail {
     var message: [MessageDetail]
 }
 
-
 enum MessageAction {
     case send((String, String), (String, String), String)
 }
-
 
 class MessageService {
     /*
@@ -59,8 +57,6 @@ class MessageService {
             ])
         ])
     }
-
-   
 }
 
 class MessageStore: ObservableObject {
@@ -75,11 +71,13 @@ class MessageStore: ObservableObject {
     }
 
     func reducer(_ state: MessageState, _ action: MessageAction) -> MessageState {
-        var mutableState = state;
-        switch action  {
+        let mutableState = state;
+
+        switch action {
         case .send(let to, let from , let message):
             MessageService.sendMessage(to: to, from: from, message: message)
         }
+
         return mutableState;
     }
 }
