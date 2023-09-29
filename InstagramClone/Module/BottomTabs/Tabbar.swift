@@ -61,9 +61,5 @@ struct Tabbar: View {
 
 #Preview {
     Tabbar()
-        .environmentObject(AuthStore(state: AuthState(username: "",
-                                                      email: "temp@temp.com", 
-                                                      password: "temp",
-                                                      loginAuthStatus: .success("A@a.com"),
-                                                      signupAuthStatus: .success("B@b.com"))))
+      
 }

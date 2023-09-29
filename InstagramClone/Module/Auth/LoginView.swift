@@ -8,8 +8,10 @@
 import SwiftUI
 
 struct LoginView: View {
-    @EnvironmentObject var authStore: AuthStore
-    
+    @EnvironmentObject var globalStore: GlobalStore
+
+    @StateObject var authStore = AuthStore()
+
     var isLoading: Bool {
         return authStore.state.loginAuthStatus == .pending
     }
@@ -49,11 +51,18 @@ struct LoginView: View {
             }
         }
         .padding()
+        .onChange(of: authStore.state.loginAuthStatus) {
+            switch authStore.state.loginAuthStatus {
+            case .success(let email):
+                globalStore.dispatch(.authAction(.login(email,.success)))
+            case .initial, .pending, .failure : break
+
+            }
+        }
     }
 }
 
 #Preview {
     LoginView()
-        .environmentObject(AuthStore(state: AuthState(loginAuthStatus: .failure("Error Occured"),
-                                                      signupAuthStatus: .failure("Error Occured"))))
+        .environmentObject(GlobalStore())
 }

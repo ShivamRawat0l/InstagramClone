@@ -14,10 +14,15 @@ struct MessageDetailScreen: View {
     @State var sendText = ""
     
     @Environment(\.dismiss) var dismiss
-    @EnvironmentObject var authStore: AuthStore
-    @EnvironmentObject var messageStore: MessageStore
-    @EnvironmentObject var profileStore: ProfileStore
-    
+
+    @EnvironmentObject var globalStore: GlobalStore
+
+    @ObservedObject var messageStore = MessageStore()
+
+    var globalProfileStore : ProfileState {
+        globalStore.state.profileState
+    }
+
     func header() -> some View {
         HStack {
             Rectangle()
@@ -81,7 +86,7 @@ struct MessageDetailScreen: View {
                 } else {
                     Button {
                         let sendAction = MessageAction.send((email,username),
-                                                            (profileStore.state.email,profileStore.state.username),
+                                                            (globalProfileStore.email,globalProfileStore.username),
                                                             sendText)
                         messageStore.dispatch(sendAction)
                         sendText = ""
@@ -95,18 +100,12 @@ struct MessageDetailScreen: View {
         }
         .navigationBarBackButtonHidden(true)
         .onAppear(perform: {
-            messageStore.dispatch(.select((email,username),(profileStore.state.email,profileStore.state.username)))
+            globalStore.dispatch(.messageAction(.select((email,username),
+                                                        (globalProfileStore.email,globalProfileStore.username))))
         })
     }
 }
 
 #Preview {
     MessageDetailScreen(email:"A@a.com", username: "A_a")
-        .environmentObject(AuthStore(state: AuthState(username: "temp_temp",
-                                                      email: "temp@temp.com", password: "temp",
-                                                      loginAuthStatus: .success("A@a.com"),
-                                                      signupAuthStatus: .success("B@b.com"))))
-        .environmentObject(ProfileStore(state: ProfileState(email: "shivam@shivam.com",
-                                                            username: "username")))
-        .environmentObject(MessageStore())
 }

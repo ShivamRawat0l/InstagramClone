@@ -8,9 +8,12 @@
 import SwiftUI
 
 struct ProfileScreen: View {
-    @EnvironmentObject var authStore: AuthStore ;
-    @EnvironmentObject var profileStore: ProfileStore ;
-    
+    @EnvironmentObject var globalStore: GlobalStore
+
+    var globalProfileStore : ProfileState {
+        globalStore.state.profileState
+    }
+
     func renderInfo(_ number: String, _ details: String) -> some View {
         VStack {
             Text(number)
@@ -25,7 +28,7 @@ struct ProfileScreen: View {
                 Image(systemName: "lock")
                     .font(.system(size: 20))
                     .bold()
-                Text(profileStore.state.username)
+                Text(globalProfileStore.username)
                     .font(.system(size: 26))
                     .bold()
                     .lineLimit(1)
@@ -42,7 +45,7 @@ struct ProfileScreen: View {
             }
             .padding(.bottom, 40)
             HStack {
-                AsyncImage(url: URL(string: Constant.getImageUrl(title: profileStore.state.email)))
+                AsyncImage(url: URL(string: Constant.getImageUrl(title: globalProfileStore.email)))
                     .frame(width:110, height: 110)
                     .clipShape(Circle())
                     .overlay {
@@ -66,7 +69,7 @@ struct ProfileScreen: View {
                 // TODO: Replace Hard Coded Numbers
                 renderInfo("910", "Following")
             }
-            Text(profileStore.state.email)
+            Text(globalProfileStore.email)
                 .bold()
             Text("status")
             Spacer()
@@ -77,11 +80,4 @@ struct ProfileScreen: View {
 
 #Preview {
     ProfileScreen()
-        .environmentObject(AuthStore(state: AuthState(username: "",
-                                                      email: "temp@temp.com",
-                                                      password: "temp",
-                                                      loginAuthStatus: .success("B@b.com"),
-                                                      signupAuthStatus: .success("A@a.com"))))
-        .environmentObject(ProfileStore(state: ProfileState(email: "EMAIL",
-                                                            username: "Hello3720221024930739300")))
 }

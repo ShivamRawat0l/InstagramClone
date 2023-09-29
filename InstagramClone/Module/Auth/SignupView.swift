@@ -9,10 +9,12 @@ import Foundation
 import SwiftUI
 
 struct SignupView : View {
-    @EnvironmentObject var authStore: AuthStore
-    
     @Environment(\.dismiss) var dismiss
-    
+
+    @EnvironmentObject var globalStore: GlobalStore
+
+    @StateObject var authStore = AuthStore()
+
     func inputFields() -> some View {
         VStack {
             TextField("Enter your username", text: $authStore.state.username)
@@ -55,6 +57,5 @@ struct SignupView : View {
 
 #Preview {
     SignupView()
-        .environmentObject(AuthStore(state: AuthState(loginAuthStatus: .failure("Error"),
-                                                      signupAuthStatus: .failure("Error"))))
+        .environmentObject(GlobalStore(state: GlobalState()))
 }

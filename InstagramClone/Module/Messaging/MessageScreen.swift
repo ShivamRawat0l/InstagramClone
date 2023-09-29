@@ -10,17 +10,20 @@ import SwiftUI
 struct MessageScreen: View {
     @Environment(\.dismiss) var dismiss
 
+    @EnvironmentObject var globalStore: GlobalStore
     @EnvironmentObject var messageStore: MessageStore
-    @EnvironmentObject var authStore: AuthStore
-    @EnvironmentObject var profileStore: ProfileStore
-    
+
+    var globalProfileStore : ProfileState {
+        globalStore.state.profileState
+    }
+
     func header() -> some View {
         HStack {
             Image(systemName: "chevron.backward")
                 .onTapGesture {
                     dismiss()
                 }
-            Text(profileStore.state.username)
+            Text(globalProfileStore.username)
                 .tint(.black)
                 .foregroundColor(.black)
                 .font(.system(size: 26))
@@ -62,6 +65,4 @@ struct MessageScreen: View {
 
 #Preview {
     MessageScreen()
-        .environmentObject(MessageStore())
-        .environmentObject(ProfileStore(state: ProfileState(email: "A@A.com", username: "UserName")))
 }

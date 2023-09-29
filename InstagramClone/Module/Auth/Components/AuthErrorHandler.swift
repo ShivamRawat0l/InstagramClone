@@ -19,8 +19,6 @@ struct AuthErrorHandler: View {
             Text("\(err)")
         case .success:
             Text("Success")
-        default :
-            Text("Unknown Error")
         }
     }
 }

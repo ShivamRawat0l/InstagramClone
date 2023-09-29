@@ -8,30 +8,29 @@
 import SwiftUI
 
 struct ContentView: View {
-    @EnvironmentObject var authStore: AuthStore
-    @EnvironmentObject var messageStore: MessageStore
-    @EnvironmentObject var profileStore: ProfileStore
-    
+    @EnvironmentObject var globalStore: GlobalStore
+
+    var globalProfileStore: ProfileState {
+        globalStore.state.profileState
+    }
     var body: some View {
         NavigationView {
-            if case .success = authStore.state.loginAuthStatus {
+            if case .success = globalStore.state.loginStatus {
                 Tabbar()
                     .onAppear {
-                        messageStore.dispatch(.addListeners(authStore.state.email))
-                        profileStore.dispatch(.getProfile(authStore.state.email))
+                        globalStore.dispatch(.messageAction(.addListeners(globalProfileStore.email)))
+                        globalStore.dispatch(.profileAction(.getProfile(globalProfileStore.email)))
                     }
                 
             } else {
                 LoginView()
             }
         }
+
     }
 }
 
 #Preview {
     ContentView()
-        .environmentObject(AuthStore())
-        .environmentObject(SearchStore())
-        .environmentObject(MessageStore())
-        .environmentObject(ProfileStore())
+        .environmentObject(GlobalStore())
 }

@@ -15,7 +15,7 @@ typealias ReducerType = (_ state: AuthState, _ action: AuthAction) -> AuthState
 enum AuthAction {
     case login
     case signup
-    
+
     // MARK: Setter actions
     case reset
     case setLoginStatus(AuthStatus)
@@ -38,10 +38,10 @@ struct AuthState: Equatable {
 }
 
 struct AuthService {
-    
+
     static func createUser(username: String, email: String) {
         let firestoreDB = Firestore.firestore();
-        
+
         firestoreDB.collection("users").document(email).setData([
             "name": email,
             "username": username + String(email.hash)
@@ -53,7 +53,7 @@ struct AuthService {
             }
         }
     }
-    
+
     static func signup(username: String,
                        email: String,
                        password: String,
@@ -63,18 +63,18 @@ struct AuthService {
             .createUser(withEmail: email, password: password) { authResult ,error in
                 if let _ = authResult {
                     createUser(username: username, email: email)
-                    dispatch( .setSignupStatus(.success(email)))
-                    dispatch( .setLoginStatus(.success(email)))
+                    dispatch(.setSignupStatus(.success(email)))
+                    dispatch(.setLoginStatus(.success(email)))
                 } else if let error {
-                    dispatch( .setSignupStatus(.failure(error.localizedDescription)))
+                    dispatch(.setSignupStatus(.failure(error.localizedDescription)))
                 } else {
-                    dispatch( .setSignupStatus(.failure("Something went wrong.")))
+                    dispatch(.setSignupStatus(.failure("Something went wrong.")))
                 }
             }
     }
-    
+
     static func  login(email: String,
-                       password: String ,
+                       password: String,
                        _ dispatch: @escaping (_ action: AuthAction) -> Void) {
         Auth
             .auth()
@@ -86,9 +86,9 @@ struct AuthService {
                 } else {
                     dispatch(.setLoginStatus(.failure("Something went wrong.")))
                 }
-                
+
             }
-        
+
     }
 }
 
@@ -96,21 +96,15 @@ struct AuthService {
 
 @MainActor class AuthStore: ObservableObject {
     @Published var state = AuthState()
-    
-    @AppStorage("AuthStatus") var authStatus = ""
-    
+
     init(state: AuthState = AuthState()) {
         self.state = state
-        if authStatus != "" {
-            self.state.email = authStatus;
-            self.state.loginAuthStatus = .success(authStatus)
-        }
     }
-    
+
     func dispatch(_ action: AuthAction) {
         state = self.reducer(self.state, action)
     }
-    
+
     func reducer (_ state: AuthState, _ action: AuthAction) -> AuthState {
         var mutableState = state
         switch action {
@@ -133,12 +127,6 @@ struct AuthService {
             mutableState.loginAuthStatus = .initial
             mutableState.signupAuthStatus = .initial
         case .setLoginStatus(let status):
-            switch status {
-            case .success(let email):
-                self.authStatus = email
-            case .failure, .initial, .pending:
-                self.authStatus = ""
-            }
             mutableState.loginAuthStatus = status
         case .setSignupStatus(let status):
             mutableState.signupAuthStatus = status
