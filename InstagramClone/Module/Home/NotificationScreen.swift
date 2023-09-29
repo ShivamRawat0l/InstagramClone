@@ -2,7 +2,7 @@
 //  NotificationScreen.swift
 //  InstagramClone
 //
-//  Created by Shivam Rawat on 08/09/23.
+//  Created by Shivam Rawat on 29/09/23.
 //
 
 import SwiftUI

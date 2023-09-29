@@ -10,43 +10,32 @@ import Foundation
 
 struct GlobalProfileService {
     func getProfile(email: String,
-                           _ dispatch: @escaping (_ action: GlobalAction) -> Void) {
-        let firestoreDB = Firestore.firestore()
-        firestoreDB
-            .collection("users")
-            .document(email)
-            .getDocument { (querySnapshot, err) in
-                if err != nil {
-                    // TODO: Logout the user
-                } else  {
-                    if let data = querySnapshot?.data(), let newData = data as? [String: String] {
-                        dispatch(.profileAction(.setProfile(newData["name"]!, newData["username"]!)))
-                    }
-                }
-            }
+                    _ dispatch: @escaping (_ action: GlobalAction) -> Void) {
+        FirebaseManager.getProfile(email: email) { newData in
+            dispatch(.profileAction(.setProfile(newData["name"]!, newData["username"]!)))
+        } err: {
+            // TODO: Handle Logout
+        }
     }
 }
 
 class GlobalMessageService {
-     var listener: ListenerRegistration? = nil
-     var selectedInfo: ((String, String), (String, String))? = nil
-     var messagesFetchedOnce = true
+    var listener: ListenerRegistration? = nil
+    var selectedInfo: ((String, String), (String, String))? = nil
+    var messagesFetchedOnce = true
 
-     func removeListener() {
+    func removeListener() {
         if let listener {
             listener.remove()
         }
     }
 
-     func addListener(owner: String, state: GlobalState, dispatch: @escaping (_ action: GlobalAction) -> Void){
-        let firestoreDB = Firestore.firestore()
+    func addListener(owner: String, state: GlobalState, dispatch: @escaping (_ action: GlobalAction) -> Void){
+
         guard listener == nil else {
             return
         }
-        listener = firestoreDB
-            .collection("messages")
-            .document(owner)
-            .addSnapshotListener { querySnapshot, err in
+        listener = FirebaseManager.addDocumentListener(owner: owner) { querySnapshot, err in
                 if self.messagesFetchedOnce {
                     if err != nil {
                         dispatch(.messageAction(.setMessagesListStatus(.failure)))
@@ -101,22 +90,11 @@ class GlobalMessageService {
         }
     }
 
-     func createConversation(from: (String, String), to: (String, String)) {
-        let firestoreDB = Firestore.firestore()
-        firestoreDB.collection("messages").document(from.0).setData([
-            to.1 : [
-                "email": to.0,
-                "messages": []
-            ]], merge: true)
-
-        firestoreDB.collection("messages").document(to.0).setData([
-            from.1 : [
-                "email": from.0,
-                "messages": []
-            ]], merge: true)
+    func createConversation(from: (String, String), to: (String, String)) {
+        FirebaseManager.createConversation(from: from, to: to)
     }
-    
-     func reset() {
+
+    func reset() {
         self.selectedInfo = nil
     }
 }

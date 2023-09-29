@@ -71,7 +71,7 @@ class SearchStore: ObservableObject {
         self.state = self.reducer(self.state, action)
     }
     
-    func reducer(_ state: SearchState ,
+    func reducer(_ state: SearchState,
                  _ action: SearchAction) -> SearchState {
         var mutableState = state;
         switch action {
