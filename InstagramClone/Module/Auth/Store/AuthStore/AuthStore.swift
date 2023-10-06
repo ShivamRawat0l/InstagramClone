@@ -11,6 +11,7 @@ import Foundation
 import SwiftUI
 
 @MainActor class AuthStore: ObservableObject {
+
     @Published var state: AuthState
     var authService: AuthService
 
@@ -26,12 +27,12 @@ import SwiftUI
     func reducer (_ state: AuthState, _ action: AuthAction) -> AuthState {
         var mutableState = state
         switch action {
-        case .login:
+        case .didTapOnLogin:
             mutableState.loginAuthStatus = .pending
             authService.login(email: state.email,
                               password: state.password,
                               self.dispatch)
-        case .signup:
+        case .didTapOnSignup:
             mutableState.signupAuthStatus = .pending
             authService.signup(username: state.username,
                                email: state.email,

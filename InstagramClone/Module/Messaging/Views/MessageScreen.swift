@@ -29,7 +29,7 @@ struct MessageScreen: View {
             Text(globalProfileStore.username)
                 .tint(.black)
                 .foregroundColor(.black)
-                .font(.system(size: 26))
+                .font(.regular26)
                 .lineLimit(1)
             Spacer()
             Image(systemName: "square.and.pencil")

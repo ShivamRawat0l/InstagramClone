@@ -8,7 +8,7 @@
 import Foundation
 
 enum GlobalAuthAction {
-    case login(String, LoginStatus)
+    case didTapOnLogin(String, LoginStatus)
     case reset
 }
 
@@ -20,7 +20,7 @@ enum GlobalProfileAction {
 }
 
 enum GlobalMessageAction {
-    case select((String, String),(String, String))
+    case selectUserMessage((String, String),(String, String))
     case addListeners(String)
 
     // MARK: Setter Actions

@@ -16,10 +16,10 @@ struct Tabbar: View {
         Group{
             if isSelected {
                 return Image(systemName: selectedName)
-                    .font(.system(size: 30))
+                    .font(.regular30)
             } else {
                 return Image(systemName: unselectedName)
-                    .font(.system(size: 30))
+                    .font(.regular30)
             }
         }
         .onTapGesture {

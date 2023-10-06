@@ -15,18 +15,18 @@ struct LoginView: View {
     var isLoading: Bool {
         return authStore.state.loginAuthStatus == .pending
     }
-    
+
     func inputFields() -> some View {
         VStack {
             TextField("Enter your email address", text: $authStore.state.email)
                 .disableAutocorrection(true)
-                .defaultInput()
+                .textFieldStyle(DefaultInputStyle())
             PasswordField(title: "Enter your password", text: $authStore.state.password)
         }
         .padding(.top, 20)
         .textInputAutocapitalization(.never)
     }
-    
+
     var body: some View {
         VStack{
             InstagramLogo()
@@ -37,12 +37,12 @@ struct LoginView: View {
                 .padding(.top, 20)
                 .multilineTextAlignment(.center)
                 .frame(maxWidth: .infinity, alignment: .leading)
-            Button {
-                authStore.dispatch(.login)
-            } label : {
-                PrimaryButton(text: "Login", loading:isLoading)
-                    .padding(.top, 100)
+
+            PrimaryButton(text: "Login", loading:isLoading) {
+                authStore.dispatch(.didTapOnLogin)
             }
+            .padding(.top, 50)
+
             Spacer()
             NavigationLink {
                 SignupView();
@@ -54,7 +54,7 @@ struct LoginView: View {
         .onChange(of: authStore.state.loginAuthStatus) {
             switch authStore.state.loginAuthStatus {
             case .success(let email):
-                globalStore.dispatch(.authAction(.login(email,.success)))
+                globalStore.dispatch(.authAction(.didTapOnLogin(email,.success)))
             case .initial, .pending, .failure : break
             }
         }

@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct ShowPasswordModifier: ViewModifier {
+    
     var onPressBtn: () -> Void;
     
     func body (content: Content) -> some View {
@@ -35,7 +36,8 @@ extension View {
 }
 
 #Preview {
-    TextField("Hello", text: .constant("hi")).defaultInput()
+    TextField("Hello", text: .constant("hi"))
+        .textFieldStyle(DefaultInputStyle())
         .showPasswordIcon {
             //
         }

@@ -104,7 +104,7 @@ struct MessageDetailScreen: View {
         }
         .navigationBarBackButtonHidden(true)
         .onAppear(perform: {
-            globalStore.dispatch(.messageAction(.select((email,username),
+            globalStore.dispatch(.messageAction(.selectUserMessage((email,username),
                                                         (globalProfileStore.email,globalProfileStore.username))))
         })
     }

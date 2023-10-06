@@ -69,7 +69,7 @@ class GlobalMessageService {
                         dispatch(.messageAction(.setMessagesList(messageListFormatted)))
                         dispatch(.messageAction(.setMessagesListStatus(.success)))
                         if let selectedInfo = self.selectedInfo {
-                            dispatch(.messageAction(.select(selectedInfo.0, selectedInfo.1)))
+                            dispatch(.messageAction(.selectUserMessage(selectedInfo.0, selectedInfo.1)))
                         }
                     }
                 }

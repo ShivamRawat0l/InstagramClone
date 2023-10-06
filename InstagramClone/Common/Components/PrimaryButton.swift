@@ -10,23 +10,30 @@ import SwiftUI
 struct PrimaryButton: View {
     var text = "Placeholder"
     var loading = false
-    
+    var onPress: () -> Void
+
     var body: some View {
-        RoundedRectangle(cornerRadius: 10)
-            .fill(.blue)
-            .frame(height: 50)
-            .overlay {
-                if !loading {
-                    Text(text)
-                        .foregroundColor(.white)
-                } else {
-                    ProgressView()
-                        .tint(.white)
+        Button {
+            onPress()
+        } label: {
+            RoundedRectangle(cornerRadius: 10)
+                .fill(.blue)
+                .frame(height: 50)
+                .overlay {
+                    if !loading {
+                        Text(text)
+                            .foregroundColor(.white)
+                    } else {
+                        ProgressView()
+                            .tint(.white)
+                    }
                 }
-            }
+        }
     }
 }
 
 #Preview {
-    PrimaryButton()
+    PrimaryButton() {
+
+    }
 }

@@ -8,8 +8,8 @@
 import Foundation
 
 enum AuthAction {
-    case login
-    case signup
+    case didTapOnLogin
+    case didTapOnSignup
 
     // MARK: Setter actions
     case reset

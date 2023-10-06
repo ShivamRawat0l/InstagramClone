@@ -43,6 +43,7 @@
 		5EB05BC32AC6B9E400141CE0 /* AuthState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EB05BC22AC6B9E400141CE0 /* AuthState.swift */; };
 		5EB05BC52AC6B9F900141CE0 /* AuthService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EB05BC42AC6B9F900141CE0 /* AuthService.swift */; };
 		5EB05BC92AC6C16700141CE0 /* NotificationScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EB05BC82AC6C16700141CE0 /* NotificationScreen.swift */; };
+		5EB05BCF2ACFC50200141CE0 /* Font.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EB05BCE2ACFC50100141CE0 /* Font.swift */; };
 		5ECF4F6C2AAE1930008BEC9C /* UploadScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ECF4F6B2AAE1930008BEC9C /* UploadScreen.swift */; };
 		5ECF4F6E2AAE193A008BEC9C /* SearchScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ECF4F6D2AAE193A008BEC9C /* SearchScreen.swift */; };
 		5ECF4F702AAE2B7E008BEC9C /* DefaultInputModifer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ECF4F6F2AAE2B7E008BEC9C /* DefaultInputModifer.swift */; };
@@ -109,6 +110,7 @@
 		5EB05BC22AC6B9E400141CE0 /* AuthState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthState.swift; sourceTree = "<group>"; };
 		5EB05BC42AC6B9F900141CE0 /* AuthService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthService.swift; sourceTree = "<group>"; };
 		5EB05BC82AC6C16700141CE0 /* NotificationScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationScreen.swift; sourceTree = "<group>"; };
+		5EB05BCE2ACFC50100141CE0 /* Font.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Font.swift; sourceTree = "<group>"; };
 		5ECF4F6B2AAE1930008BEC9C /* UploadScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadScreen.swift; sourceTree = "<group>"; };
 		5ECF4F6D2AAE193A008BEC9C /* SearchScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchScreen.swift; sourceTree = "<group>"; };
 		5ECF4F6F2AAE2B7E008BEC9C /* DefaultInputModifer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultInputModifer.swift; sourceTree = "<group>"; };
@@ -270,7 +272,6 @@
 		5E4410F82AA9C78A00781FEF /* Modifer */ = {
 			isa = PBXGroup;
 			children = (
-				5ECF4F6F2AAE2B7E008BEC9C /* DefaultInputModifer.swift */,
 				5ECF4F712AAE2FB9008BEC9C /* ShowPasswordModifier.swift */,
 			);
 			path = Modifer;
@@ -289,6 +290,7 @@
 			isa = PBXGroup;
 			children = (
 				5EB05B9B2AC3E03800141CE0 /* Date.swift */,
+				5EB05BCE2ACFC50100141CE0 /* Font.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -296,6 +298,7 @@
 		5EB05B9F2AC5D05700141CE0 /* Common */ = {
 			isa = PBXGroup;
 			children = (
+				5EB05BCC2ACE777900141CE0 /* Styles */,
 				5EB05BA62AC6A05000141CE0 /* Constants */,
 				5EB05BA32AC67CC800141CE0 /* Enums */,
 				5E4410D32AA83CDF00781FEF /* Store */,
@@ -439,6 +442,22 @@
 				5ECF4F6D2AAE193A008BEC9C /* SearchScreen.swift */,
 			);
 			path = Search;
+			sourceTree = "<group>";
+		};
+		5EB05BCC2ACE777900141CE0 /* Styles */ = {
+			isa = PBXGroup;
+			children = (
+				5EB05BCD2ACE778200141CE0 /* DefaultInputModifier */,
+			);
+			path = Styles;
+			sourceTree = "<group>";
+		};
+		5EB05BCD2ACE778200141CE0 /* DefaultInputModifier */ = {
+			isa = PBXGroup;
+			children = (
+				5ECF4F6F2AAE2B7E008BEC9C /* DefaultInputModifer.swift */,
+			);
+			path = DefaultInputModifier;
 			sourceTree = "<group>";
 		};
 		5ECF4F732AAF2194008BEC9C /* Frameworks */ = {
@@ -630,6 +649,7 @@
 				5EB05B9C2AC3E03800141CE0 /* Date.swift in Sources */,
 				5E4410E62AA88AB200781FEF /* SignupView.swift in Sources */,
 				5E4410F72AA9962D00781FEF /* PasswordField.swift in Sources */,
+				5EB05BCF2ACFC50200141CE0 /* Font.swift in Sources */,
 				5EB05BC92AC6C16700141CE0 /* NotificationScreen.swift in Sources */,
 				5ECF4F772AAF2DA5008BEC9C /* SearchStore.swift in Sources */,
 			);

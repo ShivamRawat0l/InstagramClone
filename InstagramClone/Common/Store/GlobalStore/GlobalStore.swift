@@ -36,7 +36,7 @@ import SwiftUI
 
         case .authAction(let authAction):
             switch authAction {
-            case .login(let email,let loginStatus):
+            case .didTapOnLogin(let email,let loginStatus):
                 mutableState.profileState.email = email
                 mutableState.loginStatus = loginStatus
                 self.loginStatus = email
@@ -59,7 +59,7 @@ import SwiftUI
 
         case .messageAction(let messageAction):
             switch messageAction {
-            case .select(let from , let to):
+            case .selectUserMessage(let from , let to):
                 globalMessageService.selectMessage(state:self.state,
                                              from: from,
                                              to: to,

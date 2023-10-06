@@ -15,12 +15,12 @@ struct HomeScreen: View {
             Spacer()
             NavigationLink(destination: NotificationScreen()) {
                 Image(systemName: "heart")
-                    .font(.system(size: 26))
+                    .font(.regular26)
                     .tint(.black)
             }
             NavigationLink(destination: MessageScreen()) {
                 Image(systemName: "message.circle.fill")
-                    .font(.system(size: 26))
+                    .font(.regular26)
                     .tint(.black)
             }
             

@@ -10,6 +10,8 @@ import PhotosUI
 
 struct UploadScreen: View {
     @State var imagePicked: PhotosPickerItem?
+    @State var UIImageHolder: UIImage?;
+
     @State var title = ""
 
     var body: some View {
@@ -19,11 +21,21 @@ struct UploadScreen: View {
             Text("Hi ")
         }
         Text("Upload Screen")
+        if let UIImageHolder {
+            Image(uiImage: UIImageHolder)
+        }
         PhotosPicker(selection: $imagePicked) {
             Text("Upload Photo")
         }
         .onChange(of: imagePicked) {
-           //  imagePicked?.loadTransferable(type: ProfileImage)
+            Task {
+                do {
+                    let image = try await imagePicked?.loadTransferable(type: Data.self);
+                    UIImageHolder = UIImage(data: image!)
+                } catch {
+
+                }
+            }
         }
         TextField("Enter the title", text: $title)
     }

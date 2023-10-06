@@ -9,25 +9,24 @@ import Foundation
 import SwiftUI
 
 struct SignupView : View {
+    
     @Environment(\.dismiss) var dismiss
-
     @EnvironmentObject var globalStore: GlobalStore
-
     @StateObject var authStore = AuthStore()
 
-    func inputFields() -> some View {
+    private func inputFields() -> some View {
         VStack {
             TextField("Enter your username", text: $authStore.state.username)
-                .defaultInput()
+                .textFieldStyle(DefaultInputStyle())
             TextField("Enter your email address", text: $authStore.state.email)
-                .defaultInput()
+                .textFieldStyle(DefaultInputStyle())
             PasswordField(title: "Enter your password", text: $authStore.state.password)
         }
         .padding(.top, 20)
         .textInputAutocapitalization(.never)
         .autocorrectionDisabled(true)
     }
-    
+
     var body: some View {
         VStack {
             inputFields()
@@ -36,12 +35,12 @@ struct SignupView : View {
                 .padding(.top, 20)
                 .multilineTextAlignment(.center)
                 .frame(maxWidth: .infinity,alignment: .leading)
-            Button {
-                authStore.dispatch(.signup)
-            } label : {
-                PrimaryButton(text: "Create Account")
-                    .padding(.top, 100)
+
+            PrimaryButton(text: "Create Account") {
+                authStore.dispatch(.didTapOnSignup)
             }
+            .padding(.top, 100)
+
             Spacer()
             Button {
                 dismiss();
