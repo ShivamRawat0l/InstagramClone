@@ -14,12 +14,12 @@ struct HomeScreen: View {
             InstagramLogo()
             Spacer()
             NavigationLink(destination: NotificationScreen()) {
-                Image(systemName: "heart")
+                Image(systemName: Icons.heart)
                     .font(.regular26)
                     .tint(.black)
             }
             NavigationLink(destination: MessageScreen()) {
-                Image(systemName: "message.circle.fill")
+                Image(systemName: Icons.messageCircleFill)
                     .font(.regular26)
                     .tint(.black)
             }

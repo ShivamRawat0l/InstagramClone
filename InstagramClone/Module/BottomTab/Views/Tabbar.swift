@@ -28,10 +28,10 @@ struct Tabbar: View {
     }
     
     var icons = [
-        ("house", "house.fill", 0 ),
-        ("magnifyingglass.circle", "magnifyingglass.circle.fill", 1 ),
-        ("plus.circle", "plus.circle.fill", 2 ),
-        ("person.crop.circle", "person.crop.circle.fill", 3 )
+        (Icons.house, Icons.houseFill, 0 ),
+        (Icons.magnifyingGlassCircle, Icons.magnifyingGlassCircleFill, 1 ),
+        (Icons.plusCircle, Icons.plusCircleFill, 2 ),
+        (Icons.personCropCircle, Icons.personCropCircleFill, 3 )
     ]
     
     var body: some View {
@@ -61,5 +61,4 @@ struct Tabbar: View {
 
 #Preview {
     Tabbar()
-      
 }

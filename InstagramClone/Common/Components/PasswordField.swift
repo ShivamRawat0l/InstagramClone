@@ -9,7 +9,7 @@ import SwiftUI
 
 struct PasswordField: View {
 
-    var title = ""
+    var title: String = .empty
     
     @Binding var text: String
     @State var isSecured = true

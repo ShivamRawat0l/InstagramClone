@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct SearchScreen: View {
-    @State var search = ""
+    @State var search: String = .empty
 
     @StateObject var searchStore = SearchStore()
 
@@ -22,10 +22,10 @@ struct SearchScreen: View {
     var body: some View {
         VStack {
             HStack {
-                Image(systemName: "magnifyingglass")
+                Image(systemName: Icons.magnifyingGlass)
                     .padding(.leading, 14)
                     .padding(.trailing, 4)
-                TextField("Search" ,text: $search)
+                TextField(T.SearchScreen.search ,text: $search)
                     .foregroundColor(.gray)
                     .padding(.vertical)
                     .onChange(of: search) {
@@ -34,7 +34,7 @@ struct SearchScreen: View {
             }
             .background {
                 RoundedRectangle(cornerRadius: 8)
-                    .fill(Color("lightgray"))
+                    .fill(Color(Colors.lightgray))
             }
             .padding()
             if searchStore.state.searchStatus == .success {

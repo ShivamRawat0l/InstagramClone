@@ -25,21 +25,21 @@ struct ProfileScreen: View {
     var body: some View {
         VStack(alignment: .leading){
             HStack {
-                Image(systemName: "lock")
+                Image(systemName: Icons.lock)
                     .font(.regular20)
                     .bold()
                 Text(globalProfileStore.username)
                     .font(.regular26)
                     .bold()
                     .lineLimit(1)
-                Image(systemName: "chevron.down")
+                Image(systemName: Icons.chevronDown)
                     .font(.regular26)
                     .bold()
                 Spacer()
-                Image(systemName: "plus.square.on.square")
+                Image(systemName: Icons.plusSquareOnSquare)
                     .font(.regular26)
                     .bold()
-                Image(systemName: "line.3.horizontal.circle")
+                Image(systemName: Icons.lineHorizontalCircle)
                     .font(.regular26)
                     .bold()
             }
@@ -49,7 +49,7 @@ struct ProfileScreen: View {
                     .frame(width:110, height: 110)
                     .clipShape(Circle())
                     .overlay {
-                        Image(systemName: "plus")
+                        Image(systemName: Icons.plus)
                             .bold()
                             .foregroundColor(.white)
                             .padding(4)
@@ -71,6 +71,7 @@ struct ProfileScreen: View {
             }
             Text(globalProfileStore.email)
                 .bold()
+            // TODO: User should be able to set the status
             Text("status")
             Spacer()
         }
@@ -80,4 +81,5 @@ struct ProfileScreen: View {
 
 #Preview {
     ProfileScreen()
+        .environmentObject(GlobalStore(state: GlobalState(loginStatus: .success,profileState: GlobalProfileState(email: "Placeholder@gmail.com",username: "Placeholder"))))
 }

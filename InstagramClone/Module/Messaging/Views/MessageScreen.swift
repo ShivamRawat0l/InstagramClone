@@ -22,7 +22,7 @@ struct MessageScreen: View {
 
     var body: some View {
         VStack(alignment: .leading){
-            Text("Messages")
+            Text(T.MessageScreen.Messages)
                 .bold()
                 .padding(.top , 20)
             ScrollView {
@@ -51,7 +51,7 @@ struct MessageScreen: View {
                 Button {
                     dismiss()
                 } label: {
-                    Image(systemName: "chevron.backward")
+                    Image(systemName: Icons.chevronBackward)
                         .foregroundStyle(.black)
                 }
             }
@@ -63,7 +63,7 @@ struct MessageScreen: View {
                     .lineLimit(1)
             }
             ToolbarItem(placement: .topBarTrailing) {
-                Image(systemName: "square.and.pencil")
+                Image(systemName: Icons.squareAndPencil)
             }
         }
         .padding()
@@ -71,5 +71,7 @@ struct MessageScreen: View {
 }
 
 #Preview {
-    MessageScreen()
+    // TODO: Add Preview
+    Text("Preview not available")
+    //MessageScreen()
 }

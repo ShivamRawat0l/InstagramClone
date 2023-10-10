@@ -16,11 +16,11 @@ struct SignupView : View {
 
     private func inputFields() -> some View {
         VStack {
-            TextField("Enter your username", text: $authStore.state.username)
+            TextField(T.SignupScreen.enterUsername, text: $authStore.state.username)
                 .textFieldStyle(DefaultInputStyle())
-            TextField("Enter your email address", text: $authStore.state.email)
+            TextField(T.SignupScreen.enterEmail, text: $authStore.state.email)
                 .textFieldStyle(DefaultInputStyle())
-            PasswordField(title: "Enter your password", text: $authStore.state.password)
+            PasswordField(title: T.SignupScreen.enterPassword, text: $authStore.state.password)
         }
         .padding(.top, 20)
         .textInputAutocapitalization(.never)
@@ -36,7 +36,7 @@ struct SignupView : View {
                 .multilineTextAlignment(.center)
                 .frame(maxWidth: .infinity,alignment: .leading)
 
-            PrimaryButton(text: "Create Account") {
+            PrimaryButton(text: T.SignupScreen.Create_Account) {
                 authStore.dispatch(.didTapOnSignup)
             }
             .padding(.top, 100)
@@ -45,10 +45,10 @@ struct SignupView : View {
             Button {
                 dismiss();
             } label : {
-                Text("Sign In")
+                Text(T.SignupScreen.signIn)
             }
         }
-        .navigationTitle("New Account")
+        .navigationTitle(T.SignupScreen.New_Account)
         .navigationBarTitleDisplayMode(.large)
         .padding()
     }
@@ -56,5 +56,5 @@ struct SignupView : View {
 
 #Preview {
     SignupView()
-        .environmentObject(GlobalStore(state: GlobalState()))
+        .environmentObject(GlobalStore())
 }

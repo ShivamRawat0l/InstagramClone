@@ -12,7 +12,7 @@ struct UploadScreen: View {
     @State var imagePicked: PhotosPickerItem?
     @State var UIImageHolder: UIImage?;
 
-    @State var title = ""
+    @State var title: String = .empty
 
     var body: some View {
         Button {

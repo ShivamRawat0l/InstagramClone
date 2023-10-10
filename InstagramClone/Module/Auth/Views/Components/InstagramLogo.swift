@@ -9,7 +9,7 @@ import SwiftUI
 
 struct InstagramLogo: View {
     var body: some View {
-        Image("logo_instagram")
+        Image(Images.logoInstagram)
             .resizable()
             .scaledToFit()
             .frame(height: 50)

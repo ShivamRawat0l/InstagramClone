@@ -14,7 +14,7 @@ struct MessageDetailScreen: View {
     @Environment(\.dismiss) var dismiss
     @EnvironmentObject var globalStore: GlobalStore
     @ObservedObject var messageStore = MessageStore()
-    @State var sendText = ""
+    @State var sendText: String = .empty
 
     var globalProfileStore: GlobalProfileState {
         globalStore.state.profileState
@@ -47,23 +47,22 @@ struct MessageDetailScreen: View {
             .rotationEffect(.degrees(180))
             .scaleEffect(x: -1, y: 1, anchor: .center)
             HStack {
-                Image(systemName: "camera.fill")
-                TextField("Hello",text:  $sendText)
+                Image(systemName: Icons.cameraFill)
+                TextField(String.empty, text: $sendText)
                 Spacer()
-                if sendText == "" {
-                    Image(systemName: "mic")
-                    Image(systemName: "photo")
+                if sendText == .empty {
+                    Image(systemName: Icons.mic)
+                    Image(systemName: Icons.photo)
                 } else {
                     Button {
-                        let sendAction = MessageAction.send((email,username),
-                                                            (globalProfileStore.email,globalProfileStore.username),
+                        let sendAction = MessageAction.send((email, username),
+                                                            (globalProfileStore.email, globalProfileStore.username),
                                                             sendText)
                         messageStore.dispatch(sendAction)
-                        sendText = ""
+                        sendText = .empty
                     } label : {
-                        Image(systemName: "paperplane.fill")
+                        Image(systemName: Icons.paperplaneFill)
                     }
-                    
                 }
             }
             .padding()
@@ -73,7 +72,6 @@ struct MessageDetailScreen: View {
         .toolbar {
             ToolbarItem(placement: .topBarLeading) {
                 HStack{
-
                     Rectangle()
                         .fill(.clear)
                         .frame(width: 40, height: 40)
@@ -82,14 +80,12 @@ struct MessageDetailScreen: View {
                             Button {
                                 dismiss()
                             } label: {
-                                Image(systemName: "chevron.backward")
+                                Image(systemName: Icons.chevronBackward)
                             }
                         }
                     AsyncImage(url: URL(string: Constant.getImageUrl(title: email)))
                         .frame(width: 40, height: 40)
                         .clipShape(Circle())
-
-
                 }
             }
             ToolbarItem(placement: .principal) {
@@ -97,22 +93,18 @@ struct MessageDetailScreen: View {
                     VStack {
                         Text(email)
                             .frame(alignment: .leading)
-
                         Text(username)
                             .lineLimit(1)
                     }
                     Spacer()
-
                 }
-
             }
             ToolbarItem(placement: .topBarTrailing) {
                 HStack{
-                    Image(systemName: "phone")
-                    Image(systemName: "video")
+                    Image(systemName: Icons.phone)
+                    Image(systemName: Icons.video)
                 }
             }
-
         }
         .onAppear(perform: {
             globalStore.dispatch(.messageAction(.selectUserMessage((email,username),
@@ -122,5 +114,7 @@ struct MessageDetailScreen: View {
 }
 
 #Preview {
-    MessageDetailScreen(email:"A@a.com", username: "A_a")
+    Text("Preview not available")
+    // MessageDetailScreen(email: "", username: "")
+      //  .environmentObject(GlobalStore(state: GlobalState(loginStatus: .success)))
 }
