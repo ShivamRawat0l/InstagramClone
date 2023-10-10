@@ -13,6 +13,7 @@ struct T {
         static var yes = "Yes"
         static var no = "No"
         static var cancel = "Cancel"
+        static var Placeholder = "Placeholder"
     }
 
    struct  LoginScreen {

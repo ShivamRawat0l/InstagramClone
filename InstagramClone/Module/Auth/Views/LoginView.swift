@@ -55,7 +55,7 @@ struct LoginView: View {
             switch authStore.state.loginAuthStatus {
             case .success(let email):
                 globalStore.dispatch(.authAction(.didTapOnLogin(email,.success)))
-            case .initial, .pending, .failure : break
+            case .initial, .pending, .failure: break
             }
         }
     }

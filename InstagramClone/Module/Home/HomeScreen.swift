@@ -23,7 +23,6 @@ struct HomeScreen: View {
                     .font(.regular26)
                     .tint(.black)
             }
-            
         }
         .padding()
         Spacer()

@@ -8,7 +8,6 @@
 import SwiftUI
 
 struct ShowPasswordModifier: ViewModifier {
-
     var onPressBtn: () -> Void;
 
     func body (content: Content) -> some View {
@@ -19,7 +18,7 @@ struct ShowPasswordModifier: ViewModifier {
                 } label: {
                     HStack{
                         Spacer()
-                        Image(systemName: "eye.fill")
+                        Image(systemName: Icons.eyeFill)
                             .padding()
                     }
                 }

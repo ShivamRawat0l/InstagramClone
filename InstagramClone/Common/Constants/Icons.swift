@@ -36,4 +36,6 @@ struct Icons {
     static var video = "video"
     static var chevronBackward = "chevron.backward"
     static var squareAndPencil = "square.and.pencil"
+
+    static var eyeFill = "eye.fill"
 }

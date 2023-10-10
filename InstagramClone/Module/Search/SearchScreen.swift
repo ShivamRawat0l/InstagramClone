@@ -9,7 +9,6 @@ import SwiftUI
 
 struct SearchScreen: View {
     @State var search: String = .empty
-
     @StateObject var searchStore = SearchStore()
 
     func renderUser(email: String, userName: String) -> some View {
@@ -47,7 +46,6 @@ struct SearchScreen: View {
         .onAppear {
             searchStore.dispatch(.fetchAll)
         }
-
     }
 }
 

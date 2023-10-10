@@ -51,7 +51,7 @@
 		5EB05BCF2ACFC50200141CE0 /* Font.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EB05BCE2ACFC50100141CE0 /* Font.swift */; };
 		5ECF4F6C2AAE1930008BEC9C /* UploadScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ECF4F6B2AAE1930008BEC9C /* UploadScreen.swift */; };
 		5ECF4F6E2AAE193A008BEC9C /* SearchScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ECF4F6D2AAE193A008BEC9C /* SearchScreen.swift */; };
-		5ECF4F702AAE2B7E008BEC9C /* DefaultInputModifer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ECF4F6F2AAE2B7E008BEC9C /* DefaultInputModifer.swift */; };
+		5ECF4F702AAE2B7E008BEC9C /* DefaultInputStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ECF4F6F2AAE2B7E008BEC9C /* DefaultInputStyle.swift */; };
 		5ECF4F722AAE2FB9008BEC9C /* ShowPasswordModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ECF4F712AAE2FB9008BEC9C /* ShowPasswordModifier.swift */; };
 		5ECF4F752AAF2194008BEC9C /* FirebaseDatabase in Frameworks */ = {isa = PBXBuildFile; productRef = 5ECF4F742AAF2194008BEC9C /* FirebaseDatabase */; };
 		5ECF4F772AAF2DA5008BEC9C /* SearchStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ECF4F762AAF2DA5008BEC9C /* SearchStore.swift */; };
@@ -123,7 +123,7 @@
 		5EB05BCE2ACFC50100141CE0 /* Font.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Font.swift; sourceTree = "<group>"; };
 		5ECF4F6B2AAE1930008BEC9C /* UploadScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadScreen.swift; sourceTree = "<group>"; };
 		5ECF4F6D2AAE193A008BEC9C /* SearchScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchScreen.swift; sourceTree = "<group>"; };
-		5ECF4F6F2AAE2B7E008BEC9C /* DefaultInputModifer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultInputModifer.swift; sourceTree = "<group>"; };
+		5ECF4F6F2AAE2B7E008BEC9C /* DefaultInputStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultInputStyle.swift; sourceTree = "<group>"; };
 		5ECF4F712AAE2FB9008BEC9C /* ShowPasswordModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowPasswordModifier.swift; sourceTree = "<group>"; };
 		5ECF4F762AAF2DA5008BEC9C /* SearchStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchStore.swift; sourceTree = "<group>"; };
 		5ECF4F7C2AB028C9008BEC9C /* MessageScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageScreen.swift; sourceTree = "<group>"; };
@@ -247,7 +247,10 @@
 		5E4410D32AA83CDF00781FEF /* Store */ = {
 			isa = PBXGroup;
 			children = (
-				5EB05BA72AC6A0BF00141CE0 /* GlobalStore */,
+				5ECF4F7E2AB06616008BEC9C /* GlobalStore.swift */,
+				5EB05BA92AC6A0E300141CE0 /* GlobalAction.swift */,
+				5EB05BAB2AC6A0F400141CE0 /* GlobalService.swift */,
+				5EB05BAD2AC6A39800141CE0 /* GlobalState.swift */,
 			);
 			path = Store;
 			sourceTree = "<group>";
@@ -373,17 +376,6 @@
 			path = Constants;
 			sourceTree = "<group>";
 		};
-		5EB05BA72AC6A0BF00141CE0 /* GlobalStore */ = {
-			isa = PBXGroup;
-			children = (
-				5ECF4F7E2AB06616008BEC9C /* GlobalStore.swift */,
-				5EB05BA92AC6A0E300141CE0 /* GlobalAction.swift */,
-				5EB05BAB2AC6A0F400141CE0 /* GlobalService.swift */,
-				5EB05BAD2AC6A39800141CE0 /* GlobalState.swift */,
-			);
-			path = GlobalStore;
-			sourceTree = "<group>";
-		};
 		5EB05BAF2AC6B73900141CE0 /* MessageStore */ = {
 			isa = PBXGroup;
 			children = (
@@ -470,17 +462,9 @@
 		5EB05BCC2ACE777900141CE0 /* Styles */ = {
 			isa = PBXGroup;
 			children = (
-				5EB05BCD2ACE778200141CE0 /* DefaultInputModifier */,
+				5ECF4F6F2AAE2B7E008BEC9C /* DefaultInputStyle.swift */,
 			);
 			path = Styles;
-			sourceTree = "<group>";
-		};
-		5EB05BCD2ACE778200141CE0 /* DefaultInputModifier */ = {
-			isa = PBXGroup;
-			children = (
-				5ECF4F6F2AAE2B7E008BEC9C /* DefaultInputModifer.swift */,
-			);
-			path = DefaultInputModifier;
 			sourceTree = "<group>";
 		};
 		5ECF4F732AAF2194008BEC9C /* Frameworks */ = {
@@ -653,7 +637,7 @@
 				5E4411012AAAE66500781FEF /* ProfileScreen.swift in Sources */,
 				5EB05BB12AC6B74500141CE0 /* MessageStore.swift in Sources */,
 				5ECF4F6C2AAE1930008BEC9C /* UploadScreen.swift in Sources */,
-				5ECF4F702AAE2B7E008BEC9C /* DefaultInputModifer.swift in Sources */,
+				5ECF4F702AAE2B7E008BEC9C /* DefaultInputStyle.swift in Sources */,
 				5EB05BB52AC6B75600141CE0 /* MessageState.swift in Sources */,
 				5ECF4F822AB06DEE008BEC9C /* UserTab.swift in Sources */,
 				5E4410A22AA7101800781FEF /* ContentView.swift in Sources */,
