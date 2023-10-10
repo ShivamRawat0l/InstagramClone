@@ -8,19 +8,20 @@
 import SwiftUI
 
 struct ShowPasswordModifier: ViewModifier {
-    
+
     var onPressBtn: () -> Void;
-    
+
     func body (content: Content) -> some View {
         content
             .overlay {
-                HStack{
-                    Spacer()
-                    Image(systemName: "eye.fill")
-                        .padding()
-                }
-                .onTapGesture {
+                Button {
                     onPressBtn()
+                } label: {
+                    HStack{
+                        Spacer()
+                        Image(systemName: "eye.fill")
+                            .padding()
+                    }
                 }
             }
     }

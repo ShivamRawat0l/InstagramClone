@@ -20,25 +20,8 @@ struct MessageScreen: View {
         globalStore.state.profileState
     }
 
-    func header() -> some View {
-        HStack {
-            Image(systemName: "chevron.backward")
-                .onTapGesture {
-                    dismiss()
-                }
-            Text(globalProfileStore.username)
-                .tint(.black)
-                .foregroundColor(.black)
-                .font(.regular26)
-                .lineLimit(1)
-            Spacer()
-            Image(systemName: "square.and.pencil")
-        }
-    }
-    
     var body: some View {
         VStack(alignment: .leading){
-            header()
             Text("Messages")
                 .bold()
                 .padding(.top , 20)
@@ -57,11 +40,32 @@ struct MessageScreen: View {
                         ProgressView()
                     }
                 }.frame(maxWidth: .infinity)
-                
+
             }
             .padding(.top, 20)
         }
         .navigationBarBackButtonHidden(true)
+        .navigationBarTitleDisplayMode(.inline)
+        .toolbar {
+            ToolbarItem(placement: .topBarLeading) {
+                Button {
+                    dismiss()
+                } label: {
+                    Image(systemName: "chevron.backward")
+                        .foregroundStyle(.black)
+                }
+            }
+            ToolbarItem(placement: .principal) {
+                Text(globalProfileStore.username)
+                    .tint(.black)
+                    .foregroundColor(.black)
+                    .font(.regular26)
+                    .lineLimit(1)
+            }
+            ToolbarItem(placement: .topBarTrailing) {
+                Image(systemName: "square.and.pencil")
+            }
+        }
         .padding()
     }
 }

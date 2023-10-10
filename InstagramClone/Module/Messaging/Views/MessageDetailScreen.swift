@@ -11,13 +11,10 @@ struct MessageDetailScreen: View {
     var email: String
     var username: String
     
-    @State var sendText = ""
-    
     @Environment(\.dismiss) var dismiss
-
     @EnvironmentObject var globalStore: GlobalStore
-
     @ObservedObject var messageStore = MessageStore()
+    @State var sendText = ""
 
     var globalProfileStore: GlobalProfileState {
         globalStore.state.profileState
@@ -26,40 +23,9 @@ struct MessageDetailScreen: View {
     var globalMessageStore: GlobalMessageState {
         globalStore.state.messageState
     }
-
-    func header() -> some View {
-        HStack {
-            Rectangle()
-                .fill(.white)
-                .frame(width: 40, height: 40)
-                .zIndex(1)
-                .overlay {
-                    Image(systemName: "chevron.backward")
-                }
-                .onTapGesture {
-                    dismiss()
-                }
-            
-            AsyncImage(url: URL(string: Constant.getImageUrl(title: email)))
-                .frame(width: 40, height: 40)
-                .clipShape(Circle())
-            
-            VStack(alignment: .leading) {
-                Text(email)
-                Text(username)
-                    .lineLimit(1)
-            }
-            Spacer()
-            Image(systemName: "phone")
-            Image(systemName: "video")
-        }
-        .padding()
-    }
     
     var body: some View {
         VStack {
-            header()
-            
             ScrollView{
                 VStack {
                     ForEach(globalMessageStore.selectedMessage.enumerated().reversed(),
@@ -103,6 +69,51 @@ struct MessageDetailScreen: View {
             .padding()
         }
         .navigationBarBackButtonHidden(true)
+        .navigationBarTitleDisplayMode(.inline)
+        .toolbar {
+            ToolbarItem(placement: .topBarLeading) {
+                HStack{
+
+                    Rectangle()
+                        .fill(.clear)
+                        .frame(width: 40, height: 40)
+                        .zIndex(1)
+                        .overlay {
+                            Button {
+                                dismiss()
+                            } label: {
+                                Image(systemName: "chevron.backward")
+                            }
+                        }
+                    AsyncImage(url: URL(string: Constant.getImageUrl(title: email)))
+                        .frame(width: 40, height: 40)
+                        .clipShape(Circle())
+
+
+                }
+            }
+            ToolbarItem(placement: .principal) {
+                HStack {
+                    VStack {
+                        Text(email)
+                            .frame(alignment: .leading)
+
+                        Text(username)
+                            .lineLimit(1)
+                    }
+                    Spacer()
+
+                }
+
+            }
+            ToolbarItem(placement: .topBarTrailing) {
+                HStack{
+                    Image(systemName: "phone")
+                    Image(systemName: "video")
+                }
+            }
+
+        }
         .onAppear(perform: {
             globalStore.dispatch(.messageAction(.selectUserMessage((email,username),
                                                         (globalProfileStore.email,globalProfileStore.username))))
