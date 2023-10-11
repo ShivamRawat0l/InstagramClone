@@ -24,7 +24,7 @@ struct SearchScreen: View {
                 Image(systemName: Icons.magnifyingGlass)
                     .padding(.leading, 14)
                     .padding(.trailing, 4)
-                TextField(T.SearchScreen.search ,text: $search)
+                TextField("Search", text: $search)
                     .foregroundColor(.gray)
                     .padding(.vertical)
                     .onChange(of: search) {

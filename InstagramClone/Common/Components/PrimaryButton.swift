@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct PrimaryButton: View {
-    var text = T.General.Placeholder
+    var text: String = .empty
     var loading = false
     var onPress: () -> Void
 

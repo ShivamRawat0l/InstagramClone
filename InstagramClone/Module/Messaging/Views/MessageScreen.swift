@@ -22,7 +22,7 @@ struct MessageScreen: View {
 
     var body: some View {
         VStack(alignment: .leading){
-            Text(T.MessageScreen.Messages)
+            Text("Messages")
                 .bold()
                 .padding(.top , 20)
             ScrollView {

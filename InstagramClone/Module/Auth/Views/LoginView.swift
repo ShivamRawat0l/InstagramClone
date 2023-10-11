@@ -18,10 +18,10 @@ struct LoginView: View {
 
     func inputFields() -> some View {
         VStack {
-            TextField(T.LoginScreen.enterEmail, text: $authStore.state.email)
+            TextField("Enter your email address", text: $authStore.state.email)
                 .disableAutocorrection(true)
                 .textFieldStyle(DefaultInputStyle())
-            PasswordField(title: T.LoginScreen.enterPassword, text: $authStore.state.password)
+            PasswordField(title: "Enter your password", text: $authStore.state.password)
         }
         .padding(.top, 20)
         .textInputAutocapitalization(.never)
@@ -38,7 +38,7 @@ struct LoginView: View {
                 .multilineTextAlignment(.center)
                 .frame(maxWidth: .infinity, alignment: .leading)
 
-            PrimaryButton(text: T.LoginScreen.Login, loading:isLoading) {
+            PrimaryButton(text: "Login", loading:isLoading) {
                 authStore.dispatch(.didTapOnLogin)
             }
             .padding(.top, 50)
@@ -47,7 +47,7 @@ struct LoginView: View {
             NavigationLink {
                 SignupView();
             } label : {
-                Text(T.LoginScreen.Create_Account)
+                Text("Create Account")
             }
         }
         .padding()

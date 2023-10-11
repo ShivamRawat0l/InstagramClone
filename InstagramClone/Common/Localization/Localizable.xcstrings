@@ -1,0 +1,93 @@
+{
+  "sourceLanguage" : "en",
+  "strings" : {
+    "%@" : {
+
+    },
+    "Create Account" : {
+      "localizations" : {
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "खाता बनाएं"
+          }
+        }
+      }
+    },
+    "Enter the title" : {
+      "localizations" : {
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "शीर्षक दर्ज करें"
+          }
+        }
+      }
+    },
+    "Enter your email address" : {
+      "localizations" : {
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "अपना ईमेल पता दर्ज करें"
+          }
+        }
+      }
+    },
+    "Enter your username" : {
+      "localizations" : {
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "अपना उपयोगकर्ता नाम दर्ज करें"
+          }
+        }
+      }
+    },
+    "Hello, World!" : {
+
+    },
+    "Hi " : {
+      "localizations" : {
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "नमस्ते"
+          }
+        }
+      }
+    },
+    "Messages" : {
+
+    },
+    "New Account" : {
+
+    },
+    "Search" : {
+      "localizations" : {
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "खोज"
+          }
+        }
+      }
+    },
+    "Sign In" : {
+
+    },
+    "status" : {
+
+    },
+    "Success" : {
+
+    },
+    "Upload Photo" : {
+
+    },
+    "Upload Screen" : {
+
+    }
+  },
+  "version" : "1.0"
+}

@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5E358F852AD5C40A0090A0D4 /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 5E358F842AD5C40A0090A0D4 /* Localizable.xcstrings */; };
 		5E4410A02AA7101800781FEF /* InstagramCloneApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E44109F2AA7101800781FEF /* InstagramCloneApp.swift */; };
 		5E4410A22AA7101800781FEF /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E4410A12AA7101800781FEF /* ContentView.swift */; };
 		5E4410A42AA7101B00781FEF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5E4410A32AA7101B00781FEF /* Assets.xcassets */; };
@@ -29,7 +30,6 @@
 		5E4410FD2AAAE62E00781FEF /* MessageDetailScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E4410FC2AAAE62E00781FEF /* MessageDetailScreen.swift */; };
 		5E4411012AAAE66500781FEF /* ProfileScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E4411002AAAE66500781FEF /* ProfileScreen.swift */; };
 		5E4411032AAAE6E200781FEF /* Tabbar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E4411022AAAE6E200781FEF /* Tabbar.swift */; };
-		5EABBCF72AD4FE710052AAF5 /* Localization.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EABBCF62AD4FE710052AAF5 /* Localization.swift */; };
 		5EABBCFA2AD5113C0052AAF5 /* Icons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EABBCF92AD5113C0052AAF5 /* Icons.swift */; };
 		5EABBCFC2AD512BB0052AAF5 /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EABBCFB2AD512BB0052AAF5 /* Colors.swift */; };
 		5EABBCFE2AD5133E0052AAF5 /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EABBCFD2AD5133E0052AAF5 /* String.swift */; };
@@ -79,6 +79,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		5E358F842AD5C40A0090A0D4 /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
 		5E44109C2AA7101800781FEF /* InstagramClone.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = InstagramClone.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5E44109F2AA7101800781FEF /* InstagramCloneApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstagramCloneApp.swift; sourceTree = "<group>"; };
 		5E4410A12AA7101800781FEF /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -101,7 +102,6 @@
 		5E4410FC2AAAE62E00781FEF /* MessageDetailScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageDetailScreen.swift; sourceTree = "<group>"; };
 		5E4411002AAAE66500781FEF /* ProfileScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileScreen.swift; sourceTree = "<group>"; };
 		5E4411022AAAE6E200781FEF /* Tabbar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tabbar.swift; sourceTree = "<group>"; };
-		5EABBCF62AD4FE710052AAF5 /* Localization.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Localization.swift; sourceTree = "<group>"; };
 		5EABBCF92AD5113C0052AAF5 /* Icons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Icons.swift; sourceTree = "<group>"; };
 		5EABBCFB2AD512BB0052AAF5 /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
 		5EABBCFD2AD5133E0052AAF5 /* String.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = String.swift; sourceTree = "<group>"; };
@@ -302,7 +302,7 @@
 		5EABBCF82AD4FE780052AAF5 /* Localization */ = {
 			isa = PBXGroup;
 			children = (
-				5EABBCF62AD4FE710052AAF5 /* Localization.swift */,
+				5E358F842AD5C40A0090A0D4 /* Localizable.xcstrings */,
 			);
 			path = Localization;
 			sourceTree = "<group>";
@@ -574,6 +574,7 @@
 			knownRegions = (
 				en,
 				Base,
+				hi,
 			);
 			mainGroup = 5E4410932AA7101800781FEF;
 			packageReferences = (
@@ -597,6 +598,7 @@
 			files = (
 				5E4410A72AA7101B00781FEF /* Preview Assets.xcassets in Resources */,
 				5E4410A42AA7101B00781FEF /* Assets.xcassets in Resources */,
+				5E358F852AD5C40A0090A0D4 /* Localizable.xcstrings in Resources */,
 				5E4410DD2AA865F900781FEF /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -649,7 +651,6 @@
 				5EB05BAA2AC6A0E300141CE0 /* GlobalAction.swift in Sources */,
 				5E4410D52AA83D4B00781FEF /* AuthStore.swift in Sources */,
 				5EB05BB72AC6B76500141CE0 /* MessageService.swift in Sources */,
-				5EABBCF72AD4FE710052AAF5 /* Localization.swift in Sources */,
 				5EB05BAE2AC6A39800141CE0 /* GlobalState.swift in Sources */,
 				5EABBCFA2AD5113C0052AAF5 /* Icons.swift in Sources */,
 				5E4410EA2AA89D2E00781FEF /* HomeScreen.swift in Sources */,

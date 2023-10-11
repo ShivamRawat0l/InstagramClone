@@ -16,11 +16,11 @@ struct SignupView : View {
 
     private func inputFields() -> some View {
         VStack {
-            TextField(T.SignupScreen.enterUsername, text: $authStore.state.username)
+            TextField("Enter your username", text: $authStore.state.username)
                 .textFieldStyle(DefaultInputStyle())
-            TextField(T.SignupScreen.enterEmail, text: $authStore.state.email)
+            TextField("Enter your email address", text: $authStore.state.email)
                 .textFieldStyle(DefaultInputStyle())
-            PasswordField(title: T.SignupScreen.enterPassword, text: $authStore.state.password)
+            PasswordField(title: "Enter your password", text: $authStore.state.password)
         }
         .padding(.top, 20)
         .textInputAutocapitalization(.never)
@@ -36,19 +36,19 @@ struct SignupView : View {
                 .multilineTextAlignment(.center)
                 .frame(maxWidth: .infinity,alignment: .leading)
 
-            PrimaryButton(text: T.SignupScreen.Create_Account) {
+            PrimaryButton(text: "Create Account") {
                 authStore.dispatch(.didTapOnSignup)
             }
-            .padding(.top, 100)
+            .padding(.top, 10)
 
             Spacer()
             Button {
                 dismiss();
             } label : {
-                Text(T.SignupScreen.signIn)
+                Text("Sign In")
             }
         }
-        .navigationTitle(T.SignupScreen.New_Account)
+        .navigationTitle("New Account")
         .navigationBarTitleDisplayMode(.large)
         .padding()
     }
