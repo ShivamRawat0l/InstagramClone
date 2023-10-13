@@ -9,7 +9,6 @@ import SwiftUI
 
 struct LoginView: View {
     @EnvironmentObject var globalStore: GlobalStore
-
     @StateObject var authStore = AuthStore()
 
     var isLoading: Bool {

@@ -9,35 +9,77 @@ import SwiftUI
 import PhotosUI
 
 struct UploadScreen: View {
-    @State var imagePicked: PhotosPickerItem?
+    @ObservedObject var uploadStore = UploadStore()
+    @EnvironmentObject var globalStore: GlobalStore
+
+    @State var isImagePickerOpened = false
+    var imagePicked: PhotosPickerItem? {
+        uploadStore.state.imagePicked
+    }
+
     @State var UIImageHolder: UIImage?;
 
-    @State var title: String = .empty
-
     var body: some View {
-        Button {
-            print("wok")
-        } label : {
-            Text("Hi ")
+        VStack {
+            if let UIImageHolder {
+                TextField("Enter the title", text: $uploadStore.state.title)
+                    .textFieldStyle(DefaultInputStyle())
+                Image(uiImage: UIImageHolder)
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+                    .frame(width: 400)
+                Button {
+                    Task {
+                        do {
+                            let imageData = try await uploadStore.state.imagePicked?.loadTransferable(type: Data.self)
+
+                            let uiImage = try await uploadStore.state.imagePicked?.loadTransferable(type: UIImage.self)
+                            uiImage?.UIImageHolder?.resizeImage(with: CGSize(width: 1000, height: 1000))
+
+                            await uploadStore.dispatch(.upload(imageData!, globalStore.state.profileState.username))
+                        }
+                        catch {
+                            print("errror occured")
+                        }
+                    }
+                } label: {
+                    Text("Send to the storage.")
+                }
+            }
+
+            // PhotoPicker
+            
+            if imagePicked != nil {
+                Button {
+                    Task {
+                        await uploadStore.dispatch(.unselectImage)
+                    }
+                    //imagePicked = nil
+                } label: {
+                    Text("Discard Image")
+                }
+            }
         }
-        Text("Upload Screen")
-        if let UIImageHolder {
-            Image(uiImage: UIImageHolder)
-        }
-        PhotosPicker(selection: $imagePicked) {
-            Text("Upload Photo")
+        .navigationBarTitleDisplayMode(.inline)
+        .navigationTitle("Upload Post")
+        .onAppear {
+            isImagePickerOpened = true
+
         }
         .onChange(of: imagePicked) {
             Task {
                 do {
-                    let image = try await imagePicked?.loadTransferable(type: Data.self);
-                    UIImageHolder = UIImage(data: image!)
+                    if let imagePicked {
+                        let image = try await imagePicked.loadTransferable(type: Data.self);
+                        UIImageHolder = UIImage(data: image!)
+                    }
                 } catch {
 
                 }
             }
         }
-        TextField("Enter the title", text: $title)
+        .photosPicker(isPresented: $isImagePickerOpened, selection: $uploadStore.state.imagePicked)
+
     }
 }
 

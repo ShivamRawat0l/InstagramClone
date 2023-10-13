@@ -30,6 +30,15 @@
 		5E4410FD2AAAE62E00781FEF /* MessageDetailScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E4410FC2AAAE62E00781FEF /* MessageDetailScreen.swift */; };
 		5E4411012AAAE66500781FEF /* ProfileScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E4411002AAAE66500781FEF /* ProfileScreen.swift */; };
 		5E4411032AAAE6E200781FEF /* Tabbar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E4411022AAAE6E200781FEF /* Tabbar.swift */; };
+		5E9F1A562AD799FD004B5E54 /* UploadStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E9F1A552AD799FD004B5E54 /* UploadStore.swift */; };
+		5E9F1A582AD79A06004B5E54 /* UploadAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E9F1A572AD79A06004B5E54 /* UploadAction.swift */; };
+		5E9F1A5A2AD79A1A004B5E54 /* UploadState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E9F1A592AD79A1A004B5E54 /* UploadState.swift */; };
+		5E9F1A5C2AD79A28004B5E54 /* UploadService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E9F1A5B2AD79A28004B5E54 /* UploadService.swift */; };
+		5E9F1A622AD7D482004B5E54 /* HomeStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E9F1A612AD7D482004B5E54 /* HomeStore.swift */; };
+		5E9F1A642AD7D489004B5E54 /* HomeAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E9F1A632AD7D489004B5E54 /* HomeAction.swift */; };
+		5E9F1A662AD7D48F004B5E54 /* HomeState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E9F1A652AD7D48F004B5E54 /* HomeState.swift */; };
+		5E9F1A682AD7D49D004B5E54 /* HomeService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E9F1A672AD7D49D004B5E54 /* HomeService.swift */; };
+		5E9F1A6A2AD9059A004B5E54 /* UIImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E9F1A692AD9059A004B5E54 /* UIImage.swift */; };
 		5EABBCFA2AD5113C0052AAF5 /* Icons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EABBCF92AD5113C0052AAF5 /* Icons.swift */; };
 		5EABBCFC2AD512BB0052AAF5 /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EABBCFB2AD512BB0052AAF5 /* Colors.swift */; };
 		5EABBCFE2AD5133E0052AAF5 /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EABBCFD2AD5133E0052AAF5 /* String.swift */; };
@@ -102,6 +111,15 @@
 		5E4410FC2AAAE62E00781FEF /* MessageDetailScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageDetailScreen.swift; sourceTree = "<group>"; };
 		5E4411002AAAE66500781FEF /* ProfileScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileScreen.swift; sourceTree = "<group>"; };
 		5E4411022AAAE6E200781FEF /* Tabbar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tabbar.swift; sourceTree = "<group>"; };
+		5E9F1A552AD799FD004B5E54 /* UploadStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadStore.swift; sourceTree = "<group>"; };
+		5E9F1A572AD79A06004B5E54 /* UploadAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadAction.swift; sourceTree = "<group>"; };
+		5E9F1A592AD79A1A004B5E54 /* UploadState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadState.swift; sourceTree = "<group>"; };
+		5E9F1A5B2AD79A28004B5E54 /* UploadService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadService.swift; sourceTree = "<group>"; };
+		5E9F1A612AD7D482004B5E54 /* HomeStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeStore.swift; sourceTree = "<group>"; };
+		5E9F1A632AD7D489004B5E54 /* HomeAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeAction.swift; sourceTree = "<group>"; };
+		5E9F1A652AD7D48F004B5E54 /* HomeState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeState.swift; sourceTree = "<group>"; };
+		5E9F1A672AD7D49D004B5E54 /* HomeService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeService.swift; sourceTree = "<group>"; };
+		5E9F1A692AD9059A004B5E54 /* UIImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIImage.swift; sourceTree = "<group>"; };
 		5EABBCF92AD5113C0052AAF5 /* Icons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Icons.swift; sourceTree = "<group>"; };
 		5EABBCFB2AD512BB0052AAF5 /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
 		5EABBCFD2AD5133E0052AAF5 /* String.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = String.swift; sourceTree = "<group>"; };
@@ -299,6 +317,53 @@
 			path = Messaging;
 			sourceTree = "<group>";
 		};
+		5E9F1A532AD799B2004B5E54 /* Store */ = {
+			isa = PBXGroup;
+			children = (
+				5E9F1A542AD799BE004B5E54 /* UploadStore */,
+			);
+			name = Store;
+			sourceTree = "<group>";
+		};
+		5E9F1A542AD799BE004B5E54 /* UploadStore */ = {
+			isa = PBXGroup;
+			children = (
+				5E9F1A552AD799FD004B5E54 /* UploadStore.swift */,
+				5E9F1A572AD79A06004B5E54 /* UploadAction.swift */,
+				5E9F1A592AD79A1A004B5E54 /* UploadState.swift */,
+				5E9F1A5B2AD79A28004B5E54 /* UploadService.swift */,
+			);
+			name = UploadStore;
+			sourceTree = "<group>";
+		};
+		5E9F1A5D2AD7D44B004B5E54 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				5E4410E92AA89D2E00781FEF /* HomeScreen.swift */,
+				5EB05BC82AC6C16700141CE0 /* NotificationScreen.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		5E9F1A5F2AD7D45F004B5E54 /* Store */ = {
+			isa = PBXGroup;
+			children = (
+				5E9F1A612AD7D482004B5E54 /* HomeStore.swift */,
+				5E9F1A632AD7D489004B5E54 /* HomeAction.swift */,
+				5E9F1A652AD7D48F004B5E54 /* HomeState.swift */,
+				5E9F1A672AD7D49D004B5E54 /* HomeService.swift */,
+			);
+			path = Store;
+			sourceTree = "<group>";
+		};
+		5E9F1A602AD7D469004B5E54 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				5ECF4F6B2AAE1930008BEC9C /* UploadScreen.swift */,
+			);
+			name = Views;
+			sourceTree = "<group>";
+		};
 		5EABBCF82AD4FE780052AAF5 /* Localization */ = {
 			isa = PBXGroup;
 			children = (
@@ -313,6 +378,7 @@
 				5EB05B9B2AC3E03800141CE0 /* Date.swift */,
 				5EB05BCE2ACFC50100141CE0 /* Font.swift */,
 				5EABBCFD2AD5133E0052AAF5 /* String.swift */,
+				5E9F1A692AD9059A004B5E54 /* UIImage.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -325,7 +391,7 @@
 				5EB05BA62AC6A05000141CE0 /* Constants */,
 				5EB05BA32AC67CC800141CE0 /* Enums */,
 				5E4410D32AA83CDF00781FEF /* Store */,
-				5ECF4F832AB1CB7E008BEC9C /* Services */,
+				5ECF4F832AB1CB7E008BEC9C /* Manager */,
 				5E4410F32AA98D9000781FEF /* Components */,
 				5EB05B9D2AC3E03B00141CE0 /* Extensions */,
 				5E4410F82AA9C78A00781FEF /* Modifer */,
@@ -428,8 +494,8 @@
 		5EB05BC62AC6C13000141CE0 /* Home */ = {
 			isa = PBXGroup;
 			children = (
-				5E4410E92AA89D2E00781FEF /* HomeScreen.swift */,
-				5EB05BC82AC6C16700141CE0 /* NotificationScreen.swift */,
+				5E9F1A5F2AD7D45F004B5E54 /* Store */,
+				5E9F1A5D2AD7D44B004B5E54 /* Views */,
 			);
 			path = Home;
 			sourceTree = "<group>";
@@ -445,7 +511,8 @@
 		5EB05BCA2AC6CCA900141CE0 /* Post */ = {
 			isa = PBXGroup;
 			children = (
-				5ECF4F6B2AAE1930008BEC9C /* UploadScreen.swift */,
+				5E9F1A602AD7D469004B5E54 /* Views */,
+				5E9F1A532AD799B2004B5E54 /* Store */,
 			);
 			name = Post;
 			sourceTree = "<group>";
@@ -474,12 +541,12 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		5ECF4F832AB1CB7E008BEC9C /* Services */ = {
+		5ECF4F832AB1CB7E008BEC9C /* Manager */ = {
 			isa = PBXGroup;
 			children = (
 				5EB05BB82AC6B8C800141CE0 /* FirebaseManager.swift */,
 			);
-			path = Services;
+			path = Manager;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -628,9 +695,12 @@
 				5EABBCFC2AD512BB0052AAF5 /* Colors.swift in Sources */,
 				5EABBCFE2AD5133E0052AAF5 /* String.swift in Sources */,
 				5EB05BC32AC6B9E400141CE0 /* AuthState.swift in Sources */,
+				5E9F1A662AD7D48F004B5E54 /* HomeState.swift in Sources */,
+				5E9F1A562AD799FD004B5E54 /* UploadStore.swift in Sources */,
 				5ECF4F6E2AAE193A008BEC9C /* SearchScreen.swift in Sources */,
 				5EB05BAC2AC6A0F400141CE0 /* GlobalService.swift in Sources */,
 				5E4410FD2AAAE62E00781FEF /* MessageDetailScreen.swift in Sources */,
+				5E9F1A5C2AD79A28004B5E54 /* UploadService.swift in Sources */,
 				5EABBD002AD516850052AAF5 /* Images.swift in Sources */,
 				5ECF4F7D2AB028C9008BEC9C /* MessageScreen.swift in Sources */,
 				5E4410F52AA98D9E00781FEF /* PrimaryButton.swift in Sources */,
@@ -642,8 +712,14 @@
 				5ECF4F702AAE2B7E008BEC9C /* DefaultInputStyle.swift in Sources */,
 				5EB05BB52AC6B75600141CE0 /* MessageState.swift in Sources */,
 				5ECF4F822AB06DEE008BEC9C /* UserTab.swift in Sources */,
+				5E9F1A682AD7D49D004B5E54 /* HomeService.swift in Sources */,
+				5E9F1A6A2AD9059A004B5E54 /* UIImage.swift in Sources */,
+				5E9F1A622AD7D482004B5E54 /* HomeStore.swift in Sources */,
+				5E9F1A582AD79A06004B5E54 /* UploadAction.swift in Sources */,
 				5E4410A22AA7101800781FEF /* ContentView.swift in Sources */,
 				5EB05BB92AC6B8C800141CE0 /* FirebaseManager.swift in Sources */,
+				5E9F1A642AD7D489004B5E54 /* HomeAction.swift in Sources */,
+				5E9F1A5A2AD79A1A004B5E54 /* UploadState.swift in Sources */,
 				5E4410A02AA7101800781FEF /* InstagramCloneApp.swift in Sources */,
 				5EB05BB32AC6B74D00141CE0 /* MessageAction.swift in Sources */,
 				5E4411032AAAE6E200781FEF /* Tabbar.swift in Sources */,

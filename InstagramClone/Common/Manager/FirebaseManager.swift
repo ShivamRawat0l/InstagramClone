@@ -8,9 +8,55 @@
 import FirebaseAuth
 import FirebaseFirestore
 import Foundation
+import FirebaseStorage
 
 class FirebaseManager {
     static  let firestoreDB = Firestore.firestore()
+    static let firebaseStorage = Storage.storage()
+
+    static func getPosts(completionHandler: @escaping (_ documents: [QueryDocumentSnapshot]) async -> Void) async {
+        do {
+            let querySnapshot = try await firestoreDB.collection("posts").getDocuments()
+            await completionHandler(querySnapshot.documents)
+        } catch {
+            print("Err")
+        }
+
+    }
+
+
+    static func getImageDownloadURL(id: String) async -> URL? {
+        let postImage = firebaseStorage.reference().child("posts/\(id)")
+        do {
+            return try await postImage.downloadURL()
+        } catch {
+            print("err")
+            return nil
+        }
+    }
+
+    static func uploadImage(id: String, image: Data, owner: String, postTitle: String) {
+        let storageRef = firebaseStorage.reference().child("posts/\(id).jpg")
+        let postDocRef = firestoreDB.collection("posts").addDocument(data: [
+            "owner": owner,
+            "postTitle": postTitle,
+            "imageName": id + ".jpg"
+        ]) { err in
+            if let err {
+                print("An error occurred", err)
+            }
+            print("Document Created successfully. ")
+        }
+
+
+        storageRef.putData(image) { storage, err in
+            if let err {
+                print("Error occured", err)
+                return
+            }
+            print("Image Uploaded successfully.")
+        }
+    }
 
     static func sendMessage(to: (String, String) , from: (String, String), message: String) {
         let senderDocRef = firestoreDB.collection("messages").document(from.0)

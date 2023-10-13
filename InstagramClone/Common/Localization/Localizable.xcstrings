@@ -14,6 +14,9 @@
         }
       }
     },
+    "Discard Image" : {
+
+    },
     "Enter the title" : {
       "localizations" : {
         "hi" : {
@@ -44,10 +47,14 @@
         }
       }
     },
+    "Error" : {
+
+    },
     "Hello, World!" : {
 
     },
     "Hi " : {
+      "extractionState" : "stale",
       "localizations" : {
         "hi" : {
           "stringUnit" : {
@@ -73,6 +80,9 @@
         }
       }
     },
+    "Send to the storage." : {
+
+    },
     "Sign In" : {
 
     },
@@ -82,10 +92,10 @@
     "Success" : {
 
     },
-    "Upload Photo" : {
+    "Unknown" : {
 
     },
-    "Upload Screen" : {
+    "Upload Post" : {
 
     }
   },
