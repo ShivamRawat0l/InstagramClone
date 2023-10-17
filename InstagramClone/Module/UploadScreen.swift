@@ -22,6 +22,7 @@ struct UploadScreen: View {
     var body: some View {
         VStack {
             if let UIImageHolder {
+
                 TextField("Enter the title", text: $uploadStore.state.title)
                     .textFieldStyle(DefaultInputStyle())
                 Image(uiImage: UIImageHolder)
@@ -32,11 +33,9 @@ struct UploadScreen: View {
                     Task {
                         do {
                             let imageData = try await uploadStore.state.imagePicked?.loadTransferable(type: Data.self)
-
-                            let uiImage = try await uploadStore.state.imagePicked?.loadTransferable(type: UIImage.self)
-                            uiImage?.UIImageHolder?.resizeImage(with: CGSize(width: 1000, height: 1000))
-
-                            await uploadStore.dispatch(.upload(imageData!, globalStore.state.profileState.username))
+                            let uiImage = UIImage(data: imageData!)
+                            let compressedImage = uiImage?.jpegData(compressionQuality: 0.5)
+                            await uploadStore.dispatch(.upload(compressedImage!, globalStore.state.profileState.username))
                         }
                         catch {
                             print("errror occured")
@@ -47,14 +46,11 @@ struct UploadScreen: View {
                 }
             }
 
-            // PhotoPicker
-            
             if imagePicked != nil {
                 Button {
                     Task {
                         await uploadStore.dispatch(.unselectImage)
                     }
-                    //imagePicked = nil
                 } label: {
                     Text("Discard Image")
                 }
@@ -79,7 +75,6 @@ struct UploadScreen: View {
             }
         }
         .photosPicker(isPresented: $isImagePickerOpened, selection: $uploadStore.state.imagePicked)
-
     }
 }
 

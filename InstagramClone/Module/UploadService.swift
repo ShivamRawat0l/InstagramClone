@@ -14,9 +14,7 @@ struct UploadService {
     }
 
     func postImageToInstagramClone(title: String, image: Data, owner: String) async {
-        // TODO: Handle it betters
         let id = randomString(length: 10)
-        print("HERE !")
         FirebaseManager.uploadImage(id: id, image: image, owner: owner, postTitle: title)
     }
 }
