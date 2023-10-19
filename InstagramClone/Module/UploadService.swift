@@ -13,8 +13,8 @@ struct UploadService {
       return String((0..<length).map{ _ in letters.randomElement()! })
     }
 
-    func postImageToInstagramClone(title: String, image: Data, owner: String) async {
+    func postImageToInstagramClone(title: String, image: Data, owner: String) async throws {
         let id = randomString(length: 10)
-        FirebaseManager.uploadImage(id: id, image: image, owner: owner, postTitle: title)
+        try await FirebaseManager.uploadImage(id: id, image: image, owner: owner, postTitle: title)
     }
 }

@@ -9,6 +9,6 @@ import Foundation
 
 enum HomeAction {
     case fetchPosts
-
+    // Setter actions
     case setPosts([PostType])
 }

@@ -11,54 +11,24 @@ import FirebaseAuth
 
 struct AuthService {
 
-    func createUser(username: String, email: String) {
+    func createUser(username: String, email: String) async throws {
         let firestoreDB = Firestore.firestore();
-
-        firestoreDB.collection("users").document(email).setData([
+        try await firestoreDB.collection("users").document(email).setData([
             "name": email,
             "username": username + String(email.hash)
-        ])  { err in
-            if let err = err {
-                print("Error adding document: \(err)")
-            } else {
-                print("Document added")
-            }
-        }
+        ])
     }
 
     func signup(username: String,
                 email: String,
-                password: String,
-                _ dispatch: @escaping (_ action: AuthAction) -> Void) {
-        Auth
-            .auth()
-            .createUser(withEmail: email, password: password) { authResult ,error in
-                if let _ = authResult {
-                    createUser(username: username, email: email)
-                    dispatch(.setSignupStatus(.success(email)))
-                    dispatch(.setLoginStatus(.success(email)))
-                } else if let error {
-                    dispatch(.setSignupStatus(.failure(error.localizedDescription)))
-                } else {
-                    dispatch(.setSignupStatus(.failure("Something went wrong.")))
-                }
-            }
+                password: String) async throws -> String {
+        let authResult = try await Auth.auth().createUser(withEmail: email, password: password)
+        try await createUser(username: username, email: email)
+        return email
     }
 
-    func  login(email: String,
-                password: String,
-                _ dispatch: @escaping (_ action: AuthAction) -> Void) {
-        Auth
-            .auth()
-            .signIn(withEmail: email, password: password) { authResult, error  in
-                if authResult != nil {
-                    dispatch(.setLoginStatus(.success(email)))
-                } else  if let error {
-                    dispatch(.setLoginStatus(.failure(error.localizedDescription)))
-                } else {
-                    dispatch(.setLoginStatus(.failure("Something went wrong.")))
-                }
-
-            }
+    func  login(email: String, password: String) async throws -> String {
+       let authResult = try await Auth.auth().signIn(withEmail: email, password: password)
+       return email
     }
 }

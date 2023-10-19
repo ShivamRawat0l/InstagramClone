@@ -28,17 +28,27 @@ import SwiftUI
         var mutableState = state
         switch action {
         case .didTapOnLogin:
-            mutableState.loginAuthStatus = .pending
-            authService.login(email: state.email,
-                              password: state.password,
-                              self.dispatch)
+            Task {
+                do {
+                    mutableState.loginAuthStatus = .pending
+                    let email = try await authService.login(email: state.email, password: state.password)
+                    self.dispatch(.setLoginStatus(.success(email)))
+                } catch {
+                    // TODO: Handle Error
+                }
+            }
         case .didTapOnSignup:
-            mutableState.signupAuthStatus = .pending
-            authService.signup(username: state.username,
-                               email: state.email,
-                               password: state.password,
-                               self.dispatch)
-            
+            Task {
+                do {
+                    mutableState.signupAuthStatus = .pending
+                    let email = try await authService.signup(username: state.username,
+                                                         email: state.email,
+                                                         password: state.password)
+                    self.dispatch(.setSignupStatus(.success(email)))
+                } catch {
+                    // TODO: Handle error
+                }
+            }
             // MARK: Setter actions
         case .reset:
             mutableState.email = ""

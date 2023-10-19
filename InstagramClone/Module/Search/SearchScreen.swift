@@ -20,22 +20,6 @@ struct SearchScreen: View {
 
     var body: some View {
         VStack {
-            HStack {
-                Image(systemName: Icons.magnifyingGlass)
-                    .padding(.leading, 14)
-                    .padding(.trailing, 4)
-                TextField("Search", text: $search)
-                    .foregroundColor(.gray)
-                    .padding(.vertical)
-                    .onChange(of: search) {
-                        searchStore.dispatch(.filter(search))
-                    }
-            }
-            .background {
-                RoundedRectangle(cornerRadius: 8)
-                    .fill(Color(Colors.lightgray))
-            }
-            .padding()
             if searchStore.state.searchStatus == .success {
                 ForEach(searchStore.state.filteredNames, id: \.self.0) { names in
                     renderUser(email: names.0, userName: names.1)
@@ -43,7 +27,11 @@ struct SearchScreen: View {
             }
             Spacer()
         }
-        .onAppear {
+        .searchable(text: $search, placement: .automatic, prompt: "Search")
+        .onChange(of: search) {
+            searchStore.dispatch(.filter(search))
+        }
+        .task {
             searchStore.dispatch(.fetchAll)
         }
     }

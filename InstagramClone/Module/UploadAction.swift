@@ -10,5 +10,5 @@ import Foundation
 enum UploadAction {
     case unselectImage
 
-    case upload(Data, String)
+    case upload(String)
 }

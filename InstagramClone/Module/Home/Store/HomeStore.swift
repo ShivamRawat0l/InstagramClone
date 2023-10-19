@@ -18,18 +18,23 @@ class HomeStore: ObservableObject {
         self.homeservice = homeservice
     }
 
-    func dispatch(_ action: HomeAction) async {
-        self.state = await self.reduce(state, action)
-        print(self.state, " STATE ")
-
+    func dispatch(_ action: HomeAction) {
+        self.state = self.reduce(state, action)
     }
 
-    func reduce(_ state: HomeState, _ action: HomeAction) async -> HomeState {
+    func reduce(_ state: HomeState, _ action: HomeAction) -> HomeState {
         var mutableState = state
 
         switch action {
         case .fetchPosts:
-            mutableState.posts = await homeservice.getPosts()
+            Task {
+                do {
+                    let posts = try await homeservice.getPosts()
+                    self.dispatch(.setPosts(posts))
+                } catch {
+                    print("Error occured @HomeStore.fetchPosts", error.localizedDescription)
+                }
+            }
         case .setPosts(let post):
             mutableState.posts = post
         }

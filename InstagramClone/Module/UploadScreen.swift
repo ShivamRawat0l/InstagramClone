@@ -30,17 +30,7 @@ struct UploadScreen: View {
                     .aspectRatio(contentMode: .fit)
                     .frame(width: 400)
                 Button {
-                    Task {
-                        do {
-                            let imageData = try await uploadStore.state.imagePicked?.loadTransferable(type: Data.self)
-                            let uiImage = UIImage(data: imageData!)
-                            let compressedImage = uiImage?.jpegData(compressionQuality: 0.5)
-                            await uploadStore.dispatch(.upload(compressedImage!, globalStore.state.profileState.username))
-                        }
-                        catch {
-                            print("errror occured")
-                        }
-                    }
+                    uploadStore.dispatch(.upload(globalStore.state.profileState.username))
                 } label: {
                     Text("Send to the storage.")
                 }
@@ -48,9 +38,7 @@ struct UploadScreen: View {
 
             if imagePicked != nil {
                 Button {
-                    Task {
-                        await uploadStore.dispatch(.unselectImage)
-                    }
+                    uploadStore.dispatch(.unselectImage)
                 } label: {
                     Text("Discard Image")
                 }
@@ -60,7 +48,6 @@ struct UploadScreen: View {
         .navigationTitle("Upload Post")
         .onAppear {
             isImagePickerOpened = true
-
         }
         .onChange(of: imagePicked) {
             Task {

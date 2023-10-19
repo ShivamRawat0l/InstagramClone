@@ -49,8 +49,14 @@ import SwiftUI
         case .profileAction(let profileAction):
             switch profileAction {
             case .getProfile(let email):
-                globalProfileService.getProfile(email: email, self.dispatch)
-
+                Task {
+                    do {
+                        let (email, username) = try await globalProfileService.getProfile(email: email)
+                        self.dispatch(.profileAction(.setProfile(email, username)))
+                    } catch {
+                        // TODO: Handle error
+                    }
+                }
                 // MARK: Setter actions
             case .setProfile(let email, let username):
                 mutableState.profileState.email = email
@@ -60,10 +66,14 @@ import SwiftUI
         case .messageAction(let messageAction):
             switch messageAction {
             case .selectUserMessage(let from , let to):
-                globalMessageService.selectMessage(state:self.state,
-                                             from: from,
-                                             to: to,
-                                             dispatch: self.dispatch)
+                Task {
+                    do {
+                        let selectedMessage = try await globalMessageService.selectMessage(state:self.state, from: from, to: to)
+                        self.dispatch(.messageAction(.setMessages(selectedMessage)))
+                    } catch {
+                        self.dispatch(.messageAction(.setMessages([])))
+                    }
+                }
             case .addListeners(let owner):
                 globalMessageService.addListener(owner: owner, state: state, dispatch: self.dispatch)
 
@@ -77,7 +87,7 @@ import SwiftUI
             case .setMessagesListStatus(let messageListStatus):
                 mutableState.messageState.messageListStatus = messageListStatus
             }
-            
+
         }
         return mutableState;
     }

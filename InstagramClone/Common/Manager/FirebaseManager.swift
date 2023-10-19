@@ -13,18 +13,24 @@ import FirebaseStorage
 class FirebaseManager {
     static  let firestoreDB = Firestore.firestore()
     static let firebaseStorage = Storage.storage()
-
-    static func getPosts(completionHandler: @escaping (_ documents: [QueryDocumentSnapshot]) async -> Void) async {
-        do {
-            let querySnapshot = try await firestoreDB.collection("posts").getDocuments()
-            await completionHandler(querySnapshot.documents)
-        } catch {
-            print("Err")
+    
+    static func getPosts() async throws -> [PostType] {
+        let querySnapshot = try await firestoreDB.collection("posts").getDocuments()
+        var posts: [PostType] = []
+        for document in querySnapshot.documents {
+            let owner = document.data()["owner"] as? PostType.Owner ?? PostType.Owner(email: "", username: "")
+            let imagename =  document.data()["imageName"] as? String ?? ""
+            let imageURL = await FirebaseManager.getImageDownloadURL(id: imagename)
+            let post = PostType(postTitle: document.data()["postTitle"] as? String ?? "",
+                                owner: owner,
+                                imageName: document.data()["imageName"] as? String ?? "",
+                                image: imageURL)
+            posts.append(post)
         }
-
+        return posts
     }
-
-
+    
+    
     static func getImageDownloadURL(id: String) async -> URL? {
         let postImage = firebaseStorage.reference().child("posts/\(id)")
         do {
@@ -34,35 +40,38 @@ class FirebaseManager {
             return nil
         }
     }
-
-    static func uploadImage(id: String, image: Data, owner: String, postTitle: String) {
+    
+    static func uploadImage(id: String, image: Data, owner: String, postTitle: String) async throws {
         let storageRef = firebaseStorage.reference().child("posts/\(id).jpg")
-        let postDocRef = firestoreDB.collection("posts").addDocument(data: [
-            "owner": owner,
-            "postTitle": postTitle,
-            "imageName": id + ".jpg"
-        ]) { err in
-            if let err {
-                print("An error occurred", err)
+        
+        try await withCheckedThrowingContinuation { (continuation: CheckedContinuation<Void, Error>) in
+            firestoreDB.collection("posts").addDocument(data: [
+                "owner": owner,
+                "postTitle": postTitle,
+                "imageName": id + ".jpg"
+            ]) { err in
+                if let err {
+                    continuation.resume(throwing: err)
+                }
+                continuation.resume()
             }
-            print("Document Created successfully. ")
         }
-
-
-        storageRef.putData(image) { storage, err in
-            if let err {
-                print("Error occured", err)
-                return
+        
+        try await withCheckedThrowingContinuation { (continuation: CheckedContinuation<Void, Error>) in
+            storageRef.putData(image) { storage, err in
+                if let err {
+                    continuation.resume(throwing: err)
+                }
+                continuation.resume()
             }
-            print("Image Uploaded successfully.")
         }
     }
-
-    static func sendMessage(to: (String, String) , from: (String, String), message: String) {
+    
+    static func sendMessage(to: (String, String) , from: (String, String), message: String) async throws {
         let senderDocRef = firestoreDB.collection("messages").document(from.0)
         let recieverDocRef = firestoreDB.collection("messages").document(to.0)
-
-        senderDocRef.updateData([
+        
+        try await senderDocRef.updateData([
             "\(to.1).messages": FieldValue.arrayUnion([
                 [
                     "isOwner": true,
@@ -71,49 +80,47 @@ class FirebaseManager {
                 ]
             ])
         ])
-
-        recieverDocRef.updateData([
+        
+        try await recieverDocRef.updateData([
             "\(from.1).messages": FieldValue.arrayUnion([
                 [
                     "isOwner": false,
                     "content": message,
                     "time": Date().toMillis()!
-
+                    
                 ]
             ])
         ])
     }
-
-    static func getProfile(email: String, success: @escaping (_ newData: [String: String]) -> Void, err: @escaping () -> Void) {
-        firestoreDB
+    
+    static func getProfile(email: String) async throws -> [String: String] {
+        let querySnapshot = try await firestoreDB
             .collection("users")
             .document(email)
-            .getDocument { querySnapshot, err in
-                if err == nil {
-                    if let data = querySnapshot?.data(), let newData = data as? [String: String] {
-                        success(newData)
-                    }
-                } else  {
-                    // TODO: Fix
-                    //err()
-                }
-            }
+            .getDocument()
+        
+        if let data = querySnapshot.data(), let newData = data as? [String: String] {
+            return newData
+        } else {
+            // TODO: Fix this throw an error
+            return [:]
+        }
     }
-
-    static func createConversation(from: (String, String), to: (String, String)) {
-        firestoreDB.collection("messages").document(from.0).setData([
+    
+    static func createConversation(from: (String, String), to: (String, String)) async throws {
+        try await firestoreDB.collection("messages").document(from.0).setData([
             to.1 : [
                 "email": to.0,
                 "messages": []
             ]], merge: true)
-
-        firestoreDB.collection("messages").document(to.0).setData([
+        
+        try await firestoreDB.collection("messages").document(to.0).setData([
             from.1 : [
                 "email": from.0,
                 "messages": []
             ]], merge: true)
     }
-
+    
     static func addDocumentListener(owner: String, onEvent: @escaping (_ querySnapshot: DocumentSnapshot?, _ err: Error?) -> Void) -> ListenerRegistration? {
         let listener = firestoreDB
             .collection("messages")

@@ -6,10 +6,13 @@
 //
 
 import Foundation
+import SwiftUI
 
 @MainActor
 class UploadStore: ObservableObject {
-    @Published var state: UploadState
+    
+    @MainActor @Published var state: UploadState
+
     var uploadService: UploadService
 
     init(state: UploadState = UploadState(), uploadService: UploadService = UploadService()) {
@@ -17,18 +20,27 @@ class UploadStore: ObservableObject {
         self.uploadService = uploadService
     }
 
-    func dispatch(_ action: UploadAction) async {
-        self.state = await self.reducer(state, action)
+    func dispatch(_ action: UploadAction) {
+        self.state = self.reducer(state, action)
     }
 
-    func reducer(_ state: UploadState, _ action: UploadAction) async -> UploadState {
+    func reducer(_ state: UploadState, _ action: UploadAction) -> UploadState {
         var mutableState = state
         
-        switch(action){ 
+        switch(action){
         case .unselectImage:
             mutableState.imagePicked = nil
-        case .upload(let image, let owner):
-            await uploadService.postImageToInstagramClone(title: state.title, image: image, owner: owner)
+        case .upload(let owner):
+            Task {
+                do {
+                    let imageData = try await self.state.imagePicked?.loadTransferable(type: Data.self)
+                    let uiImage = UIImage(data: imageData!)
+                    let compressedImage = uiImage?.jpegData(compressionQuality: 0.5)
+                    try await uploadService.postImageToInstagramClone(title: state.title, image: compressedImage!, owner: owner)
+                } catch {
+                    print("Error occurred @UploadStore.upload", error.localizedDescription)
+                }
+            }
         }
         
         return mutableState

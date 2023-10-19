@@ -25,7 +25,13 @@ class MessageStore: ObservableObject {
 
         switch action {
         case .send(let to, let from , let message):
-            messageService.sendMessage(to: to, from: from, message: message)
+            Task {
+                do {
+                    try await messageService.sendMessage(to: to, from: from, message: message)
+                } catch {
+                    // TODO: Handle error
+                }
+            }
         }
         
         return mutableState;

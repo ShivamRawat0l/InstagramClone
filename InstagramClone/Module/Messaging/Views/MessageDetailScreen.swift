@@ -24,6 +24,46 @@ struct MessageDetailScreen: View {
         globalStore.state.messageState
     }
     
+    func header() -> some ToolbarContent {
+        Group {
+            ToolbarItem(placement: .topBarLeading) {
+                HStack{
+                    Rectangle()
+                        .fill(.clear)
+                        .frame(width: 40, height: 40)
+                        .zIndex(1)
+                        .overlay {
+                            Button {
+                                dismiss()
+                            } label: {
+                                Image(systemName: Icons.chevronBackward)
+                            }
+                        }
+                    AsyncImage(url: URL(string: Constant.getImageUrl(title: email)))
+                        .frame(width: 40, height: 40)
+                        .clipShape(Circle())
+                }
+            }
+            ToolbarItem(placement: .principal) {
+                HStack {
+                    VStack {
+                        Text(email)
+                            .frame(alignment: .leading)
+                        Text(username)
+                            .lineLimit(1)
+                    }
+                    Spacer()
+                }
+            }
+            ToolbarItem(placement: .topBarTrailing) {
+                HStack{
+                    Image(systemName: Icons.phone)
+                    Image(systemName: Icons.video)
+                }
+            }
+        }
+    }
+
     var body: some View {
         VStack {
             ScrollView{
@@ -70,51 +110,22 @@ struct MessageDetailScreen: View {
         .navigationBarBackButtonHidden(true)
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {
-            ToolbarItem(placement: .topBarLeading) {
-                HStack{
-                    Rectangle()
-                        .fill(.clear)
-                        .frame(width: 40, height: 40)
-                        .zIndex(1)
-                        .overlay {
-                            Button {
-                                dismiss()
-                            } label: {
-                                Image(systemName: Icons.chevronBackward)
-                            }
-                        }
-                    AsyncImage(url: URL(string: Constant.getImageUrl(title: email)))
-                        .frame(width: 40, height: 40)
-                        .clipShape(Circle())
-                }
-            }
-            ToolbarItem(placement: .principal) {
-                HStack {
-                    VStack {
-                        Text(email)
-                            .frame(alignment: .leading)
-                        Text(username)
-                            .lineLimit(1)
-                    }
-                    Spacer()
-                }
-            }
-            ToolbarItem(placement: .topBarTrailing) {
-                HStack{
-                    Image(systemName: Icons.phone)
-                    Image(systemName: Icons.video)
-                }
-            }
+            header()
         }
-        .onAppear(perform: {
+        .task {
             globalStore.dispatch(.messageAction(.selectUserMessage((email,username),
                                                         (globalProfileStore.email,globalProfileStore.username))))
-        })
+        }
     }
 }
 
 #Preview {
-    Text("Preview not available")
-    // MessageDetailScreen(email: "", username: "")
-      //  .environmentObject(GlobalStore(state: GlobalState(loginStatus: .success)))
+    MessageDetailScreen(email: "A@a.com", username: "A_a")
+        .environmentObject(GlobalStore(state: GlobalState(loginStatus: .success,
+                                                          profileState: GlobalProfileState(),
+                                                          messageState: GlobalMessageState(
+                                                            selectedMessage: [],
+                                                            messageListStatus: .success,
+                                                            messageList: []
+                                                          ))))
 }

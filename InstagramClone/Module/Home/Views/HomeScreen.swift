@@ -9,10 +9,9 @@ import SwiftUI
 
 struct HomeScreen: View {
     @StateObject var homeStore = HomeStore()
-
+    
     var body: some View {
         VStack {
-            let _ = print("asd",homeStore.state.posts)
             HStack {
                 InstagramLogo()
                 Spacer()
@@ -51,14 +50,14 @@ struct HomeScreen: View {
                         Text(post.postTitle)
                     }
                 }
-
                 Spacer()
             }
         }
-        .onAppear {
-            Task {
-             await homeStore.dispatch(.fetchPosts)
-            }
+        .refreshable {
+            homeStore.dispatch(.fetchPosts)
+        }
+        .task {
+            homeStore.dispatch(.fetchPosts)
         }
     }
 }

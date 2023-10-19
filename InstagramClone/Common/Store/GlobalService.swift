@@ -9,13 +9,9 @@ import FirebaseFirestore
 import Foundation
 
 struct GlobalProfileService {
-    func getProfile(email: String,
-                    _ dispatch: @escaping (_ action: GlobalAction) -> Void) {
-        FirebaseManager.getProfile(email: email) { newData in
-            dispatch(.profileAction(.setProfile(newData["name"]!, newData["username"]!)))
-        } err: {
-            // TODO: Handle Logout
-        }
+    func getProfile(email: String) async throws -> (String, String) {
+        let newData = try await FirebaseManager.getProfile(email: email)
+        return (newData["name"]!, newData["username"]!)
     }
 }
 
@@ -76,26 +72,27 @@ class GlobalMessageService {
             }
     }
 
-    func selectMessage(state : GlobalState, from: (String,String), to:(String,String) , dispatch : @escaping (_ action : GlobalAction) -> Void ){
+    func selectMessage(state : GlobalState, from: (String,String), to:(String,String)) async throws -> [MessageDetail] {
         var isConversationAvailable = false
+        var selectedConversation: [MessageDetail] = []
         selectedInfo = (from, to)
         state.messageState.messageList.forEach({ message in
             if message.ownerName == from.1 {
-                DispatchQueue.main.async {
-                    dispatch(.messageAction(.setMessages(message.message)))
-                }
+                selectedConversation = message.message
                 isConversationAvailable = true
             }
         })
 
         guard isConversationAvailable else {
-            createConversation(from: from, to: to)
-            return
+            try await createConversation(from: from, to: to)
+            // TODO: Replace with proper error
+            throw URLError(.badURL)
         }
+        return selectedConversation
     }
 
-    func createConversation(from: (String, String), to: (String, String)) {
-        FirebaseManager.createConversation(from: from, to: to)
+    func createConversation(from: (String, String), to: (String, String)) async throws {
+        try await FirebaseManager.createConversation(from: from, to: to)
     }
 
     func reset() {
