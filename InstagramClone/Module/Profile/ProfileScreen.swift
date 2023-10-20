@@ -57,6 +57,7 @@ struct ProfileScreen: View {
                                 Circle()
                                     .fill(.blue)
                             }
+                            .offset(x: -10, y: -10)
                             .frame(maxWidth: .infinity, maxHeight: .infinity,alignment: .bottomTrailing)
                     }
                 Spacer()

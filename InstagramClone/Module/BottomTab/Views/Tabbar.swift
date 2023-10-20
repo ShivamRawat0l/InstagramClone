@@ -26,7 +26,11 @@ struct Tabbar: View {
             onSelectTab()
         }
     }
-    
+
+    func navigateToHome() {
+        self.selectedIndex = 0;
+    }
+
     var icons = [
         (Icons.house, Icons.houseFill, 0 ),
         (Icons.magnifyingGlassCircle, Icons.magnifyingGlassCircleFill, 1 ),
@@ -41,7 +45,7 @@ struct Tabbar: View {
             } else if selectedIndex == 1 {
                 SearchScreen()
             } else if selectedIndex == 2 {
-                UploadScreen()
+                UploadScreen(navigateToHome: navigateToHome)
             } else if selectedIndex == 3 {
                 ProfileScreen()
             }

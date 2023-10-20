@@ -33,6 +33,7 @@
 		5E576B492ADF9C0700C96EED /* SearchAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E576B482ADF9C0700C96EED /* SearchAction.swift */; };
 		5E576B4B2ADF9C1F00C96EED /* SearchState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E576B4A2ADF9C1F00C96EED /* SearchState.swift */; };
 		5E576B4D2ADF9C3300C96EED /* SearchService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E576B4C2ADF9C3300C96EED /* SearchService.swift */; };
+		5E9C79772AE226630084FF23 /* AsyncAlgorithms in Frameworks */ = {isa = PBXBuildFile; productRef = 5E9C79762AE226630084FF23 /* AsyncAlgorithms */; };
 		5E9F1A562AD799FD004B5E54 /* UploadStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E9F1A552AD799FD004B5E54 /* UploadStore.swift */; };
 		5E9F1A582AD79A06004B5E54 /* UploadAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E9F1A572AD79A06004B5E54 /* UploadAction.swift */; };
 		5E9F1A5A2AD79A1A004B5E54 /* UploadState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E9F1A592AD79A1A004B5E54 /* UploadState.swift */; };
@@ -165,6 +166,7 @@
 				5E4410E22AA866DA00781FEF /* FirebaseFirestore in Frameworks */,
 				5ECF4F752AAF2194008BEC9C /* FirebaseDatabase in Frameworks */,
 				5E4410E42AA866DA00781FEF /* FirebaseStorage in Frameworks */,
+				5E9C79772AE226630084FF23 /* AsyncAlgorithms in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -579,6 +581,7 @@
 				5E4410E12AA866DA00781FEF /* FirebaseFirestore */,
 				5E4410E32AA866DA00781FEF /* FirebaseStorage */,
 				5ECF4F742AAF2194008BEC9C /* FirebaseDatabase */,
+				5E9C79762AE226630084FF23 /* AsyncAlgorithms */,
 			);
 			productName = InstagramClone;
 			productReference = 5E44109C2AA7101800781FEF /* InstagramClone.app */;
@@ -655,6 +658,7 @@
 			mainGroup = 5E4410932AA7101800781FEF;
 			packageReferences = (
 				5E4410DE2AA866DA00781FEF /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+				5E9C79752AE226630084FF23 /* XCRemoteSwiftPackageReference "swift-async-algorithms" */,
 			);
 			productRefGroup = 5E44109D2AA7101800781FEF /* Products */;
 			projectDirPath = "";
@@ -1094,6 +1098,14 @@
 				minimumVersion = 10.14.0;
 			};
 		};
+		5E9C79752AE226630084FF23 /* XCRemoteSwiftPackageReference "swift-async-algorithms" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/apple/swift-async-algorithms.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.1.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -1111,6 +1123,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 5E4410DE2AA866DA00781FEF /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseStorage;
+		};
+		5E9C79762AE226630084FF23 /* AsyncAlgorithms */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 5E9C79752AE226630084FF23 /* XCRemoteSwiftPackageReference "swift-async-algorithms" */;
+			productName = AsyncAlgorithms;
 		};
 		5ECF4F742AAF2194008BEC9C /* FirebaseDatabase */ = {
 			isa = XCSwiftPackageProductDependency;

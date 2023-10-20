@@ -9,6 +9,8 @@ import Foundation
 
 enum HomeAction {
     case fetchPosts
+    case likePost(String, String)
+    case dislikePost(String, String)
     // Setter actions
     case setPosts([PostType])
 }

@@ -12,7 +12,10 @@ struct UploadScreen: View {
     @ObservedObject var uploadStore = UploadStore()
     @EnvironmentObject var globalStore: GlobalStore
 
+    var navigateToHome: () -> Void
+
     @State var isImagePickerOpened = false
+
     var imagePicked: PhotosPickerItem? {
         uploadStore.state.imagePicked
     }
@@ -21,29 +24,21 @@ struct UploadScreen: View {
 
     var body: some View {
         VStack {
-            if let UIImageHolder {
-
-                TextField("Enter the title", text: $uploadStore.state.title)
-                    .textFieldStyle(DefaultInputStyle())
+            if uploadStore.state.imageUploadStatus == .pending {
+                ProgressView()
+            }
+            else if let UIImageHolder {
                 Image(uiImage: UIImageHolder)
                     .resizable()
                     .aspectRatio(contentMode: .fit)
-                    .frame(width: 400)
-                Button {
-                    uploadStore.dispatch(.upload(globalStore.state.profileState.username))
-                } label: {
-                    Text("Send to the storage.")
-                }
-            }
-
-            if imagePicked != nil {
-                Button {
-                    uploadStore.dispatch(.unselectImage)
-                } label: {
-                    Text("Discard Image")
-                }
+                    .frame(maxWidth: 300)
+                    .padding(.vertical, 30)
+                TextField("Enter the title", text: $uploadStore.state.title)
+                    .textFieldStyle(.roundedBorder)
+                Spacer()
             }
         }
+        .padding()
         .navigationBarTitleDisplayMode(.inline)
         .navigationTitle("Upload Post")
         .onAppear {
@@ -61,10 +56,42 @@ struct UploadScreen: View {
                 }
             }
         }
-        .photosPicker(isPresented: $isImagePickerOpened, selection: $uploadStore.state.imagePicked)
+        .onChange(of: uploadStore.state.imageUploadStatus) {
+            if uploadStore.state.imageUploadStatus == .success {
+                navigateToHome()
+            }
+        }
+        .onChange(of: isImagePickerOpened) {
+            if isImagePickerOpened == false && imagePicked == nil {
+                navigateToHome()
+            }
+        }
+        .toolbar {
+            ToolbarItem(placement: .cancellationAction) {
+                Button {
+                    uploadStore.dispatch(.unselectImage)
+                    navigateToHome()
+                } label: {
+                    Image(systemName: Icons.cancel)
+                }
+            }
+            ToolbarItem(placement: .confirmationAction) {
+                Button {
+                    uploadStore.dispatch(.upload(globalStore.state.profileState.email))
+                } label: {
+                    Text("Post")
+                }
+                .disabled(uploadStore.state.title.count == 0)
+            }
+        }
+        .photosPicker(isPresented: $isImagePickerOpened,
+                      selection: $uploadStore.state.imagePicked,
+                      matching: .images)
     }
 }
 
 #Preview {
-    UploadScreen()
+    NavigationView {
+        UploadScreen(navigateToHome: {}, UIImageHolder: UIImage(systemName: Icons.cameraFill))
+    }
 }

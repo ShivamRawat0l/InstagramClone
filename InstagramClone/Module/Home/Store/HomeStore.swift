@@ -35,6 +35,30 @@ class HomeStore: ObservableObject {
                     print("Error occured @HomeStore.fetchPosts", error.localizedDescription)
                 }
             }
+        case .likePost(let postID, let email):
+            Task {
+                do {
+                    let selectedPostIndex = self.state.posts.firstIndex {
+                        $0.postID == postID
+                    }
+                    mutableState.posts[selectedPostIndex!] = try await homeservice.likePost(postID: postID, email: email, post: mutableState.posts[selectedPostIndex!])
+                    self.dispatch(.setPosts(mutableState.posts))
+                } catch {
+                    print("Error occured @HomeStore.fetchPosts", error.localizedDescription)
+                }
+            }
+        case .dislikePost(let postID, let email):
+            Task {
+                do {
+                    let selectedPostIndex = self.state.posts.firstIndex {
+                        $0.postID == postID
+                    }
+                    mutableState.posts[selectedPostIndex!] = try await homeservice.dislikePost(postID: postID, email: email, post: mutableState.posts[selectedPostIndex!])
+                    self.dispatch(.setPosts(mutableState.posts))
+                } catch {
+                    print("Error occured @HomeStore.fetchPosts", error.localizedDescription)
+                }
+            }
         case .setPosts(let post):
             mutableState.posts = post
         }

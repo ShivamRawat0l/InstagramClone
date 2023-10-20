@@ -9,6 +9,7 @@ import Foundation
 
 enum UploadAction {
     case unselectImage
-
     case upload(String)
+
+    case setUploadStatus(AsyncStatus)
 }

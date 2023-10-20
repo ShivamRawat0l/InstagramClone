@@ -10,9 +10,8 @@ import PhotosUI
 import SwiftUI
 
 struct UploadState {
-     var isImagePickerOpened = false // TODO: Handle this
-     var imagePicked: PhotosPickerItem?
-     var UIImageHolder: UIImage?
-
-     var title: String = .empty
+    var imagePicked: PhotosPickerItem?
+    var UIImageHolder: UIImage?
+    var imageUploadStatus: AsyncStatus = .inital
+    var title: String = .empty
 }

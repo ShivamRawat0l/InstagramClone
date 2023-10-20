@@ -33,14 +33,20 @@ class UploadStore: ObservableObject {
         case .upload(let owner):
             Task {
                 do {
+                    self.dispatch(.setUploadStatus(.pending))
                     let imageData = try await self.state.imagePicked?.loadTransferable(type: Data.self)
                     let uiImage = UIImage(data: imageData!)
                     let compressedImage = uiImage?.jpegData(compressionQuality: 0.5)
                     try await uploadService.postImageToInstagramClone(title: state.title, image: compressedImage!, owner: owner)
+                    self.dispatch(.setUploadStatus(.success))
                 } catch {
+                    self.dispatch(.setUploadStatus(.failure))
                     print("Error occurred @UploadStore.upload", error.localizedDescription)
                 }
             }
+
+        case .setUploadStatus(let status):
+            mutableState.imageUploadStatus = status
         }
         
         return mutableState

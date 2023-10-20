@@ -34,7 +34,7 @@ import SwiftUI
                     let email = try await authService.login(email: state.email, password: state.password)
                     self.dispatch(.setLoginStatus(.success(email)))
                 } catch {
-                    // TODO: Handle Error
+                    self.dispatch(.setLoginStatus(.failure(error.localizedDescription)))
                 }
             }
         case .didTapOnSignup:
@@ -46,7 +46,7 @@ import SwiftUI
                                                          password: state.password)
                     self.dispatch(.setSignupStatus(.success(email)))
                 } catch {
-                    // TODO: Handle error
+                    self.dispatch(.setLoginStatus(.failure(error.localizedDescription)))
                 }
             }
             // MARK: Setter actions

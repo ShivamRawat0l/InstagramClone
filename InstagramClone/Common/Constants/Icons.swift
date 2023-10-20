@@ -38,4 +38,13 @@ struct Icons {
     static var squareAndPencil = "square.and.pencil"
 
     static var eyeFill = "eye.fill"
+
+    static var cancel = "xmark" 
+
+    static var like = "heart"
+    static var likeFill = "heart.fill"
+    static var comment = "bubble.right"
+    static var share = "arrowshape.turn.up.right"
+    static var bookmark = "bookmark"
+    static var bookmarkFill = "bookmark.fill"
 }

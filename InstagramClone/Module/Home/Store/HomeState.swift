@@ -8,15 +8,13 @@
 import Foundation
 
 struct PostType {
-    struct Owner {
-        var email: String
-        var username:String
-    }
-
+    var postID: String
     var postTitle: String
-    var owner: Owner
+    var owner: String
     var imageName: String
     var image: URL?
+    var uploadTime: Double
+    var likes: [String]
 }
 
 struct HomeState {
