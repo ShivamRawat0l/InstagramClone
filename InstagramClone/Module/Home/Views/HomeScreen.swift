@@ -55,6 +55,73 @@ struct HomeScreen: View {
         globalStore.state.profileState.email
     }
 
+    func renderPost(post: PostType) -> some View {
+        let isPostLikedByMe = post.likes.contains {
+            $0 == userEmail
+        }
+        return VStack(alignment: .leading) {
+            HStack {
+                AsyncImage(url: URL(string: Constant.getImageUrl(title: post.owner)))
+                    .frame(width:40, height: 40)
+                    .clipShape(Circle())
+                Text(post.owner)
+            }
+            AsyncImage(url: post.image) {   phaseImage in
+                switch phaseImage {
+                case .success(let image):
+                    image
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                        .frame(maxWidth: .infinity)
+                case .empty:
+                    ProgressView()
+                case .failure(_):
+                    Text("Error")
+                default:
+                    Text("Unknown")
+                }
+            }
+            Text("\(post.likes.count) Likes")
+                .bold()
+                .padding(.vertical,6)
+            HStack {
+                Button {
+                    //homeVM.change()
+                    if isPostLikedByMe {
+                        homeStore.dispatch(.dislikePost(post.postID, userEmail))
+                    } else {
+                        homeStore.dispatch(.likePost(post.postID, userEmail))
+                    }
+                    //homeStore.dispatch(.like)
+                } label: {
+                    if isPostLikedByMe {
+                        Image(systemName: Icons.likeFill)
+                            .font(.title2)
+                    } else {
+                        Image(systemName: Icons.like)
+                            .font(.title2)
+                    }
+
+                }
+                Image(systemName: Icons.comment)
+                    .font(.title2)
+
+                Image(systemName: Icons.share)
+                    .font(.title2)
+
+                Spacer()
+                Image(systemName: Icons.bookmark)
+                    .font(.title2)
+            }
+            .padding(.bottom,6)
+            HStack {
+                Text(post.owner)
+                    .bold()
+                Text(post.postTitle)
+            }
+        }
+    }
+
     var body: some View {
         VStack {
             HStack {
@@ -72,76 +139,17 @@ struct HomeScreen: View {
                 }
             }
             .padding()
-            ScrollView {
-                ForEach(homeStore.state.posts, id: \.imageName) { post in
-                    var isPostLikedByMe = post.likes.contains {
-                        $0 == userEmail
+            if homeStore.state.fetchPostStatus == .pending {
+                ProgressView()
+            } else {
+                ScrollView {
+                    ForEach(homeStore.state.posts, id: \.imageName) { post in
+                        renderPost(post: post)
                     }
-                    VStack(alignment: .leading) {
-                        HStack {
-                            AsyncImage(url: URL(string: Constant.getImageUrl(title: post.owner)))
-                                .frame(width:40, height: 40)
-                                .clipShape(Circle())
-                            Text(post.owner)
-                        }
-                        AsyncImage(url: post.image) {   phaseImage in
-                            switch phaseImage {
-                            case .success(let image):
-                                image
-                                    .resizable()
-                                    .aspectRatio(contentMode: .fit)
-                                    .frame(maxWidth: .infinity)
-                            case .empty:
-                                ProgressView()
-                            case .failure(_):
-                                Text("Error")
-                            default:
-                                Text("Unknown")
-                            }
-                        }
-                        Text("\(post.likes.count) Likes")
-                            .bold()
-                            .padding(.vertical,6)
-                        HStack {
-                            Button {
-                                //homeVM.change()
-                                if isPostLikedByMe {
-                                    homeStore.dispatch(.dislikePost(post.postID, userEmail))
-                                } else {
-                                    homeStore.dispatch(.likePost(post.postID, userEmail))
-                                }
-                                //homeStore.dispatch(.like)
-                            } label: {
-                                if isPostLikedByMe {
-                                    Image(systemName: Icons.likeFill)
-                                        .font(.title2)
-                                } else {
-                                    Image(systemName: Icons.like)
-                                        .font(.title2)
-                                }
-
-                            }
-                            Image(systemName: Icons.comment)
-                                .font(.title2)
-
-                            Image(systemName: Icons.share)
-                                .font(.title2)
-
-                            Spacer()
-                            Image(systemName: Icons.bookmark)
-                                .font(.title2)
-                        }
-                        .padding(.bottom,6)
-                        HStack {
-                            Text(post.owner)
-                                .bold()
-                            Text(post.postTitle)
-                        }
-                    }
+                    .padding()
                 }
-                .padding()
-                Spacer()
             }
+            Spacer()
         }
         .refreshable {
             homeStore.dispatch(.fetchPosts)
@@ -154,4 +162,6 @@ struct HomeScreen: View {
 
 #Preview {
     HomeScreen()
+        .environmentObject(GlobalStore(state: GlobalState(profileState: 
+                                                            GlobalProfileState(email: "A@a.com", username: "A_a"))))
 }

@@ -19,4 +19,5 @@ struct PostType {
 
 struct HomeState {
     var posts: [PostType] = []
+    var fetchPostStatus: AsyncStatus = .inital
 }

@@ -20,7 +20,11 @@ struct UserTab: View {
                 Text(title)
                     .bold()
                     .foregroundStyle(.black)
+                    .multilineTextAlignment(.leading)
+                    .lineLimit(1)
                 Text(caption)
+                    .multilineTextAlignment(.leading)
+                    .lineLimit(1)
             }
             .padding(.leading, 20)
             Spacer()

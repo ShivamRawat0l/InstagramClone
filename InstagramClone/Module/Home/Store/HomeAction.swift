@@ -13,4 +13,6 @@ enum HomeAction {
     case dislikePost(String, String)
     // Setter actions
     case setPosts([PostType])
+    case setPostStatus(AsyncStatus)
+
 }

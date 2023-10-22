@@ -29,10 +29,12 @@ class HomeStore: ObservableObject {
         case .fetchPosts:
             Task {
                 do {
+                    self.dispatch(.setPostStatus(.pending))
                     let posts = try await homeservice.getPosts()
                     self.dispatch(.setPosts(posts))
+                    self.dispatch(.setPostStatus(.success))
                 } catch {
-                    print("Error occured @HomeStore.fetchPosts", error.localizedDescription)
+                    self.dispatch(.setPostStatus(.failure))
                 }
             }
         case .likePost(let postID, let email):
@@ -61,6 +63,8 @@ class HomeStore: ObservableObject {
             }
         case .setPosts(let post):
             mutableState.posts = post
+        case .setPostStatus(let status):
+            mutableState.fetchPostStatus = status
         }
         return mutableState
     }

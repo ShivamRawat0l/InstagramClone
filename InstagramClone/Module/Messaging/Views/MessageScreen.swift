@@ -30,13 +30,7 @@ struct MessageScreen: View {
                         .foregroundStyle(.black)
                 }
             }
-            ToolbarItem(placement: .principal) {
-                Text(globalProfileStore.username)
-                    .tint(.black)
-                    .foregroundColor(.black)
-                    .font(.regular26)
-                    .lineLimit(1)
-            }
+            
             ToolbarItem(placement: .topBarTrailing) {
                 Image(systemName: Icons.squareAndPencil)
             }
@@ -45,9 +39,6 @@ struct MessageScreen: View {
     
     var body: some View {
         VStack(alignment: .leading){
-            Text("Messages")
-                .bold()
-                .padding(.top , 20)
             ScrollView {
                 VStack{
                     if globalMessageStore.messageListStatus == .success {
@@ -55,7 +46,10 @@ struct MessageScreen: View {
                             let messageDetailsScreen = MessageDetailScreen(email: message.ownerEmail,
                                                                            username: message.ownerName)
                             NavigationLink(destination: messageDetailsScreen) {
-                                UserTab(title: message.ownerName, caption: message.content)
+                                VStack {
+                                    UserTab(title: message.ownerName, caption: message.content)
+                                    Divider()
+                                }
                             }
                         }
                     } else {
@@ -66,6 +60,7 @@ struct MessageScreen: View {
             }
             .padding(.top, 20)
         }
+        .navigationTitle("Messages")
         .navigationBarBackButtonHidden(true)
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {
@@ -82,6 +77,11 @@ struct MessageScreen: View {
                                                           messageState: GlobalMessageState(
                                                             selectedMessage: [],
                                                             messageListStatus: .success, 
-                                                            messageList: []
+                                                            messageList: [
+                                                                MessageListDetail(ownerEmail: "SAMPLE",
+                                                                                  ownerName: "SAMPLE",
+                                                                                  content: "SAMPLE",
+                                                                                  message: [])
+                                                            ]
                                                           ))))
 }

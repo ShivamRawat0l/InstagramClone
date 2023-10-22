@@ -34,6 +34,7 @@
 		5E576B4B2ADF9C1F00C96EED /* SearchState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E576B4A2ADF9C1F00C96EED /* SearchState.swift */; };
 		5E576B4D2ADF9C3300C96EED /* SearchService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E576B4C2ADF9C3300C96EED /* SearchService.swift */; };
 		5E9C79772AE226630084FF23 /* AsyncAlgorithms in Frameworks */ = {isa = PBXBuildFile; productRef = 5E9C79762AE226630084FF23 /* AsyncAlgorithms */; };
+		5E9C79792AE26E9C0084FF23 /* CustomShimmer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E9C79782AE26E9C0084FF23 /* CustomShimmer.swift */; };
 		5E9F1A562AD799FD004B5E54 /* UploadStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E9F1A552AD799FD004B5E54 /* UploadStore.swift */; };
 		5E9F1A582AD79A06004B5E54 /* UploadAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E9F1A572AD79A06004B5E54 /* UploadAction.swift */; };
 		5E9F1A5A2AD79A1A004B5E54 /* UploadState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E9F1A592AD79A1A004B5E54 /* UploadState.swift */; };
@@ -118,6 +119,7 @@
 		5E576B482ADF9C0700C96EED /* SearchAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchAction.swift; sourceTree = "<group>"; };
 		5E576B4A2ADF9C1F00C96EED /* SearchState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchState.swift; sourceTree = "<group>"; };
 		5E576B4C2ADF9C3300C96EED /* SearchService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchService.swift; sourceTree = "<group>"; };
+		5E9C79782AE26E9C0084FF23 /* CustomShimmer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomShimmer.swift; sourceTree = "<group>"; };
 		5E9F1A552AD799FD004B5E54 /* UploadStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadStore.swift; sourceTree = "<group>"; };
 		5E9F1A572AD79A06004B5E54 /* UploadAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadAction.swift; sourceTree = "<group>"; };
 		5E9F1A592AD79A1A004B5E54 /* UploadState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadState.swift; sourceTree = "<group>"; };
@@ -304,6 +306,7 @@
 				5E4410F42AA98D9E00781FEF /* PrimaryButton.swift */,
 				5E4410F62AA9962D00781FEF /* PasswordField.swift */,
 				5ECF4F812AB06DEE008BEC9C /* UserTab.swift */,
+				5E9C79782AE26E9C0084FF23 /* CustomShimmer.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -734,6 +737,7 @@
 				5EB05BB92AC6B8C800141CE0 /* FirebaseManager.swift in Sources */,
 				5E9F1A642AD7D489004B5E54 /* HomeAction.swift in Sources */,
 				5E9F1A5A2AD79A1A004B5E54 /* UploadState.swift in Sources */,
+				5E9C79792AE26E9C0084FF23 /* CustomShimmer.swift in Sources */,
 				5E4410A02AA7101800781FEF /* InstagramCloneApp.swift in Sources */,
 				5EB05BB32AC6B74D00141CE0 /* MessageAction.swift in Sources */,
 				5E4411032AAAE6E200781FEF /* Tabbar.swift in Sources */,

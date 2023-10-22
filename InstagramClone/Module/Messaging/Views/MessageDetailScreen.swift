@@ -46,10 +46,13 @@ struct MessageDetailScreen: View {
             }
             ToolbarItem(placement: .principal) {
                 HStack {
-                    VStack {
+                    VStack(alignment: .leading) {
                         Text(email)
                             .frame(alignment: .leading)
+                            .multilineTextAlignment(.leading)
+                            .lineLimit(1)
                         Text(username)
+                            .multilineTextAlignment(.leading)
                             .lineLimit(1)
                     }
                     Spacer()
