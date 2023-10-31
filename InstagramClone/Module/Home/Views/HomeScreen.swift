@@ -7,49 +7,14 @@
 
 import SwiftUI
 import AsyncAlgorithms
-
-class HomeVM: ObservableObject {
-    @Published var isPostLiked: Bool = false
-    var task: Task<(), Never>? = nil
-    init(isPostLiked: Bool = false) {
-        self.isPostLiked = isPostLiked
-        Task {
-            await toggle()
-        }
-    }
-    
-    func change() {
-        self.isPostLiked.toggle()
-    }
-
-
-    func sampleFunc() async  {
-        do {
-            print("SLEEPING", self.isPostLiked)
-            try  await Task.sleep(nanoseconds:  4_000_000_000)
-            print("WAKE", self.isPostLiked)
-        } catch {
-            print("Errror")
-        }
-    }
-
-    func toggle() async {
-        for await _ in $isPostLiked.values.debounce(for: .seconds(2)) {
-            if task != nil {
-                task?.cancel()
             }
-             task = Task {
-                await sampleFunc()
-            }
-        }
-    }
-}
+import AVFoundation
 
 struct HomeScreen: View {
     @EnvironmentObject var globalStore: GlobalStore
-
     @StateObject var homeStore = HomeStore()
-     @StateObject var homeVM = HomeVM()
+    @State var originalImage: Image?
+    @State var thumbnailImage: Image?
 
     var userEmail: String {
         globalStore.state.profileState.email
@@ -66,13 +31,26 @@ struct HomeScreen: View {
                     .clipShape(Circle())
                 Text(post.owner)
             }
-            AsyncImage(url: post.image) {   phaseImage in
+            AsyncImage(url: post.image) { phaseImage in
                 switch phaseImage {
                 case .success(let image):
                     image
                         .resizable()
                         .aspectRatio(contentMode: .fit)
                         .frame(maxWidth: .infinity)
+                        .task {
+                            originalImage = image
+                            let uiimage = ImageRenderer(content: image).uiImage
+                            let thumbnail =  await withCheckedContinuation { continuation in
+                                uiimage!.prepareThumbnail(of: CGSize(width: 100, height: 100)) { uiImage in
+                                    continuation.resume(returning: uiImage)
+                                }
+                            }
+                            if let thumbnail {
+                                thumbnailImage = Image(uiImage: thumbnail)
+                            }
+                        }
+
                 case .empty:
                     ProgressView()
                 case .failure(_):
@@ -86,13 +64,11 @@ struct HomeScreen: View {
                 .padding(.vertical,6)
             HStack {
                 Button {
-                    //homeVM.change()
                     if isPostLikedByMe {
                         homeStore.dispatch(.dislikePost(post.postID, userEmail))
                     } else {
                         homeStore.dispatch(.likePost(post.postID, userEmail))
                     }
-                    //homeStore.dispatch(.like)
                 } label: {
                     if isPostLikedByMe {
                         Image(systemName: Icons.likeFill)
@@ -105,10 +81,16 @@ struct HomeScreen: View {
                 }
                 Image(systemName: Icons.comment)
                     .font(.title2)
-
-                Image(systemName: Icons.share)
-                    .font(.title2)
-
+                if let originalImage, let thumbnailImage {
+                    ShareLink(item:  originalImage,
+                              subject: Text("Sharing a post"),
+                              message: Text("Instagram Clone Application"),
+                              preview: SharePreview(post.postTitle,  image: thumbnailImage)
+                    ) {
+                        Image(systemName: Icons.share)
+                            .font(.title2)
+                    }
+                }
                 Spacer()
                 Image(systemName: Icons.bookmark)
                     .font(.title2)
@@ -162,6 +144,6 @@ struct HomeScreen: View {
 
 #Preview {
     HomeScreen()
-        .environmentObject(GlobalStore(state: GlobalState(profileState: 
+        .environmentObject(GlobalStore(state: GlobalState(profileState:
                                                             GlobalProfileState(email: "A@a.com", username: "A_a"))))
 }

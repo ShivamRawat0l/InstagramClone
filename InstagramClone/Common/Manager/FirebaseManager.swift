@@ -58,7 +58,7 @@ class FirebaseManager {
         do {
             return try await postImage.downloadURL()
         } catch {
-            print("err")
+            print("err", error.localizedDescription)
             return nil
         }
     }
@@ -86,8 +86,9 @@ class FirebaseManager {
             storageRef.putData(image) { storage, err in
                 if let err {
                     continuation.resume(throwing: err)
-                }
-                continuation.resume()
+                } else {
+                    continuation.resume()
+                } 
             }
         }
     }
