@@ -7,8 +7,8 @@
 
 import SwiftUI
 import AsyncAlgorithms
-            }
 import AVFoundation
+import AVKit
 
 struct HomeScreen: View {
     @EnvironmentObject var globalStore: GlobalStore
@@ -21,6 +21,7 @@ struct HomeScreen: View {
     }
 
     func renderPost(post: PostType) -> some View {
+        let _ = print(post)
         let isPostLikedByMe = post.likes.contains {
             $0 == userEmail
         }
@@ -31,32 +32,43 @@ struct HomeScreen: View {
                     .clipShape(Circle())
                 Text(post.owner)
             }
-            AsyncImage(url: post.image) { phaseImage in
-                switch phaseImage {
-                case .success(let image):
-                    image
-                        .resizable()
-                        .aspectRatio(contentMode: .fit)
-                        .frame(maxWidth: .infinity)
-                        .task {
-                            originalImage = image
-                            let uiimage = ImageRenderer(content: image).uiImage
-                            let thumbnail =  await withCheckedContinuation { continuation in
-                                uiimage!.prepareThumbnail(of: CGSize(width: 100, height: 100)) { uiImage in
-                                    continuation.resume(returning: uiImage)
+            if post.isMediaVideo {
+                VideoPlayer(player: AVPlayer(url: post.mediaURL!)) {
+                    VStack {
+                        Spacer()
+                        Image(systemName: "play.fill")
+                        Spacer()
+                    }
+                }
+                .frame(maxWidth: .infinity, height: 300)
+            } else {
+                AsyncImage(url: post.mediaURL) { phaseImage in
+                    switch phaseImage {
+                    case .success(let image):
+                        image
+                            .resizable()
+                            .aspectRatio(contentMode: .fit)
+                            .frame(maxWidth: .infinity)
+                            .task {
+                                originalImage = image
+                                let uiimage = ImageRenderer(content: image).uiImage
+                                let thumbnail =  await withCheckedContinuation { continuation in
+                                    uiimage!.prepareThumbnail(of: CGSize(width: 200, height: 200)) { uiImage in
+                                        continuation.resume(returning: uiImage)
+                                    }
+                                }
+                                if let thumbnail {
+                                    thumbnailImage = Image(uiImage: thumbnail)
                                 }
                             }
-                            if let thumbnail {
-                                thumbnailImage = Image(uiImage: thumbnail)
-                            }
-                        }
 
-                case .empty:
-                    ProgressView()
-                case .failure(_):
-                    Text("Error")
-                default:
-                    Text("Unknown")
+                    case .empty:
+                        ProgressView()
+                    case .failure(_):
+                        Text("Error")
+                    default:
+                        Text("Unknown")
+                    }
                 }
             }
             Text("\(post.likes.count) Likes")
@@ -125,7 +137,7 @@ struct HomeScreen: View {
                 ProgressView()
             } else {
                 ScrollView {
-                    ForEach(homeStore.state.posts, id: \.imageName) { post in
+                    ForEach(homeStore.state.posts, id: \.mediaName) { post in
                         renderPost(post: post)
                     }
                     .padding()
@@ -145,5 +157,8 @@ struct HomeScreen: View {
 #Preview {
     HomeScreen()
         .environmentObject(GlobalStore(state: GlobalState(profileState:
-                                                            GlobalProfileState(email: "A@a.com", username: "A_a"))))
+                                                            GlobalProfileState(email: "A@a.com", 
+                                                                               username: "A_a")
+                                                         )
+        ))
 }

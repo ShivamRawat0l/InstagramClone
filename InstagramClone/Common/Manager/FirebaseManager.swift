@@ -18,17 +18,18 @@ class FirebaseManager {
         let querySnapshot = try await firestoreDB.collection("posts").getDocuments()
         var posts: [PostType] = []
         for document in querySnapshot.documents {
-            let owner = document.data()["owner"] as? String ?? ""
-            let imagename =  document.data()["imageName"] as? String ?? ""
-            let imageURL = await FirebaseManager.getImageDownloadURL(id: imagename)
+            let owner = document.data()[PostFields.owner] as? String ?? ""
+            let mediaName =  document.data()[PostFields.mediaName] as? String ?? ""
+            let mediaURL = await FirebaseManager.getImageDownloadURL(id: mediaName)
             let documentData = document.data()
             let post = PostType(postID: document.documentID,
-                                postTitle: documentData["postTitle"] as? String ?? "",
+                                postTitle: documentData[PostFields.postTitle] as? String ?? "",
                                 owner: owner,
-                                imageName: documentData["imageName"] as? String ?? "",
-                                image: imageURL,
-                                uploadTime: documentData["uploadTime"] as? Double ?? 0,
-                                likes: documentData["likes"] as? [String] ?? []
+                                mediaName: documentData[PostFields.mediaName] as? String ?? "",
+                                mediaURL: mediaURL,
+                                uploadTime: documentData[PostFields.uploadTime] as? Double ?? 0,
+                                likes: documentData[PostFields.likes] as? [String] ?? [],
+                                isMediaVideo: documentData[PostFields.isMediaVideo] as? Bool ?? false
             )
             posts.append(post)
         }
@@ -38,7 +39,7 @@ class FirebaseManager {
     static func likePost(postID: String, myEmailID: String) async throws {
         let postRef = firestoreDB.collection("posts").document(postID)
         try await postRef.updateData([
-            "likes": FieldValue.arrayUnion([
+            PostFields.likes: FieldValue.arrayUnion([
                     myEmailID
             ])
         ])
@@ -47,7 +48,7 @@ class FirebaseManager {
     static func dislikePost(postID: String, myEmailID: String) async throws {
         let postRef = firestoreDB.collection("posts").document(postID)
         try await postRef.updateData([
-            "likes": FieldValue.arrayRemove([
+            PostFields.likes: FieldValue.arrayRemove([
                     myEmailID
             ])
         ])
@@ -56,24 +57,26 @@ class FirebaseManager {
     static func getImageDownloadURL(id: String) async -> URL? {
         let postImage = firebaseStorage.reference().child("posts/\(id)")
         do {
+            print(id)
             return try await postImage.downloadURL()
         } catch {
-            print("err", error.localizedDescription)
+            print("FirebaseManager.swift getImageDownloadURL \(id)", error.localizedDescription)
             return nil
         }
     }
     
-    static func uploadImage(id: String, image: Data, owner: String, postTitle: String) async throws {
-        let storageRef = firebaseStorage.reference().child("posts/\(id).jpg")
+    static func uploadImage(id: String, media: Data, owner: String, postTitle: String, isMediaVideo: Bool, fileExtension: String) async throws {
+        let storageRef = firebaseStorage.reference().child("posts/\(id)\(fileExtension)")
         
         try await withCheckedThrowingContinuation { (continuation: CheckedContinuation<Void, Error>) in
             firestoreDB.collection("posts").addDocument(data: [
-                "owner": owner,
-                "postTitle": postTitle,
-                "imageName": id + ".jpg",
-                "uploadTime": Date().timeIntervalSince1970,
-                "likes": [],
-                "commnets": []
+                PostFields.owner: owner,
+                PostFields.postTitle: postTitle,
+                PostFields.mediaName: id + fileExtension,
+                PostFields.uploadTime: Date().timeIntervalSince1970,
+                PostFields.likes: [],
+                PostFields.comments: [],
+                PostFields.isMediaVideo: isMediaVideo
             ]) { err in
                 if let err {
                     continuation.resume(throwing: err)
@@ -83,7 +86,7 @@ class FirebaseManager {
         }
         
         try await withCheckedThrowingContinuation { (continuation: CheckedContinuation<Void, Error>) in
-            storageRef.putData(image) { storage, err in
+            storageRef.putData(media) { storage, err in
                 if let err {
                     continuation.resume(throwing: err)
                 } else {

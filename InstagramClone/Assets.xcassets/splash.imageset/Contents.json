@@ -1,0 +1,15 @@
+{
+  "images" : [
+    {
+      "filename" : "Testpattern 1080x1920.png",
+      "idiom" : "universal"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  },
+  "properties" : {
+    "preserves-vector-representation" : true
+  }
+}

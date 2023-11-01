@@ -63,6 +63,8 @@
 		5EB05BC52AC6B9F900141CE0 /* AuthService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EB05BC42AC6B9F900141CE0 /* AuthService.swift */; };
 		5EB05BC92AC6C16700141CE0 /* NotificationScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EB05BC82AC6C16700141CE0 /* NotificationScreen.swift */; };
 		5EB05BCF2ACFC50200141CE0 /* Font.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EB05BCE2ACFC50100141CE0 /* Font.swift */; };
+		5EC952C02AF1783C0004FC89 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5EC952BF2AF1783C0004FC89 /* LaunchScreen.storyboard */; };
+		5EC952C42AF239AD0004FC89 /* FirebaseState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EC952C32AF239AD0004FC89 /* FirebaseState.swift */; };
 		5ECF4F6C2AAE1930008BEC9C /* UploadScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ECF4F6B2AAE1930008BEC9C /* UploadScreen.swift */; };
 		5ECF4F6E2AAE193A008BEC9C /* SearchScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ECF4F6D2AAE193A008BEC9C /* SearchScreen.swift */; };
 		5ECF4F702AAE2B7E008BEC9C /* DefaultInputStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ECF4F6F2AAE2B7E008BEC9C /* DefaultInputStyle.swift */; };
@@ -148,6 +150,9 @@
 		5EB05BC42AC6B9F900141CE0 /* AuthService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthService.swift; sourceTree = "<group>"; };
 		5EB05BC82AC6C16700141CE0 /* NotificationScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationScreen.swift; sourceTree = "<group>"; };
 		5EB05BCE2ACFC50100141CE0 /* Font.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Font.swift; sourceTree = "<group>"; };
+		5EC952BE2AF172280004FC89 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		5EC952BF2AF1783C0004FC89 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
+		5EC952C32AF239AD0004FC89 /* FirebaseState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseState.swift; sourceTree = "<group>"; };
 		5ECF4F6B2AAE1930008BEC9C /* UploadScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadScreen.swift; sourceTree = "<group>"; };
 		5ECF4F6D2AAE193A008BEC9C /* SearchScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchScreen.swift; sourceTree = "<group>"; };
 		5ECF4F6F2AAE2B7E008BEC9C /* DefaultInputStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultInputStyle.swift; sourceTree = "<group>"; };
@@ -213,6 +218,7 @@
 		5E44109E2AA7101800781FEF /* InstagramClone */ = {
 			isa = PBXGroup;
 			children = (
+				5EC952BE2AF172280004FC89 /* Info.plist */,
 				5EB05B9F2AC5D05700141CE0 /* Common */,
 				5E4410DC2AA865F900781FEF /* GoogleService-Info.plist */,
 				5E4410C92AA7366400781FEF /* Module */,
@@ -220,6 +226,7 @@
 				5E44109F2AA7101800781FEF /* InstagramCloneApp.swift */,
 				5E4410A32AA7101B00781FEF /* Assets.xcassets */,
 				5E4410A52AA7101B00781FEF /* Preview Content */,
+				5EC952BF2AF1783C0004FC89 /* LaunchScreen.storyboard */,
 			);
 			path = InstagramClone;
 			sourceTree = "<group>";
@@ -559,6 +566,7 @@
 			isa = PBXGroup;
 			children = (
 				5EB05BB82AC6B8C800141CE0 /* FirebaseManager.swift */,
+				5EC952C32AF239AD0004FC89 /* FirebaseState.swift */,
 			);
 			path = Manager;
 			sourceTree = "<group>";
@@ -682,6 +690,7 @@
 				5E4410A72AA7101B00781FEF /* Preview Assets.xcassets in Resources */,
 				5E4410A42AA7101B00781FEF /* Assets.xcassets in Resources */,
 				5E358F852AD5C40A0090A0D4 /* Localizable.xcstrings in Resources */,
+				5EC952C02AF1783C0004FC89 /* LaunchScreen.storyboard in Resources */,
 				5E4410DD2AA865F900781FEF /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -708,6 +717,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				5E4410CE2AA7370F00781FEF /* LoginView.swift in Sources */,
+				5EC952C42AF239AD0004FC89 /* FirebaseState.swift in Sources */,
 				5EABBCFC2AD512BB0052AAF5 /* Colors.swift in Sources */,
 				5EABBCFE2AD5133E0052AAF5 /* String.swift in Sources */,
 				5EB05BC32AC6B9E400141CE0 /* AuthState.swift in Sources */,
@@ -850,6 +860,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				"INFOPLIST_KEY_UILaunchStoryboardName[sdk=*]" = "";
 				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
@@ -929,9 +940,10 @@
 				DEVELOPMENT_TEAM = 2PHTASP985;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = InstagramClone/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
-				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen.storyboard;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
@@ -959,9 +971,10 @@
 				DEVELOPMENT_TEAM = 2PHTASP985;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = InstagramClone/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
-				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen.storyboard;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				IPHONEOS_DEPLOYMENT_TARGET = 17.0;

@@ -7,20 +7,21 @@
 
 import SwiftUI
 import PhotosUI
+import AVKit
+import CoreTransferable
 
 struct UploadScreen: View {
-    @ObservedObject var uploadStore = UploadStore()
     @EnvironmentObject var globalStore: GlobalStore
-
-    var navigateToHome: () -> Void
+    @ObservedObject var uploadStore = UploadStore()
 
     @State var isImagePickerOpened = false
+    @State var UIImageHolder: UIImage?;
+    @State var UIVideoHolder: URL?
 
+    var navigateToHome: () -> Void
     var imagePicked: PhotosPickerItem? {
         uploadStore.state.imagePicked
     }
-
-    @State var UIImageHolder: UIImage?;
 
     var body: some View {
         VStack {
@@ -37,6 +38,12 @@ struct UploadScreen: View {
                     .textFieldStyle(.roundedBorder)
                 Spacer()
             }
+            else if let UIVideoHolder {
+                VideoPlayer(player: AVPlayer(url: UIVideoHolder))
+                TextField("Enter the title", text: $uploadStore.state.title)
+                    .textFieldStyle(.roundedBorder)
+                Spacer()
+            }
         }
         .padding()
         .navigationBarTitleDisplayMode(.inline)
@@ -48,11 +55,16 @@ struct UploadScreen: View {
             Task {
                 do {
                     if let imagePicked {
-                        let image = try await imagePicked.loadTransferable(type: Data.self);
-                        UIImageHolder = UIImage(data: image!)
+                        let videoURL = try await imagePicked.loadTransferable(type: Movie.self);
+                        if let videoURL {
+                            UIVideoHolder = videoURL.url
+                        } else {
+                            let image = try await imagePicked.loadTransferable(type: Data.self);
+                            UIImageHolder = UIImage(data: image!)
+                        }
                     }
                 } catch {
-
+                    print("UploadScreen.swift", error.localizedDescription)
                 }
             }
         }
@@ -86,12 +98,12 @@ struct UploadScreen: View {
         }
         .photosPicker(isPresented: $isImagePickerOpened,
                       selection: $uploadStore.state.imagePicked,
-                      matching: .images)
+                      matching: PHPickerFilter.any(of: [.images, .videos]))
     }
 }
 
 #Preview {
     NavigationView {
-        UploadScreen(navigateToHome: {}, UIImageHolder: UIImage(systemName: Icons.cameraFill))
+        UploadScreen(UIImageHolder: UIImage(systemName: Icons.cameraFill), navigateToHome: {})
     }
 }
