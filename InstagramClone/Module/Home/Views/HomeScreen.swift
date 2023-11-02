@@ -16,15 +16,17 @@ struct HomeScreen: View {
     @State var originalImage: Image?
     @State var thumbnailImage: Image?
 
+
     var userEmail: String {
         globalStore.state.profileState.email
     }
 
     func renderPost(post: PostType) -> some View {
-        let _ = print(post)
+
         let isPostLikedByMe = post.likes.contains {
             $0 == userEmail
         }
+
         return VStack(alignment: .leading) {
             HStack {
                 AsyncImage(url: URL(string: Constant.getImageUrl(title: post.owner)))
@@ -33,14 +35,7 @@ struct HomeScreen: View {
                 Text(post.owner)
             }
             if post.isMediaVideo {
-                VideoPlayer(player: AVPlayer(url: post.mediaURL!)) {
-                    VStack {
-                        Spacer()
-                        Image(systemName: "play.fill")
-                        Spacer()
-                    }
-                }
-                .frame(maxWidth: .infinity, height: 300)
+                CustomVideoPlayer(url: post.mediaURL!)
             } else {
                 AsyncImage(url: post.mediaURL) { phaseImage in
                     switch phaseImage {
@@ -61,7 +56,6 @@ struct HomeScreen: View {
                                     thumbnailImage = Image(uiImage: thumbnail)
                                 }
                             }
-
                     case .empty:
                         ProgressView()
                     case .failure(_):
@@ -89,7 +83,6 @@ struct HomeScreen: View {
                         Image(systemName: Icons.like)
                             .font(.title2)
                     }
-
                 }
                 Image(systemName: Icons.comment)
                     .font(.title2)
@@ -157,7 +150,7 @@ struct HomeScreen: View {
 #Preview {
     HomeScreen()
         .environmentObject(GlobalStore(state: GlobalState(profileState:
-                                                            GlobalProfileState(email: "A@a.com", 
+                                                            GlobalProfileState(email: "A@a.com",
                                                                                username: "A_a")
                                                          )
         ))

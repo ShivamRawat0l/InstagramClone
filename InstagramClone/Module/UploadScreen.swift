@@ -23,27 +23,53 @@ struct UploadScreen: View {
         uploadStore.state.imagePicked
     }
 
+    func toolbar() -> some ToolbarContent {
+        Group {
+            ToolbarItem(placement: .cancellationAction) {
+                Button {
+                    uploadStore.dispatch(.unselectImage)
+                    navigateToHome()
+                } label: {
+                    Image(systemName: Icons.cancel)
+                }
+            }
+            ToolbarItem(placement: .confirmationAction) {
+                Button {
+                    uploadStore.dispatch(.upload(globalStore.state.profileState.email))
+                } label: {
+                    Text("Post")
+                }
+                .disabled(uploadStore.state.title.count == 0)
+            }
+        }
+    }
+
     var body: some View {
         VStack {
-            if uploadStore.state.imageUploadStatus == .pending {
-                ProgressView()
-            }
-            else if let UIImageHolder {
-                Image(uiImage: UIImageHolder)
-                    .resizable()
-                    .aspectRatio(contentMode: .fit)
-                    .frame(maxWidth: 300)
-                    .padding(.vertical, 30)
+            HStack(alignment: .top) {
+                if uploadStore.state.imageUploadStatus == .pending {
+                    ProgressView()
+                }
+                else if let UIImageHolder {
+                    Image(uiImage: UIImageHolder)
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                        .frame(width: 100)
+                }
+                else if let UIVideoHolder {
+                   CustomVideoPlayer(url: UIVideoHolder)
+                        .frame(width: 100)
+                }
                 TextField("Enter the title", text: $uploadStore.state.title)
-                    .textFieldStyle(.roundedBorder)
-                Spacer()
+                    .padding(.top, 10)
             }
-            else if let UIVideoHolder {
-                VideoPlayer(player: AVPlayer(url: UIVideoHolder))
-                TextField("Enter the title", text: $uploadStore.state.title)
-                    .textFieldStyle(.roundedBorder)
+            .padding(.vertical, 30)
+            HStack {
+                Text("Advanced Settings")
                 Spacer()
+                Image(systemName: Icons.chevronRight)
             }
+            Spacer()
         }
         .padding()
         .navigationBarTitleDisplayMode(.inline)
@@ -79,22 +105,7 @@ struct UploadScreen: View {
             }
         }
         .toolbar {
-            ToolbarItem(placement: .cancellationAction) {
-                Button {
-                    uploadStore.dispatch(.unselectImage)
-                    navigateToHome()
-                } label: {
-                    Image(systemName: Icons.cancel)
-                }
-            }
-            ToolbarItem(placement: .confirmationAction) {
-                Button {
-                    uploadStore.dispatch(.upload(globalStore.state.profileState.email))
-                } label: {
-                    Text("Post")
-                }
-                .disabled(uploadStore.state.title.count == 0)
-            }
+            toolbar()
         }
         .photosPicker(isPresented: $isImagePickerOpened,
                       selection: $uploadStore.state.imagePicked,

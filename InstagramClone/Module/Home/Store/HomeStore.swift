@@ -27,7 +27,7 @@ class HomeStore: ObservableObject {
 
         switch action {
         case .fetchPosts:
-            Task {
+             Task {
                 do {
                     self.dispatch(.setPostStatus(.pending))
                     let posts = try await homeservice.getPosts()

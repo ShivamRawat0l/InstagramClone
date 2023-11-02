@@ -75,6 +75,8 @@
 		5ECF4F7F2AB06616008BEC9C /* GlobalStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ECF4F7E2AB06616008BEC9C /* GlobalStore.swift */; };
 		5ECF4F822AB06DEE008BEC9C /* UserTab.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ECF4F812AB06DEE008BEC9C /* UserTab.swift */; };
 		5ECF4F852AB1CBBE008BEC9C /* Constant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ECF4F842AB1CBBD008BEC9C /* Constant.swift */; };
+		5EFD1F382AF39AE500123842 /* CustomVideoPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EFD1F372AF39AE500123842 /* CustomVideoPlayer.swift */; };
+		5EFD1F3A2AF39BA600123842 /* CustomVideoPlayerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EFD1F392AF39BA600123842 /* CustomVideoPlayerController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -162,6 +164,8 @@
 		5ECF4F7E2AB06616008BEC9C /* GlobalStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobalStore.swift; sourceTree = "<group>"; };
 		5ECF4F812AB06DEE008BEC9C /* UserTab.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserTab.swift; sourceTree = "<group>"; };
 		5ECF4F842AB1CBBD008BEC9C /* Constant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constant.swift; sourceTree = "<group>"; };
+		5EFD1F372AF39AE500123842 /* CustomVideoPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomVideoPlayer.swift; sourceTree = "<group>"; };
+		5EFD1F392AF39BA600123842 /* CustomVideoPlayerController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomVideoPlayerController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -310,6 +314,7 @@
 		5E4410F32AA98D9000781FEF /* Components */ = {
 			isa = PBXGroup;
 			children = (
+				5EFD1F362AF39AD800123842 /* CustomVideoPlayer */,
 				5E4410F42AA98D9E00781FEF /* PrimaryButton.swift */,
 				5E4410F62AA9962D00781FEF /* PasswordField.swift */,
 				5ECF4F812AB06DEE008BEC9C /* UserTab.swift */,
@@ -571,6 +576,15 @@
 			path = Manager;
 			sourceTree = "<group>";
 		};
+		5EFD1F362AF39AD800123842 /* CustomVideoPlayer */ = {
+			isa = PBXGroup;
+			children = (
+				5EFD1F372AF39AE500123842 /* CustomVideoPlayer.swift */,
+				5EFD1F392AF39BA600123842 /* CustomVideoPlayerController.swift */,
+			);
+			path = CustomVideoPlayer;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -758,6 +772,7 @@
 				5EB05BAE2AC6A39800141CE0 /* GlobalState.swift in Sources */,
 				5EABBCFA2AD5113C0052AAF5 /* Icons.swift in Sources */,
 				5E4410EA2AA89D2E00781FEF /* HomeScreen.swift in Sources */,
+				5EFD1F3A2AF39BA600123842 /* CustomVideoPlayerController.swift in Sources */,
 				5ECF4F852AB1CBBE008BEC9C /* Constant.swift in Sources */,
 				5ECF4F7F2AB06616008BEC9C /* GlobalStore.swift in Sources */,
 				5E4410EC2AA98C2800781FEF /* InstagramLogo.swift in Sources */,
@@ -765,6 +780,7 @@
 				5EB05BC12AC6B9D000141CE0 /* AuthAction.swift in Sources */,
 				5EB05B9C2AC3E03800141CE0 /* Date.swift in Sources */,
 				5E4410E62AA88AB200781FEF /* SignupView.swift in Sources */,
+				5EFD1F382AF39AE500123842 /* CustomVideoPlayer.swift in Sources */,
 				5E4410F72AA9962D00781FEF /* PasswordField.swift in Sources */,
 				5EB05BCF2ACFC50200141CE0 /* Font.swift in Sources */,
 				5E576B4D2ADF9C3300C96EED /* SearchService.swift in Sources */,

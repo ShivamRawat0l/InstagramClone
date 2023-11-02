@@ -7,6 +7,13 @@
 
 import Foundation
 
+enum VideoPlayerStatus {
+    case Loading
+    case Ended
+    case Playing
+    case Paused
+}
+
 struct PostType {
     var postID: String
     var postTitle: String

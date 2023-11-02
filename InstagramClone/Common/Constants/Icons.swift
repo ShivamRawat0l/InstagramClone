@@ -47,4 +47,6 @@ struct Icons {
     static var share = "arrowshape.turn.up.right"
     static var bookmark = "bookmark"
     static var bookmarkFill = "bookmark.fill"
+
+    static var chevronRight = "chevron.right"
 }
