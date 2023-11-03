@@ -34,34 +34,36 @@ struct HomeScreen: View {
                     .clipShape(Circle())
                 Text(post.owner)
             }
-            if post.isMediaVideo {
-                CustomVideoPlayer(url: post.mediaURL!)
-            } else {
-                AsyncImage(url: post.mediaURL) { phaseImage in
-                    switch phaseImage {
-                    case .success(let image):
-                        image
-                            .resizable()
-                            .aspectRatio(contentMode: .fit)
-                            .frame(maxWidth: .infinity)
-                            .task {
-                                originalImage = image
-                                let uiimage = ImageRenderer(content: image).uiImage
-                                let thumbnail =  await withCheckedContinuation { continuation in
-                                    uiimage!.prepareThumbnail(of: CGSize(width: 200, height: 200)) { uiImage in
-                                        continuation.resume(returning: uiImage)
+            if let mediaURL = post.mediaURL {
+                if post.isMediaVideo {
+                    CustomVideoPlayer(url: post.mediaURL!)
+                } else {
+                    AsyncImage(url: post.mediaURL) { phaseImage in
+                        switch phaseImage {
+                        case .success(let image):
+                            image
+                                .resizable()
+                                .aspectRatio(contentMode: .fit)
+                                .frame(maxWidth: .infinity)
+                                .task {
+                                    originalImage = image
+                                    let uiimage = ImageRenderer(content: image).uiImage
+                                    let thumbnail =  await withCheckedContinuation { continuation in
+                                        uiimage!.prepareThumbnail(of: CGSize(width: 200, height: 200)) { uiImage in
+                                            continuation.resume(returning: uiImage)
+                                        }
+                                    }
+                                    if let thumbnail {
+                                        thumbnailImage = Image(uiImage: thumbnail)
                                     }
                                 }
-                                if let thumbnail {
-                                    thumbnailImage = Image(uiImage: thumbnail)
-                                }
-                            }
-                    case .empty:
-                        ProgressView()
-                    case .failure(_):
-                        Text("Error")
-                    default:
-                        Text("Unknown")
+                        case .empty:
+                            ProgressView()
+                        case .failure(_):
+                            Text("Error")
+                        default:
+                            Text("Unknown")
+                        }
                     }
                 }
             }
