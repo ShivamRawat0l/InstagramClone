@@ -21,6 +21,9 @@ struct CustomVideoPlayer: View {
                 .frame(maxWidth: .infinity)
                 .scaledToFit()
                 .disabled(true)
+            if videoPlayerController.playerStatus == .Loading {
+                CustomShimmer(height: 400.0)
+            }
             Group {
                 Spacer()
                 Button {

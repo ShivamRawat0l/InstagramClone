@@ -77,6 +77,10 @@
 		5ECF4F852AB1CBBE008BEC9C /* Constant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ECF4F842AB1CBBD008BEC9C /* Constant.swift */; };
 		5EFD1F382AF39AE500123842 /* CustomVideoPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EFD1F372AF39AE500123842 /* CustomVideoPlayer.swift */; };
 		5EFD1F3A2AF39BA600123842 /* CustomVideoPlayerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EFD1F392AF39BA600123842 /* CustomVideoPlayerController.swift */; };
+		5EFD1F3D2AF8A2AC00123842 /* YouTubePlayerKit in Frameworks */ = {isa = PBXBuildFile; productRef = 5EFD1F3C2AF8A2AC00123842 /* YouTubePlayerKit */; };
+		5EFD1F402AF8A89E00123842 /* Shimmer in Frameworks */ = {isa = PBXBuildFile; productRef = 5EFD1F3F2AF8A89E00123842 /* Shimmer */; };
+		5EFD1F422AF8ACB300123842 /* WebViewUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EFD1F412AF8ACB300123842 /* WebViewUI.swift */; };
+		5EFD1F442AF9F99600123842 /* CustomShimmerGithub.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EFD1F432AF9F99600123842 /* CustomShimmerGithub.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -166,6 +170,8 @@
 		5ECF4F842AB1CBBD008BEC9C /* Constant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constant.swift; sourceTree = "<group>"; };
 		5EFD1F372AF39AE500123842 /* CustomVideoPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomVideoPlayer.swift; sourceTree = "<group>"; };
 		5EFD1F392AF39BA600123842 /* CustomVideoPlayerController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomVideoPlayerController.swift; sourceTree = "<group>"; };
+		5EFD1F412AF8ACB300123842 /* WebViewUI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewUI.swift; sourceTree = "<group>"; };
+		5EFD1F432AF9F99600123842 /* CustomShimmerGithub.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomShimmerGithub.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -175,8 +181,10 @@
 			files = (
 				5E4410E02AA866DA00781FEF /* FirebaseAuth in Frameworks */,
 				5E4410E22AA866DA00781FEF /* FirebaseFirestore in Frameworks */,
+				5EFD1F3D2AF8A2AC00123842 /* YouTubePlayerKit in Frameworks */,
 				5ECF4F752AAF2194008BEC9C /* FirebaseDatabase in Frameworks */,
 				5E4410E42AA866DA00781FEF /* FirebaseStorage in Frameworks */,
+				5EFD1F402AF8A89E00123842 /* Shimmer in Frameworks */,
 				5E9C79772AE226630084FF23 /* AsyncAlgorithms in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -319,6 +327,8 @@
 				5E4410F62AA9962D00781FEF /* PasswordField.swift */,
 				5ECF4F812AB06DEE008BEC9C /* UserTab.swift */,
 				5E9C79782AE26E9C0084FF23 /* CustomShimmer.swift */,
+				5EFD1F412AF8ACB300123842 /* WebViewUI.swift */,
+				5EFD1F432AF9F99600123842 /* CustomShimmerGithub.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -607,6 +617,8 @@
 				5E4410E32AA866DA00781FEF /* FirebaseStorage */,
 				5ECF4F742AAF2194008BEC9C /* FirebaseDatabase */,
 				5E9C79762AE226630084FF23 /* AsyncAlgorithms */,
+				5EFD1F3C2AF8A2AC00123842 /* YouTubePlayerKit */,
+				5EFD1F3F2AF8A89E00123842 /* Shimmer */,
 			);
 			productName = InstagramClone;
 			productReference = 5E44109C2AA7101800781FEF /* InstagramClone.app */;
@@ -684,6 +696,8 @@
 			packageReferences = (
 				5E4410DE2AA866DA00781FEF /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 				5E9C79752AE226630084FF23 /* XCRemoteSwiftPackageReference "swift-async-algorithms" */,
+				5EFD1F3B2AF8A2AC00123842 /* XCRemoteSwiftPackageReference "YouTubePlayerKit" */,
+				5EFD1F3E2AF8A89E00123842 /* XCRemoteSwiftPackageReference "SwiftUI-Shimmer" */,
 			);
 			productRefGroup = 5E44109D2AA7101800781FEF /* Products */;
 			projectDirPath = "";
@@ -758,6 +772,7 @@
 				5E9F1A622AD7D482004B5E54 /* HomeStore.swift in Sources */,
 				5E9F1A582AD79A06004B5E54 /* UploadAction.swift in Sources */,
 				5E4410A22AA7101800781FEF /* ContentView.swift in Sources */,
+				5EFD1F442AF9F99600123842 /* CustomShimmerGithub.swift in Sources */,
 				5EB05BB92AC6B8C800141CE0 /* FirebaseManager.swift in Sources */,
 				5E9F1A642AD7D489004B5E54 /* HomeAction.swift in Sources */,
 				5E9F1A5A2AD79A1A004B5E54 /* UploadState.swift in Sources */,
@@ -775,6 +790,7 @@
 				5EFD1F3A2AF39BA600123842 /* CustomVideoPlayerController.swift in Sources */,
 				5ECF4F852AB1CBBE008BEC9C /* Constant.swift in Sources */,
 				5ECF4F7F2AB06616008BEC9C /* GlobalStore.swift in Sources */,
+				5EFD1F422AF8ACB300123842 /* WebViewUI.swift in Sources */,
 				5E4410EC2AA98C2800781FEF /* InstagramLogo.swift in Sources */,
 				5EB05BC52AC6B9F900141CE0 /* AuthService.swift in Sources */,
 				5EB05BC12AC6B9D000141CE0 /* AuthAction.swift in Sources */,
@@ -1141,6 +1157,22 @@
 				minimumVersion = 0.1.0;
 			};
 		};
+		5EFD1F3B2AF8A2AC00123842 /* XCRemoteSwiftPackageReference "YouTubePlayerKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SvenTiigi/YouTubePlayerKit.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.5.4;
+			};
+		};
+		5EFD1F3E2AF8A89E00123842 /* XCRemoteSwiftPackageReference "SwiftUI-Shimmer" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/markiv/SwiftUI-Shimmer";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.4.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -1168,6 +1200,16 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 5E4410DE2AA866DA00781FEF /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseDatabase;
+		};
+		5EFD1F3C2AF8A2AC00123842 /* YouTubePlayerKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 5EFD1F3B2AF8A2AC00123842 /* XCRemoteSwiftPackageReference "YouTubePlayerKit" */;
+			productName = YouTubePlayerKit;
+		};
+		5EFD1F3F2AF8A89E00123842 /* Shimmer */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 5EFD1F3E2AF8A89E00123842 /* XCRemoteSwiftPackageReference "SwiftUI-Shimmer" */;
+			productName = Shimmer;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

@@ -36,7 +36,7 @@ struct HomeScreen: View {
             }
             if let mediaURL = post.mediaURL {
                 if post.isMediaVideo {
-                    CustomVideoPlayer(url: post.mediaURL!)
+                    CustomVideoPlayer(url: mediaURL)
                 } else {
                     AsyncImage(url: post.mediaURL) { phaseImage in
                         switch phaseImage {
@@ -58,7 +58,7 @@ struct HomeScreen: View {
                                     }
                                 }
                         case .empty:
-                            ProgressView()
+                            CustomShimmer(height: 400.0)
                         case .failure(_):
                             Text("Error")
                         default:
