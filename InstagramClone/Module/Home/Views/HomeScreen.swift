@@ -18,7 +18,7 @@ struct HomeScreen: View {
 
 
     var userEmail: String {
-        globalStore.state.profileState.email
+              globalStore.state.profileState.email
     }
 
     func renderPost(post: PostType) -> some View {

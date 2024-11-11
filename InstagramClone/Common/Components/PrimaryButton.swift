@@ -17,7 +17,7 @@ struct PrimaryButton: View {
             onPress()
         } label: {
             RoundedRectangle(cornerRadius: 10)
-                .fill(.blue)
+                .fill(.green)
                 .frame(height: 50)
                 .overlay {
                     if !loading {

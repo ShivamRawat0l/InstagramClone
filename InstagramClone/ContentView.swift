@@ -21,7 +21,7 @@ struct ContentView: View {
                         globalStore.dispatch(.messageAction(.addListeners(globalProfileStore.email)))
                         globalStore.dispatch(.profileAction(.getProfile(globalProfileStore.email)))
                     }
-                
+
             } else {
                 LoginView()
             }
